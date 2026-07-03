@@ -153,27 +153,31 @@ const PLACEMENT_QS = [
   {q:"'By the time we arrived, the train ___.' (left before we got there)",opts:["left","was leaving","had left","has left"],ans:2,level:"B1"},
 ];
 
+/* ══ Safe localStorage JSON helpers ═════════════════════════ */
+function lsGet(key,fallback){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback; }catch{ return fallback; } }
+function lsSet(key,value){ try{ localStorage.setItem(key,JSON.stringify(value)); }catch{} }
+
 /* ══ Streak Tracking ════════════════════════════════════════ */
 const todayStr=()=>new Date().toISOString().slice(0,10);
-function loadStreak(){ try{ const v=localStorage.getItem('ptb1:streak'); return v?JSON.parse(v):{streak:0,best:0,last:null}; }catch{ return{streak:0,best:0,last:null}; } }
+function loadStreak(){ return lsGet('ptb1:streak',{streak:0,best:0,last:null}); }
 function touchStreak(){
   const s=loadStreak(); const today=todayStr();
   if(s.last===today) return s;
   const yd=new Date(today); yd.setDate(yd.getDate()-1); const yesterday=yd.toISOString().slice(0,10);
   const ns=(s.last===yesterday)?s.streak+1:1;
   const updated={streak:ns,best:Math.max(ns,s.best||0),last:today};
-  try{ localStorage.setItem('ptb1:streak',JSON.stringify(updated)); }catch{}
+  lsSet('ptb1:streak',updated);
   return updated;
 }
 
 /* ══ Wrong Answer Tracking ══════════════════════════════════ */
-function getWrongs(){ try{ const v=localStorage.getItem('ptb1:wrongs'); return v?JSON.parse(v):[]; }catch{ return[]; } }
+function getWrongs(){ return lsGet('ptb1:wrongs',[]); }
 function addWrong(topicId,qi){
   const ws=getWrongs(); const idx=ws.findIndex(w=>w.topicId===topicId&&w.qi===qi);
   if(idx>=0){ws[idx].count++;ws[idx].last=Date.now();}else{ws.push({topicId,qi,count:1,last:Date.now()});}
-  try{ localStorage.setItem('ptb1:wrongs',JSON.stringify(ws)); }catch{}
+  lsSet('ptb1:wrongs',ws);
 }
-function clearWrong(topicId,qi){ try{ localStorage.setItem('ptb1:wrongs',JSON.stringify(getWrongs().filter(w=>!(w.topicId===topicId&&w.qi===qi)))); }catch{} }
+function clearWrong(topicId,qi){ lsSet('ptb1:wrongs',getWrongs().filter(w=>!(w.topicId===topicId&&w.qi===qi))); }
 function getTopWrongs(n=12){ return getWrongs().sort((a,b)=>b.count-a.count).slice(0,n); }
 
 /* ══ Spaced Repetition (Leitner) ═══════════════════════════ */
@@ -181,24 +185,20 @@ const MIN=60000,HOUR=60*MIN,DAY=24*HOUR;
 const BOX_INTERVALS=[0,MIN,12*HOUR,DAY,3*DAY,7*DAY];
 
 function fcKey(id,i){ return `ptb1:fc:${id}:${i}`; }
-function getFCS(id,i){ try{ const v=localStorage.getItem(fcKey(id,i)); return v?JSON.parse(v):{box:0,next:0}; }catch{ return{box:0,next:0}; } }
-function setFCS(id,i,s){ try{ localStorage.setItem(fcKey(id,i),JSON.stringify(s)); }catch{} }
+function getFCS(id,i){ return lsGet(fcKey(id,i),{box:0,next:0}); }
+function setFCS(id,i,s){ lsSet(fcKey(id,i),s); }
 function answerCard(id,i,result){
   const s=getFCS(id,i);
   const nb=result==='good'?Math.min(s.box+1,5):result==='close'?Math.max(s.box-1,1):1;
   setFCS(id,i,{box:nb,next:Date.now()+BOX_INTERVALS[nb]});
 }
-function getDueCards(id){
-  const tp=CURRICULUM[id]; if(!tp)return[];
-  const now=Date.now();
-  return tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(id,i)})).filter(c=>c.next<=now);
-}
-function getMastery(id){ const tp=CURRICULUM[id]; if(!tp)return 0; return tp.flashcards.filter((_,i)=>getFCS(id,i).box>=5).length; }
+function getAllCards(id){ const tp=CURRICULUM[id]; if(!tp)return[]; return tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(id,i)})); }
+function getDueCards(id){ const now=Date.now(); return getAllCards(id).filter(c=>c.next<=now); }
 function allDue(){ return ALL_TOPIC_IDS.reduce((s,id)=>s+getDueCards(id).length,0); }
 
 /* ══ Persistence ════════════════════════════════════════════ */
-function loadApp(){ try{ const v=localStorage.getItem('ptb1:app'); return v?JSON.parse(v):null; }catch{return null;} }
-function saveApp(s){ try{ localStorage.setItem('ptb1:app',JSON.stringify(s)); }catch{} }
+function loadApp(){ return lsGet('ptb1:app',null); }
+function saveApp(s){ lsSet('ptb1:app',s); }
 
 /* ══ Supabase sync ══════════════════════════════════════════ */
 async function restoreFromSupabase(client,userId){
@@ -218,10 +218,8 @@ async function syncToSupabase(client,userId){
 /* ══ Reset helpers ══════════════════════════════════════════ */
 function clearLevelStorage(lv){
   const ids=LEVEL_TOPICS[lv]||[];
-  try{
-    ids.forEach(id=>CURRICULUM[id].flashcards.forEach((_,i)=>localStorage.removeItem(fcKey(id,i))));
-    localStorage.setItem('ptb1:wrongs',JSON.stringify(getWrongs().filter(w=>!ids.includes(w.topicId))));
-  }catch{}
+  try{ ids.forEach(id=>CURRICULUM[id].flashcards.forEach((_,i)=>localStorage.removeItem(fcKey(id,i)))); }catch{}
+  lsSet('ptb1:wrongs',getWrongs().filter(w=>!ids.includes(w.topicId)));
 }
 function clearAllProgress(){
   // Wipe everything except the chosen tutor language.
@@ -327,6 +325,13 @@ function QuizFeedback({isRight,explain,lang}){
     </div>
   );
 }
+function QuizNav({checked,picked,onCheck,onNext,nextLabel,lang,color=C.teal}){
+  if(!checked) return(
+    <button disabled={picked==null} onClick={onCheck}
+      style={{...S.btn(picked==null?C.line:color,'#fff',picked==null),width:'100%'}}>{UI(lang,'Check','Comprobar')}</button>
+  );
+  return <button onClick={onNext} style={{...S.btn(C.teal),width:'100%'}}>{nextLabel}</button>;
+}
 
 /* ══ Login ════════════════════════════════════════════════════ */
 function LoginScreen({lang='en'}){
@@ -392,6 +397,7 @@ function PlacementTest({onDone,lang='en'}){
   const q=PLACEMENT_QS[qi];
   const last=qi===PLACEMENT_QS.length-1;
 
+  const finish=(lv)=>{ try{localStorage.setItem('ptb1:placementDone','1');}catch{} onDone(lv); };
   const doNext=()=>{
     const newAnswers=[...answers,{level:q.level,correct:picked===q.ans}];
     if(last){
@@ -401,8 +407,7 @@ function PlacementTest({onDone,lang='en'}){
       let lv='A1';
       if(pct('A1')>=60&&pct('A2')>=60)lv='B1';
       else if(pct('A1')>=60)lv='A2';
-      try{localStorage.setItem('ptb1:placementDone','1');}catch{}
-      onDone(lv);
+      finish(lv);
     }else{
       setAnswers(newAnswers);
       setQi(qi+1);
@@ -432,14 +437,9 @@ function PlacementTest({onDone,lang='en'}){
           <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={q.ans} onPick={setPicked}/>
         ))}
       </div>
-      {!checked?(
-        <button disabled={picked==null} onClick={()=>setChecked(true)}
-          style={{...S.btn(picked==null?C.line:C.teal,'#fff',picked==null),width:'100%'}}>{UI(lang,'Check','Comprobar')}</button>
-      ):(
-        <button onClick={doNext}
-          style={{...S.btn(C.teal),width:'100%'}}>{last?UI(lang,'See my level →','Ver mi nivel →'):UI(lang,'Next →','Siguiente →')}</button>
-      )}
-      <button onClick={()=>{try{localStorage.setItem('ptb1:placementDone','1');}catch{}onDone('A1');}}
+      <QuizNav checked={checked} picked={picked} onCheck={()=>setChecked(true)} onNext={doNext} lang={lang}
+        nextLabel={last?UI(lang,'See my level →','Ver mi nivel →'):UI(lang,'Next →','Siguiente →')}/>
+      <button onClick={()=>finish('A1')}
         style={{...S.ghost,width:'100%',marginTop:10,fontSize:13}}>{UI(lang,'Skip — start from A1','Saltar — empezar desde A1')}</button>
     </div>
   );
@@ -479,7 +479,6 @@ function HomeScreen({level,setLevel,lang,xp,completed,dueCount,streak,weakCount,
     {id:'weakpoints',icon:'🎯',title:UI(lang,'Weak Points','Puntos débiles'),desc:UI(lang,'Drill your missed questions','Practica tus preguntas falladas'),col:C.coral,bg:C.coralSoft,badge:weakCount||null},
     {id:'progress',icon:'📊',title:UI(lang,'Progress','Progreso'),desc:UI(lang,'Your stats & mastery','Tus estadísticas y dominio'),col:C.sub,bg:C.line},
   ];
-  const stk=streak||{streak:0,best:0};
   return(
     <div>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}}>
@@ -490,7 +489,7 @@ function HomeScreen({level,setLevel,lang,xp,completed,dueCount,streak,weakCount,
         <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6,flexShrink:0}}>
           <button onClick={()=>onNav('settings')} aria-label="Settings" style={{background:'transparent',border:'none',cursor:'pointer',fontSize:22,lineHeight:1,padding:'0 2px'}}>⚙️</button>
           <div style={{background:C.amberSoft,color:'#9A6B12',fontWeight:800,borderRadius:99,padding:'6px 12px',fontSize:14,whiteSpace:'nowrap'}}>⭐ {xp} XP</div>
-          {stk.streak>0&&<div style={{background:'#FFF0E8',color:'#C05000',fontWeight:800,borderRadius:99,padding:'4px 10px',fontSize:13,whiteSpace:'nowrap'}}>🔥 {stk.streak} {pluralDays(lang,stk.streak)}</div>}
+          {streak.streak>0&&<div style={{background:'#FFF0E8',color:'#C05000',fontWeight:800,borderRadius:99,padding:'4px 10px',fontSize:13,whiteSpace:'nowrap'}}>🔥 {streak.streak} {pluralDays(lang,streak.streak)}</div>}
         </div>
       </div>
       <div style={{margin:'16px 0'}}><LevelPath level={level} setLevel={setLevel} lang={lang} completed={completed}/></div>
@@ -611,15 +610,12 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
             <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={ex.correct} onPick={setPicked}/>
           ))}
         </div>
-        {checked&&<QuizFeedback isRight={picked===ex.correct} explain={quizExplain(ex,lang)} lang={lang}/>}
+        {checked&&<QuizFeedback isRight={isRight} explain={quizExplain(ex,lang)} lang={lang}/>}
         <div style={{marginTop:14}}>
-          {!checked?(
-            <button disabled={picked==null} onClick={()=>{setChecked(true);if(picked===ex.correct){setRight(r=>r+1);clearWrong(topicId,qi);}else{addWrong(topicId,qi);}}}
-              style={{...S.btn(picked==null?C.line:C.teal,'#fff',picked==null),width:'100%'}}>{UI(lang,'Check','Comprobar')}</button>
-          ):(
-            <button onClick={()=>{ if(qi+1<tp.quiz.length){setQi(qi+1);setPicked(null);setChecked(false);}else setStep('done'); }}
-              style={{...S.btn(C.teal),width:'100%'}}>{qi+1<tp.quiz.length?UI(lang,'Next →','Siguiente →'):UI(lang,'See Results →','Ver resultados →')}</button>
-          )}
+          <QuizNav checked={checked} picked={picked} lang={lang}
+            onCheck={()=>{setChecked(true);if(isRight){setRight(r=>r+1);clearWrong(topicId,qi);}else{addWrong(topicId,qi);}}}
+            onNext={()=>{ if(qi+1<tp.quiz.length){setQi(qi+1);setPicked(null);setChecked(false);}else setStep('done'); }}
+            nextLabel={qi+1<tp.quiz.length?UI(lang,'Next →','Siguiente →'):UI(lang,'See Results →','Ver resultados →')}/>
         </div>
       </div>
     );
@@ -654,11 +650,12 @@ function FlashcardsScreen({level,lang,addXP,onBack}){
   const[topic,setTopic]=useState(null);
   if(!topic){
     const ids=LEVEL_TOPICS[level];
-    const dueMap=Object.fromEntries(ids.map(id=>[id,getDueCards(id).length]));
+    const now=Date.now();
+    const stats=Object.fromEntries(ids.map(id=>{ const cards=getAllCards(id); return[id,{due:cards.filter(c=>c.next<=now).length,mastered:cards.filter(c=>c.box>=5).length}]; }));
     return(
       <div>
         <BackBar title={`${UI(lang,'Flashcards','Tarjetas')} · ${level}`} onBack={onBack}/>
-        {ids.some(id=>dueMap[id]>0)&&(
+        {ids.some(id=>stats[id].due>0)&&(
           <div style={{...S.card,background:C.purpleSoft,border:'none',marginBottom:12,padding:'12px 14px'}}>
             <div style={{fontWeight:800,color:C.purple}}>🔔 {UI(lang,'You have cards due for review','Tienes tarjetas pendientes de repaso')}</div>
             <div style={{fontSize:13,color:C.sub,marginTop:2}}>{UI(lang,'Cards with a badge are ready to practise.','Las tarjetas con una insignia están listas para practicar.')}</div>
@@ -666,7 +663,7 @@ function FlashcardsScreen({level,lang,addXP,onBack}){
         )}
         <div style={{display:'grid',gap:8}}>
           {ids.map(id=>{
-            const tp=CURRICULUM[id]; const due=dueMap[id]; const mastered=getMastery(id);
+            const tp=CURRICULUM[id]; const{due,mastered}=stats[id];
             return(
               <button key={id} onClick={()=>setTopic(id)} style={{...S.card,display:'flex',alignItems:'center',gap:12,cursor:'pointer',textAlign:'left',fontFamily:FONT}}>
                 <span style={{fontSize:24}}>{tp.icon}</span>
@@ -691,7 +688,7 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
   const[done,setDone]=useState(false);
   const[idx,setIdx]=useState(0);
   const[flipped,setFlipped]=useState(false);
-  const[session]=useState(()=>{ const due=getDueCards(topicId); return due.length>0?due:tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(topicId,i)})); });
+  const[session]=useState(()=>{ const all=getAllCards(topicId),now=Date.now(); const due=all.filter(c=>c.next<=now); return due.length>0?due:all; });
 
   useEffect(()=>setFlipped(false),[idx]);
 
@@ -750,7 +747,7 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
 
 /* ══ Weak Points ═════════════════════════════════════════════ */
 function WeakPointsScreen({lang,onBack}){
-  const[list]=useState(()=>getTopWrongs(12));
+  const[list]=useState(()=>getTopWrongs());
   const[idx,setIdx]=useState(0);
   const[picked,setPicked]=useState(null);
   const[checked,setChecked]=useState(false);
@@ -804,13 +801,10 @@ function WeakPointsScreen({lang,onBack}){
       </div>
       {checked&&<QuizFeedback isRight={isRight} explain={quizExplain(qdata,lang)} lang={lang}/>}
       <div style={{marginTop:14}}>
-        {!checked?(
-          <button disabled={picked==null} onClick={()=>setChecked(true)}
-            style={{...S.btn(picked==null?C.line:C.coral,'#fff',picked==null),width:'100%'}}>{UI(lang,'Check','Comprobar')}</button>
-        ):(
-          <button onClick={()=>{if(isRight)clearWrong(w.topicId,w.qi);setIdx(i=>i+1);setPicked(null);setChecked(false);}}
-            style={{...S.btn(C.teal),width:'100%'}}>{idx+1<list.length?UI(lang,'Next →','Siguiente →'):UI(lang,'Finish →','Terminar →')}</button>
-        )}
+        <QuizNav checked={checked} picked={picked} lang={lang} color={C.coral}
+          onCheck={()=>setChecked(true)}
+          onNext={()=>{if(isRight)clearWrong(w.topicId,w.qi);setIdx(i=>i+1);setPicked(null);setChecked(false);}}
+          nextLabel={idx+1<list.length?UI(lang,'Next →','Siguiente →'):UI(lang,'Finish →','Terminar →')}/>
       </div>
     </div>
   );
@@ -863,9 +857,15 @@ function PronScreen({level,lang,addXP,onBack}){
 
 /* ══ Progress ════════════════════════════════════════════════ */
 function ProgressScreen({xp,lang,completed,streak,onBack}){
-  const stk=streak||{streak:0,best:0};
-  const masteryMap=Object.fromEntries(ALL_TOPIC_IDS.map(id=>[id,getMastery(id)]));
-  const masteredCards=Object.values(masteryMap).reduce((s,m)=>s+m,0);
+  const now=Date.now();
+  let masteredCards=0,dueNow=0;
+  const masteryMap={};
+  ALL_TOPIC_IDS.forEach(id=>{
+    const cards=getAllCards(id);
+    masteryMap[id]=cards.filter(c=>c.box>=5).length;
+    masteredCards+=masteryMap[id];
+    dueNow+=cards.filter(c=>c.next<=now).length;
+  });
   return(
     <div>
       <BackBar title={UI(lang,'Progress','Progreso')} onBack={onBack}/>
@@ -874,9 +874,9 @@ function ProgressScreen({xp,lang,completed,streak,onBack}){
           {label:UI(lang,'Total XP','XP total'),val:`${xp} XP`,icon:'⭐',col:C.amber,bg:C.amberSoft},
           {label:UI(lang,'Topics done','Temas hechos'),val:`${(completed||[]).length}/${ALL_TOPIC_IDS.length}`,icon:'📚',col:C.teal,bg:C.tealSoft},
           {label:UI(lang,'Cards mastered','Tarjetas dominadas'),val:`${masteredCards}/${TOTAL_CARDS}`,icon:'🃏',col:C.purple,bg:C.purpleSoft},
-          {label:UI(lang,'Cards due now','Tarjetas pendientes'),val:`${allDue()}`,icon:'🔔',col:C.coral,bg:C.coralSoft},
-          {label:UI(lang,'Current streak','Racha actual'),val:`${stk.streak} ${pluralDays(lang,stk.streak)}`,icon:'🔥',col:'#C05000',bg:'#FFF0E8'},
-          {label:UI(lang,'Best streak','Mejor racha'),val:`${stk.best} ${pluralDays(lang,stk.best)}`,icon:'🏆',col:C.amber,bg:C.amberSoft},
+          {label:UI(lang,'Cards due now','Tarjetas pendientes'),val:`${dueNow}`,icon:'🔔',col:C.coral,bg:C.coralSoft},
+          {label:UI(lang,'Current streak','Racha actual'),val:`${streak.streak} ${pluralDays(lang,streak.streak)}`,icon:'🔥',col:'#C05000',bg:'#FFF0E8'},
+          {label:UI(lang,'Best streak','Mejor racha'),val:`${streak.best} ${pluralDays(lang,streak.best)}`,icon:'🏆',col:C.amber,bg:C.amberSoft},
         ].map(s=>(
           <div key={s.label} style={{...S.card,background:s.bg,border:'none',textAlign:'center',padding:'16px 12px'}}>
             <div style={{fontSize:28,marginBottom:4}}>{s.icon}</div>
@@ -986,23 +986,20 @@ function App({user}){
   const[st,setSt]=useState(()=>loadApp()||{xp:0,completed:[]});
   const[dueCount,setDueCount]=useState(()=>allDue());
   const[streak,setStreak]=useState(()=>loadStreak());
-  const[weakCount,setWeakCount]=useState(()=>getTopWrongs(12).length);
+  const[weakCount,setWeakCount]=useState(()=>getTopWrongs().length);
   const[showPlacement,setShowPlacement]=useState(()=>{ try{return!localStorage.getItem('ptb1:placementDone');}catch{return false;} });
 
   const syncTimerRef=useRef(null);
-  const scheduleSync=useCallback(()=>{
+  const scheduleSync=useCallback((delay=1500)=>{
     if(!user||!sbClient)return;
     clearTimeout(syncTimerRef.current);
-    syncTimerRef.current=setTimeout(()=>syncToSupabase(sbClient,user.id),1500);
+    if(delay)syncTimerRef.current=setTimeout(()=>syncToSupabase(sbClient,user.id),delay);
+    else syncToSupabase(sbClient,user.id);
   },[user]);
-  const syncNow=useCallback(()=>{
-    if(!user||!sbClient)return;
-    clearTimeout(syncTimerRef.current);
-    syncToSupabase(sbClient,user.id);
-  },[user]);
+  const syncNow=useCallback(()=>scheduleSync(0),[scheduleSync]);
 
   useEffect(()=>{ saveApp(st); scheduleSync(); },[st,scheduleSync]);
-  useEffect(()=>{ scheduleSync(); setDueCount(allDue()); setWeakCount(getTopWrongs(12).length); },[screen,scheduleSync]);
+  useEffect(()=>{ scheduleSync(); setDueCount(allDue()); setWeakCount(getTopWrongs().length); },[screen,scheduleSync]);
   useEffect(()=>{
     const h=()=>{if(document.visibilityState==='hidden')syncNow();};
     document.addEventListener('visibilitychange',h);
@@ -1019,7 +1016,7 @@ function App({user}){
     if(!window.confirm(`Reset all ${lv} progress?\n\nThis clears your completed ${lv} lessons, flashcard memory and weak points for ${lv}. It cannot be undone.`)) return;
     clearLevelStorage(lv);
     setSt(s=>({...s,completed:(s.completed||[]).filter(id=>!LEVEL_TOPICS[lv].includes(id))}));
-    setDueCount(allDue()); setWeakCount(getTopWrongs(12).length);
+    setDueCount(allDue()); setWeakCount(getTopWrongs().length);
   };
   const resetAll=()=>{
     if(!window.confirm('Reset ALL progress?\n\nThis erases your XP, streaks, completed lessons, flashcard progress and weak points, and restarts onboarding. It cannot be undone.')) return;
@@ -1043,7 +1040,7 @@ function App({user}){
         {screen==='cards'&&<FlashcardsScreen level={level} lang={lang} addXP={addXP} onBack={()=>setScreen('home')}/>}
         {screen==='pron'&&<PronScreen level={level} lang={lang} addXP={addXP} onBack={()=>setScreen('home')}/>}
         {screen==='progress'&&<ProgressScreen xp={st.xp} lang={lang} completed={st.completed} streak={streak} onBack={()=>setScreen('home')}/>}
-        {screen==='weakpoints'&&<WeakPointsScreen lang={lang} onBack={()=>{ setWeakCount(getTopWrongs(12).length); setScreen('home'); }}/>}
+        {screen==='weakpoints'&&<WeakPointsScreen lang={lang} onBack={()=>{ setWeakCount(getTopWrongs().length); setScreen('home'); }}/>}
         {screen==='settings'&&<SettingsScreen lang={lang} setLang={setLang} user={user} onSignOut={signOut} onBack={()=>setScreen('home')} onRerunPlacement={rerunPlacement} onResetLevel={resetLevel} onResetAll={resetAll}/>}
       </div>
     </div>
@@ -1059,23 +1056,21 @@ function AppShell(){
   useEffect(()=>{
     if(!sbClient){ setPhase('app'); return; }
 
-    sbClient.auth.getSession().then(async({data:{session}})=>{
-      if(session?.user){
-        userRef.current=session.user;
-        setUser(session.user);
-        await restoreFromSupabase(sbClient,session.user.id);
-        setPhase('app');
-      }else{
-        setPhase('login');
-      }
+    const enterApp=async(u)=>{
+      userRef.current=u;
+      setUser(u);
+      await restoreFromSupabase(sbClient,u.id);
+      setPhase('app');
+    };
+
+    sbClient.auth.getSession().then(({data:{session}})=>{
+      if(session?.user)enterApp(session.user);
+      else setPhase('login');
     });
 
-    const{data:{subscription}}=sbClient.auth.onAuthStateChange(async(event,session)=>{
+    const{data:{subscription}}=sbClient.auth.onAuthStateChange((event,session)=>{
       if(event==='SIGNED_IN'&&session?.user&&!userRef.current){
-        userRef.current=session.user;
-        setUser(session.user);
-        await restoreFromSupabase(sbClient,session.user.id);
-        setPhase('app');
+        enterApp(session.user);
       }else if(event==='SIGNED_OUT'){
         userRef.current=null;
         setUser(null);
