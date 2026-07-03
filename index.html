@@ -87,15 +87,15 @@ const pluralDays   = (lang,n)    => UI(lang,n!==1?'days':'day',n!==1?'días':'d�
 
 const LEVELS = ["A1","A2","B1"];
 const LEVEL_TOPICS = {
-  A1:["a1-greet","a1-num","a1-fam","a1-food","a1-day","a1-town"],
-  A2:["a2-past","a2-shop","a2-travel","a2-health","a2-work","a2-plans"],
-  B1:["b1-opinion","b1-story","b1-if","b1-news","b1-email","b1-feel"],
+  A1:["a1-greet","a1-num","a1-fam","a1-now","a1-food","a1-day","a1-town"],
+  A2:["a2-past","a2-shop","a2-compare","a2-travel","a2-health","a2-modals","a2-work","a2-plans"],
+  B1:["b1-perfect","b1-structures","b1-opinion","b1-story","b1-if","b1-news","b1-email","b1-feel"],
 };
 const ALL_TOPIC_IDS=Object.keys(CURRICULUM);
 const TOTAL_CARDS=ALL_TOPIC_IDS.reduce((s,id)=>s+CURRICULUM[id].flashcards.length,0);
 const PRON_SENTENCES = {
   A1:[
-    "Hello, my name is Anna and I am from Denmark.",
+    "Hello, my name is Anna and I am from Chile.",
     "I would like a coffee with milk, please.",
     "The supermarket is next to the train station.",
     "She works every day from nine to five.",
@@ -118,7 +118,7 @@ const PRON_SENTENCES = {
     "In my opinion, learning a language takes patience and practice.",
     "If I had more time, I would travel around the world.",
     "She told me that the meeting had been cancelled.",
-    "I have been living in Copenhagen for three years.",
+    "I have been living in Santiago for three years.",
     "Although it was raining, we decided to walk home.",
     "I am writing to enquire about the position advertised online.",
     "By the time we arrived, the train had already left.",
@@ -130,7 +130,7 @@ const PRON_SENTENCES = {
 const PLACEMENT_QS = [
   // A1
   {q:"What ___ your name?",opts:["is","are","am","have"],ans:0,level:"A1"},
-  {q:"I have ___ older sister.",opts:["a","an","the","—"],ans:0,level:"A1"},
+  {q:"I have ___ older sister.",opts:["a","an","the","—"],ans:1,level:"A1"},
   {q:"She ___ to school every day.",opts:["go","goes","going","gone"],ans:1,level:"A1"},
   {q:"The bank is ___ the post office. (directly across the road)",opts:["next to","opposite","between","behind"],ans:1,level:"A1"},
   {q:"How ___ does this cost?",opts:["much","many","old","far"],ans:0,level:"A1"},
@@ -142,7 +142,7 @@ const PLACEMENT_QS = [
   {q:"How long ___ you had this cough?",opts:["have","did","do","are"],ans:0,level:"A2"},
   {q:"She works ___ a nurse at the hospital.",opts:["like","for","as","in"],ans:2,level:"A2"},
   {q:"'A return ticket' means you:",opts:["travel one way only","travel there and back","get a refund","upgrade to first class"],ans:1,level:"A2"},
-  {q:"We ___ visit my parents next weekend. (plan already booked)",opts:["will","are going to","shall","would"],ans:1,level:"A2"},
+  {q:"We ___ visit my parents next weekend. (plan already decided)",opts:["will","are going to","shall","would"],ans:1,level:"A2"},
   {q:"'Do you have this in a larger ___?' (clothing shop)",opts:["price","colour","size","model"],ans:2,level:"A2"},
   // B1
   {q:"Direct: 'I am happy.' → Reported: 'She said she ___ happy.'",opts:["is","was","were","has been"],ans:1,level:"B1"},
