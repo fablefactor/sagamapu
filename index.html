@@ -87,9 +87,9 @@ const pluralDays   = (lang,n)    => UI(lang,n!==1?'days':'day',n!==1?'dÃ­as':'dÃ
 
 const LEVELS = ["A1","A2","B1"];
 const LEVEL_TOPICS = {
-  A1:["a1-greet","a1-num","a1-fam","a1-food","a1-day","a1-town"],
-  A2:["a2-past","a2-shop","a2-travel","a2-health","a2-work","a2-plans"],
-  B1:["b1-opinion","b1-story","b1-if","b1-news","b1-email","b1-feel"],
+  A1:["a1-greet","a1-num","a1-fam","a1-now","a1-food","a1-day","a1-town"],
+  A2:["a2-past","a2-shop","a2-compare","a2-travel","a2-health","a2-modals","a2-work","a2-plans"],
+  B1:["b1-perfect","b1-structures","b1-opinion","b1-story","b1-if","b1-news","b1-email","b1-feel"],
 };
 const ALL_TOPIC_IDS=Object.keys(CURRICULUM);
 const TOTAL_CARDS=ALL_TOPIC_IDS.reduce((s,id)=>s+CURRICULUM[id].flashcards.length,0);
