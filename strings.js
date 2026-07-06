@@ -1,6 +1,6 @@
 /* ══ Pathway to B1 — UI string table ══════════════════════════════
-   Plain JS (no JSX) — loaded via <script src="strings.js"> after curriculum.js,
-   before the Babel block in index.html.
+   Plain JS (no JSX) — loaded via <script src="strings.js"> after the
+   courses/*.js files, before the Babel block in index.html.
 
    t(lang, key)          → localized UI string ('es' or 'en', fallback en)
    t(lang, key, {n: 3})  → same, with {placeholder} interpolation

@@ -8,7 +8,8 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script src="curriculum.js"></script>
+  <script src="courses/en.core.js"></script>
+  <script src="courses/en.support.es.js"></script>
   <script src="strings.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -72,9 +73,14 @@ const C = {
 };
 const FONT = "'Avenir Next','Segoe UI',system-ui,-apple-system,sans-serif";
 
-/* ══ Course meta ═══════════════════════════════════════════════
-   The current (and only) course: English up to B1. */
-const COURSE_META = {id:'en', name:'English', levels:['A1','A2','B1'], speechLocale:'en-GB'};
+/* ══ Course data ═══════════════════════════════════════════════
+   The current (and only) course: English up to B1, loaded from
+   courses/en.core.js (target-language content + placement +
+   pronunciation) and courses/en.support.es.js (Spanish overlay,
+   keyed by topic id + item id) into window.PTB_COURSES.en. */
+const COURSE = window.PTB_COURSES.en;
+const COURSE_META = COURSE.meta;
+const CORE_TOPICS = COURSE.core.topics;
 
 /* ══ Localization ══════════════════════════════════════════════
    lang is 'en' (English immersion — no translations shown) or 'es' (Spanish).
@@ -83,38 +89,48 @@ const COURSE_META = {id:'en', name:'English', levels:['A1','A2','B1'], speechLoc
    the resolver below. */
 
 /* ══ Content resolver ══════════════════════════════════════════
-   resolveCourse(supportLang) maps the raw CURRICULUM global to topics whose
+   resolveCourse(supportLang) merges the course core (target-language
+   content) with the support-language overlay BY ITEM ID into topics whose
    presentation fields are already chosen for the given support language
-   ('es' = Spanish, anything else = English immersion). Fallback rules:
-     title:               es → titleEs||title,       en → title
-     theory heading/body: es → headingEs||heading / bodyEs||body, en → heading/body
-     examples.translation:es → ex.es||'',            en → ''
-     flashcards.back:     es → es||enDef||'',        en → enDef||es||''
-     quiz explain:        es → explainEs||explain,   en → explain
+   ('es' = Spanish, anything else = immersion — core only). Fallback rules
+   (identical to the Phase 2 resolver over the old merged schema):
+     title:               es → overlay.title||title,  en → title
+     theory heading/body: es → overlay||core,         en → core
+     examples.translation:es → overlay||'',           en → ''
+     flashcards.back:     es → overlay||def||'',      en → def||overlay||''
+     quiz explain:        es → overlay||explain,      en → explain
+   (The immersion card-back falls back to the es overlay string, mirroring
+   the old enDef||es path; def coverage is 100%, so it is a dead path.)
    Everything else on the topic (id, icon, level, …) passes through. */
 function resolveCourse(supportLang){
-  const es = supportLang==='es';
+  const support = COURSE.support||{};
+  const ov = support[supportLang]||null;            // active overlay, null in immersion
+  const ovTopics = ov ? ov.topics : {};
+  const fbTopics = (support.es||{}).topics||{};     // immersion card-back fallback (dead path)
   const out = {};
-  Object.keys(CURRICULUM).forEach(id=>{
-    const tp = CURRICULUM[id];
+  Object.keys(CORE_TOPICS).forEach(id=>{
+    const tp = CORE_TOPICS[id];
+    const o = ovTopics[id]||{};
+    const oTheory=o.theory||{}, oEx=o.examples||{}, oFc=o.flashcards||{}, oQz=o.quiz||{};
+    const fFc = (fbTopics[id]||{}).flashcards||{};
     out[id] = {
       ...tp,
-      title: es ? (tp.titleEs||tp.title) : tp.title,
+      title: ov ? (o.title||tp.title) : tp.title,
       theory: tp.theory.map(sec=>({
-        heading: es ? (sec.headingEs||sec.heading) : sec.heading,
-        body:    es ? (sec.bodyEs||sec.body)       : sec.body,
+        heading: ov ? ((oTheory[sec.id]||{}).heading||sec.heading) : sec.heading,
+        body:    ov ? ((oTheory[sec.id]||{}).body||sec.body)       : sec.body,
       })),
       examples: tp.examples.map(ex=>({
-        en: ex.en,
-        translation: es ? (ex.es||'') : '',
+        en: ex.text,
+        translation: ov ? (oEx[ex.id]||'') : '',
       })),
       flashcards: tp.flashcards.map(card=>({
         front: card.front,
-        back: es ? (card.es||card.enDef||'') : (card.enDef||card.es||''),
+        back: ov ? (oFc[card.id]||card.def||'') : (card.def||fFc[card.id]||''),
       })),
       quiz: tp.quiz.map(q=>({
         ...q,
-        explain: es ? (q.explainEs||q.explain) : q.explain,
+        explain: ov ? (oQz[q.id]||q.explain) : q.explain,
       })),
     };
   });
@@ -127,72 +143,17 @@ function resolvedTopic(id,lang){
 }
 
 const LEVELS = ["A1","A2","B1"];
-const LEVEL_TOPICS = {
-  A1:["a1-greet","a1-num","a1-fam","a1-now","a1-food","a1-day","a1-town"],
-  A2:["a2-past","a2-shop","a2-compare","a2-travel","a2-health","a2-modals","a2-work","a2-plans"],
-  B1:["b1-perfect","b1-structures","b1-opinion","b1-story","b1-if","b1-news","b1-email","b1-feel"],
-};
-const ALL_TOPIC_IDS=Object.keys(CURRICULUM);
-const TOTAL_CARDS=ALL_TOPIC_IDS.reduce((s,id)=>s+CURRICULUM[id].flashcards.length,0);
-const PRON_SENTENCES = {
-  A1:[
-    "Hello, my name is Anna and I am from Chile.",
-    "I would like a coffee with milk, please.",
-    "The supermarket is next to the train station.",
-    "She works every day from nine to five.",
-    "We have three children and one dog.",
-    "What time is it now?",
-    "Today is Monday and tomorrow is Tuesday.",
-    "My mother has brown hair and blue eyes.",
-  ],
-  A2:[
-    "Yesterday I went to the cinema with my friends.",
-    "Could you tell me how to get to the airport?",
-    "I have a headache and a sore throat.",
-    "We are going to visit my parents next weekend.",
-    "How much does this jacket cost?",
-    "I worked in a restaurant when I was younger.",
-    "She applied for a job as an engineer last month.",
-    "Did you see the football match last night?",
-  ],
-  B1:[
-    "In my opinion, learning a language takes patience and practice.",
-    "If I had more time, I would travel around the world.",
-    "She told me that the meeting had been cancelled.",
-    "I have been living in Santiago for three years.",
-    "Although it was raining, we decided to walk home.",
-    "I am writing to enquire about the position advertised online.",
-    "By the time we arrived, the train had already left.",
-    "I couldn't agree more — protecting the environment is our biggest challenge.",
-  ],
-};
+/* Module-level content constants, all derived from the course core.
+   LEVEL_TOPICS preserves the core's topic insertion order per level. */
+const ALL_TOPIC_IDS=Object.keys(CORE_TOPICS);
+const LEVEL_TOPICS={};
+COURSE_META.levels.forEach(lv=>{LEVEL_TOPICS[lv]=[];});
+ALL_TOPIC_IDS.forEach(id=>{LEVEL_TOPICS[CORE_TOPICS[id].level].push(id);});
+const TOTAL_CARDS=ALL_TOPIC_IDS.reduce((s,id)=>s+CORE_TOPICS[id].flashcards.length,0);
+const PRON_SENTENCES = COURSE.core.pronunciation;
 
-/* ══ Placement Test Questions ═══════════════════════════════ */
-const PLACEMENT_QS = [
-  // A1
-  {q:"What ___ your name?",opts:["is","are","am","have"],ans:0,level:"A1"},
-  {q:"I have ___ older sister.",opts:["a","an","the","—"],ans:1,level:"A1"},
-  {q:"She ___ to school every day.",opts:["go","goes","going","gone"],ans:1,level:"A1"},
-  {q:"The bank is ___ the post office. (directly across the road)",opts:["next to","opposite","between","behind"],ans:1,level:"A1"},
-  {q:"How ___ does this cost?",opts:["much","many","old","far"],ans:0,level:"A1"},
-  {q:"'Half past seven' means:",opts:["7:00","7:15","7:30","7:45"],ans:2,level:"A1"},
-  {q:"I ___ drink coffee — I prefer tea.",opts:["always","never","sometimes","still"],ans:1,level:"A1"},
-  // A2
-  {q:"Yesterday she ___ to the cinema.",opts:["go","goes","went","has gone"],ans:2,level:"A2"},
-  {q:"We ___ go to school last Monday — it was a holiday.",opts:["didn't","don't","not","haven't"],ans:0,level:"A2"},
-  {q:"How long ___ you had this cough?",opts:["have","did","do","are"],ans:0,level:"A2"},
-  {q:"She works ___ a nurse at the hospital.",opts:["like","for","as","in"],ans:2,level:"A2"},
-  {q:"'A return ticket' means you:",opts:["travel one way only","travel there and back","get a refund","upgrade to first class"],ans:1,level:"A2"},
-  {q:"We ___ visit my parents next weekend. (plan already decided)",opts:["will","are going to","shall","would"],ans:1,level:"A2"},
-  {q:"'Do you have this in a larger ___?' (clothing shop)",opts:["price","colour","size","model"],ans:2,level:"A2"},
-  // B1
-  {q:"Direct: 'I am happy.' → Reported: 'She said she ___ happy.'",opts:["is","was","were","has been"],ans:1,level:"B1"},
-  {q:"'I was walking home when I ___ a loud noise.' (main event)",opts:["heard","was hearing","had heard","hear"],ans:0,level:"B1"},
-  {q:"'If I ___ more money, I would buy a house.' (second conditional)",opts:["have","had","would have","having"],ans:1,level:"B1"},
-  {q:"You know the recipient's name. You end the formal email with:",opts:["Yours faithfully,","Yours sincerely,","Best wishes,","Cheers,"],ans:1,level:"B1"},
-  {q:"'___ my opinion, we should invest more in public transport.'",opts:["In","From","By","With"],ans:0,level:"B1"},
-  {q:"'By the time we arrived, the train ___.' (left before we got there)",opts:["left","was leaving","had left","has left"],ans:2,level:"B1"},
-];
+/* ══ Placement Test Questions (course content, from the core) ══ */
+const PLACEMENT_QS = COURSE.core.placement;
 
 /* ══ Safe localStorage JSON helpers ═════════════════════════ */
 function lsGet(key,fallback){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback; }catch{ return fallback; } }
@@ -225,6 +186,11 @@ function getTopWrongs(n=12){ return getWrongs().sort((a,b)=>b.count-a.count).sli
 const MIN=60000,HOUR=60*MIN,DAY=24*HOUR;
 const BOX_INTERVALS=[0,MIN,12*HOUR,DAY,3*DAY,7*DAY];
 
+/* PHASE 3 INVARIANT: fcKey stays INDEX-based (and wrongs keep their `qi`
+   index) so existing localStorage progress keys keep working unchanged —
+   flashcard/quiz arrays kept their pre-split order, so index-based keys
+   still match. The stable item ids in the course core are dormant until
+   the Phase 4 storage migration rekeys progress by item id. */
 function fcKey(id,i){ return `ptb1:fc:${id}:${i}`; }
 function getFCS(id,i){ return lsGet(fcKey(id,i),{box:0,next:0}); }
 function setFCS(id,i,s){ lsSet(fcKey(id,i),s); }
@@ -233,7 +199,7 @@ function answerCard(id,i,result){
   const nb=result==='good'?Math.min(s.box+1,5):result==='close'?Math.max(s.box-1,1):1;
   setFCS(id,i,{box:nb,next:Date.now()+BOX_INTERVALS[nb]});
 }
-function getAllCards(id){ const tp=CURRICULUM[id]; if(!tp)return[]; return tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(id,i)})); }
+function getAllCards(id){ const tp=CORE_TOPICS[id]; if(!tp)return[]; return tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(id,i)})); }
 function getDueCards(id){ const now=Date.now(); return getAllCards(id).filter(c=>c.next<=now); }
 function allDue(){ return ALL_TOPIC_IDS.reduce((s,id)=>s+getDueCards(id).length,0); }
 
@@ -259,7 +225,7 @@ async function syncToSupabase(client,userId){
 /* ══ Reset helpers ══════════════════════════════════════════ */
 function clearLevelStorage(lv){
   const ids=LEVEL_TOPICS[lv]||[];
-  try{ ids.forEach(id=>CURRICULUM[id].flashcards.forEach((_,i)=>localStorage.removeItem(fcKey(id,i)))); }catch{}
+  try{ ids.forEach(id=>CORE_TOPICS[id].flashcards.forEach((_,i)=>localStorage.removeItem(fcKey(id,i)))); }catch{}
   lsSet('ptb1:wrongs',getWrongs().filter(w=>!ids.includes(w.topicId)));
 }
 function clearAllProgress(){
