@@ -2,7 +2,7 @@
    Plain JS (no JSX) — loaded via <script src="strings.js"> after the
    courses/*.js files, before the Babel block in index.html.
 
-   t(lang, key)          → localized UI string ('es' or 'en', fallback en)
+   t(lang, key)          → localized UI string for that uiLang (fallback en)
    t(lang, key, {n: 3})  → same, with {placeholder} interpolation
    tPlural(lang, n, key) → key+'.one' / key+'.other' via per-language plural rule
    pluralDays(lang, n)   → day/days/día/días
@@ -180,7 +180,7 @@ const STRINGS = {
 function t(lang, key, params) {
   const entry = STRINGS[key];
   if (!entry) { console.warn('[i18n] Missing string key: ' + key); return key; }
-  let s = entry[lang === 'es' ? 'es' : 'en'];
+  let s = entry[lang];
   if (s == null) s = entry.en;
   if (params) {
     for (const p in params) { s = s.split('{' + p + '}').join(String(params[p])); }
