@@ -179,7 +179,36 @@ to the enrolled list.
   data (re-adding restores everything); actual deletion only via explicit
   reset.
 
-**Global settings**: UI language (independent of any course), account/sync.
+**Global settings**: UI language (independent of any course), account/sync,
+and a visually separated **danger zone** with "Start over as a new user".
+
+**Start over as a new user** — a full factory reset, distinct from the
+per-course reset:
+
+- Wipes **every** `ptb1:*` key: all courses' progress, the enrolled list,
+  streak, XP, UI language — everything.
+- Also wipes the **cloud copy** (empties the user's `user_progress` row in
+  Supabase) after cancelling any pending debounced sync. This is essential:
+  wiping only localStorage would just resurrect everything from the cloud
+  on the next sign-in.
+- The account itself survives — you stay signed in; it's the data that
+  starts fresh. (Deleting the auth account is a Supabase-dashboard action,
+  deliberately out of scope.)
+- Lands the user back at first-run onboarding ("I speak…"), exactly like a
+  brand-new user.
+
+Because this is the one truly irreversible action in the app, it gets
+ample confirmation — deliberately heavier than any other flow:
+
+1. First tap opens a summary of exactly what will be deleted: each
+   enrolled course with its progress (e.g. "English — 14 topics, 213 cards
+   in review"), streak, XP, and the line "your cloud backup will also be
+   deleted".
+2. The confirm button is disabled until the user types a confirmation word
+   (e.g. their support language's word for "DELETE") — a deliberate
+   speed bump that a double-tap can't defeat.
+3. The final button is styled destructive-red and worded as the outcome,
+   "Delete everything and start over", never a bare "OK".
 
 **Screens whose scope changes**: Home, Flashcards, Progress, Weak Points
 all become views over the *active course* (weak points' stored ids are
@@ -212,9 +241,16 @@ are deleted locally so the `ptb1:*` sync sweep never resurrects them. The
 Supabase sync *functions* need no changes, but the migration must live
 inside the sync *lifecycle*.
 
-Reset semantics: per-course reset clears `ptb1:<target>:*`; the full reset
-preserves `uiLang`, `course`, `courses` (today's equivalent preserves
-`ptb1:lang`).
+Reset semantics, three tiers:
+
+1. **Per-course reset** clears `ptb1:<target>:*` only.
+2. **Reset all progress** clears every course's progress but preserves
+   `uiLang`, `course`, `courses` (today's equivalent preserves `ptb1:lang`).
+3. **Start over as a new user** (see UX section) clears every `ptb1:*` key
+   AND empties the Supabase `user_progress` row, then returns to
+   onboarding. Sequencing matters: cancel the debounced sync timer, clear
+   the cloud row, then clear localStorage — otherwise a pending sync or
+   the next restore reintroduces the old data.
 
 ## Migration in five safe phases
 
