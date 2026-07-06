@@ -40,15 +40,16 @@ They're loaded by regular `<script src>` tags before the Babel block, so they mu
 
 **UI strings** live in `strings.js`: a `STRINGS` table of dot-namespaced keys (`'nav.lessons'`, `'settings.signout'`, …) with `{en, es}` values, read via `t(lang, 'key')` (optional third argument interpolates `{placeholder}`s, e.g. `t(lang,'lessons.finishEarn',{xp:earned})`). Pluralization goes through `tPlural(lang, n, key)` (per-language rules; `pluralDays(lang,n)` is a convenience wrapper) and the flashcard back label through the `cardBackLabel(lang)` shim — all defined in `strings.js`. The old inline `UI(lang,'…','…')` helper is gone; don't reintroduce it.
 
-The six **content helpers** still live in `index.html` (defined just after `COURSE_META`) until Phase 2 of `docs/i18n-plan.md` replaces them with a resolver:
-```js
-const topicTitle   = (tp,lang)   => lang==='es' ? (tp.titleEs||tp.title)     : tp.title;
-const theoryHeading= (sec,lang)  => lang==='es' ? (sec.headingEs||sec.heading): sec.heading;
-const theoryBody   = (sec,lang)  => lang==='es' ? (sec.bodyEs||sec.body)      : sec.body;
-const exTranslation= (ex,lang)   => lang==='es' ? (ex.es||'')                 : '';
-const cardBack     = (card,lang) => lang==='es' ? (card.es||card.enDef||'')   : (card.enDef||card.es||'');
-const quizExplain  = (q,lang)    => lang==='es' ? (q.explainEs||q.explain)    : q.explain;
-```
+**Curriculum content** is localized by the **content resolver** in `index.html` (defined just after `COURSE_META`; Phase 2 of `docs/i18n-plan.md`). The old per-field helpers (`topicTitle`, `theoryHeading`, `theoryBody`, `exTranslation`, `cardBack`, `quizExplain`) are gone — don't reintroduce them.
+
+- `resolveCourse(supportLang)` maps the raw `CURRICULUM` global (synchronously) to an object of resolved topics keyed by topic id, with presentation fields already chosen for `supportLang` (`'es'` = Spanish, anything else = English immersion). Fallback rules per field:
+  - `title`: es → `titleEs||title`; en → `title`
+  - `theory[]` → `{heading, body}`: es → `headingEs||heading` / `bodyEs||body`; en → `heading`/`body`
+  - `examples[]` → `{en, translation}`: `translation` is `es||''` in Spanish mode, `''` in immersion
+  - `flashcards[]` → `{front, back}`: `back` is `es||enDef||''` in Spanish mode, `enDef||es||''` in immersion
+  - `quiz[]`: `explain` is `explainEs||explain` in Spanish mode, `explain` in immersion; `q`/`options`/`correct` pass through
+  - everything else on the topic (`icon`, `level`, …) passes through unchanged
+- Screens don't call `resolveCourse` directly; they use the `resolvedTopic(id, lang)` accessor (memoized per lang in `RESOLVED_COURSES`) instead of reading `CURRICULUM[id]`. Raw `CURRICULUM` reads remain only in language-independent code (card counts, Leitner state, reset helpers).
 
 `COURSE_META` (top of the Babel block) describes the current course: `{id:'en', name:'English', levels:['A1','A2','B1'], speechLocale:'en-GB'}`. The Web Speech API (`speak()` and `SpeechRecognition`) uses `COURSE_META.speechLocale` — no hardcoded `'en-GB'`.
 

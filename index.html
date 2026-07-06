@@ -76,19 +76,55 @@ const FONT = "'Avenir Next','Segoe UI',system-ui,-apple-system,sans-serif";
    The current (and only) course: English up to B1. */
 const COURSE_META = {id:'en', name:'English', levels:['A1','A2','B1'], speechLocale:'en-GB'};
 
-/* ══ Localization helpers ══════════════════════════════════════
+/* ══ Localization ══════════════════════════════════════════════
    lang is 'en' (English immersion — no translations shown) or 'es' (Spanish).
    UI strings live in strings.js — use t(lang,'key') (plus the pluralDays /
-   cardBackLabel shims defined there). The six content helpers below read
-   curriculum fields directly (Phase 2 replaces them with a resolver). */
-const topicTitle   = (tp,lang)  => lang==='es' ? (tp.titleEs||tp.title) : tp.title;
-const theoryHeading= (sec,lang) => lang==='es' ? (sec.headingEs||sec.heading) : sec.heading;
-const theoryBody   = (sec,lang) => lang==='es' ? (sec.bodyEs||sec.body) : sec.body;
-// English immersion shows no translation line under examples; Spanish shows the es translation.
-const exTranslation= (ex,lang)  => lang==='es' ? (ex.es||'') : '';
-// Flashcard back: Spanish translation, or a plain-English definition in immersion mode.
-const cardBack     = (card,lang)=> lang==='es' ? (card.es||card.enDef||'') : (card.enDef||card.es||'');
-const quizExplain  = (q,lang)   => lang==='es' ? (q.explainEs||q.explain) : q.explain;
+   cardBackLabel shims defined there). Curriculum content is localized by
+   the resolver below. */
+
+/* ══ Content resolver ══════════════════════════════════════════
+   resolveCourse(supportLang) maps the raw CURRICULUM global to topics whose
+   presentation fields are already chosen for the given support language
+   ('es' = Spanish, anything else = English immersion). Fallback rules:
+     title:               es → titleEs||title,       en → title
+     theory heading/body: es → headingEs||heading / bodyEs||body, en → heading/body
+     examples.translation:es → ex.es||'',            en → ''
+     flashcards.back:     es → es||enDef||'',        en → enDef||es||''
+     quiz explain:        es → explainEs||explain,   en → explain
+   Everything else on the topic (id, icon, level, …) passes through. */
+function resolveCourse(supportLang){
+  const es = supportLang==='es';
+  const out = {};
+  Object.keys(CURRICULUM).forEach(id=>{
+    const tp = CURRICULUM[id];
+    out[id] = {
+      ...tp,
+      title: es ? (tp.titleEs||tp.title) : tp.title,
+      theory: tp.theory.map(sec=>({
+        heading: es ? (sec.headingEs||sec.heading) : sec.heading,
+        body:    es ? (sec.bodyEs||sec.body)       : sec.body,
+      })),
+      examples: tp.examples.map(ex=>({
+        en: ex.en,
+        translation: es ? (ex.es||'') : '',
+      })),
+      flashcards: tp.flashcards.map(card=>({
+        front: card.front,
+        back: es ? (card.es||card.enDef||'') : (card.enDef||card.es||''),
+      })),
+      quiz: tp.quiz.map(q=>({
+        ...q,
+        explain: es ? (q.explainEs||q.explain) : q.explain,
+      })),
+    };
+  });
+  return out;
+}
+const RESOLVED_COURSES = {};
+function resolvedTopic(id,lang){
+  const course = RESOLVED_COURSES[lang] || (RESOLVED_COURSES[lang] = resolveCourse(lang));
+  return course[id];
+}
 
 const LEVELS = ["A1","A2","B1"];
 const LEVEL_TOPICS = {
@@ -528,11 +564,11 @@ function LessonsScreen({level,lang,completed,onComplete,addXP,onBack}){
       <div style={{fontWeight:700,color:C.sub,marginBottom:10,fontSize:14}}>{t(lang,'lessons.chooseTopic')}</div>
       <div style={{display:'grid',gap:10}}>
         {LEVEL_TOPICS[level].map(id=>{
-          const tp=CURRICULUM[id]; const done=(completed||[]).includes(id);
+          const tp=resolvedTopic(id,lang); const done=(completed||[]).includes(id);
           return(
             <button key={id} onClick={()=>setTopic(id)} style={{...S.card,display:'flex',alignItems:'center',gap:12,cursor:'pointer',textAlign:'left',fontFamily:FONT,fontSize:16}}>
               <span style={{fontSize:26}}>{tp.icon}</span>
-              <span style={{flex:1,fontWeight:700}}>{topicTitle(tp,lang)}</span>
+              <span style={{flex:1,fontWeight:700}}>{tp.title}</span>
               {done&&<Badge color={C.green} bg={C.greenSoft}>{t(lang,'lessons.done')}</Badge>}
             </button>
           );
@@ -544,7 +580,7 @@ function LessonsScreen({level,lang,completed,onComplete,addXP,onBack}){
 }
 
 function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
-  const tp=CURRICULUM[topicId];
+  const tp=resolvedTopic(topicId,lang);
   const[step,setStep]=useState('theory');
   const[tIdx,setTIdx]=useState(0);
   const[qi,setQi]=useState(0);
@@ -558,15 +594,15 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
     const sec=tp.theory[tIdx]; const last=tIdx===tp.theory.length-1;
     return(
       <div>
-        <BackBar title={topicTitle(tp,lang)} onBack={onBack}/>
+        <BackBar title={tp.title} onBack={onBack}/>
         <div style={{display:'flex',gap:6,marginBottom:14}}>
           {tp.theory.map((_,i)=>(
             <div key={i} style={{flex:1,height:4,borderRadius:2,background:i<=tIdx?C.teal:C.line,transition:'background .3s'}}/>
           ))}
         </div>
         <div style={{...S.card,marginBottom:14}}>
-          <div style={{fontWeight:800,fontSize:16,color:C.teal,marginBottom:10}}>📖 {theoryHeading(sec,lang)}</div>
-          <div className="theory-body" style={{fontSize:15,lineHeight:1.7,color:C.ink}} dangerouslySetInnerHTML={{__html:theoryBody(sec,lang)}}/>
+          <div style={{fontWeight:800,fontSize:16,color:C.teal,marginBottom:10}}>📖 {sec.heading}</div>
+          <div className="theory-body" style={{fontSize:15,lineHeight:1.7,color:C.ink}} dangerouslySetInnerHTML={{__html:sec.body}}/>
         </div>
         <div style={{display:'flex',gap:8}}>
           {tIdx>0&&<button onClick={()=>setTIdx(tIdx-1)} style={S.ghost}>{t(lang,'lessons.prev')}</button>}
@@ -580,13 +616,13 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
 
   if(step==='examples') return(
     <div>
-      <BackBar title={topicTitle(tp,lang)} onBack={()=>{setStep('theory');setTIdx(0);}}/>
+      <BackBar title={tp.title} onBack={()=>{setStep('theory');setTIdx(0);}}/>
       <div style={{...S.card,marginBottom:10,background:C.tealSoft,border:'none',padding:'12px 14px'}}>
         <div style={{fontWeight:700,fontSize:14,color:C.teal}}>{t(lang,'lessons.examplesIntro')}</div>
       </div>
       <div style={{display:'grid',gap:8,marginBottom:18}}>
         {tp.examples.map((ex,i)=>{
-          const tr=exTranslation(ex,lang);
+          const tr=ex.translation;
           return(
             <div key={i} style={{...S.card,padding:14,display:'flex',gap:10,alignItems:'flex-start'}}>
               <button onClick={()=>speak(ex.en)} aria-label="Listen" style={{background:C.tealSoft,border:'none',borderRadius:10,width:38,height:38,cursor:'pointer',fontSize:17,flexShrink:0}}>🔊</button>
@@ -616,7 +652,7 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
             <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={ex.correct} onPick={setPicked}/>
           ))}
         </div>
-        {checked&&<QuizFeedback isRight={isRight} explain={quizExplain(ex,lang)} lang={lang}/>}
+        {checked&&<QuizFeedback isRight={isRight} explain={ex.explain} lang={lang}/>}
         <div style={{marginTop:14}}>
           <QuizNav checked={checked} picked={picked} lang={lang}
             onCheck={()=>{setChecked(true);if(isRight){setRight(r=>r+1);clearWrong(topicId,qi);}else{addWrong(topicId,qi);}}}
@@ -669,12 +705,12 @@ function FlashcardsScreen({level,lang,addXP,onBack}){
         )}
         <div style={{display:'grid',gap:8}}>
           {ids.map(id=>{
-            const tp=CURRICULUM[id]; const{due,mastered}=stats[id];
+            const tp=resolvedTopic(id,lang); const{due,mastered}=stats[id];
             return(
               <button key={id} onClick={()=>setTopic(id)} style={{...S.card,display:'flex',alignItems:'center',gap:12,cursor:'pointer',textAlign:'left',fontFamily:FONT}}>
                 <span style={{fontSize:24}}>{tp.icon}</span>
                 <div style={{flex:1}}>
-                  <div style={{fontWeight:700,fontSize:15}}>{topicTitle(tp,lang)}</div>
+                  <div style={{fontWeight:700,fontSize:15}}>{tp.title}</div>
                   <div style={{fontSize:12,color:C.sub,marginTop:2}}>{mastered}/{tp.flashcards.length} {t(lang,'flashcards.mastered')}{due>0?<span style={{marginLeft:8,color:C.purple,fontWeight:700}}>· {due} {t(lang,'flashcards.due')}</span>:''}</div>
                 </div>
                 {due>0&&<Badge color="#fff" bg={C.purple}>{due}</Badge>}
@@ -690,7 +726,7 @@ function FlashcardsScreen({level,lang,addXP,onBack}){
 }
 
 function FlashcardDeck({topicId,lang,addXP,onBack}){
-  const tp=CURRICULUM[topicId];
+  const tp=resolvedTopic(topicId,lang);
   const[done,setDone]=useState(false);
   const[idx,setIdx]=useState(0);
   const[flipped,setFlipped]=useState(false);
@@ -700,7 +736,7 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
 
   if(done||session.length===0) return(
     <div>
-      <BackBar title={topicTitle(tp,lang)} onBack={onBack}/>
+      <BackBar title={tp.title} onBack={onBack}/>
       <div style={{...S.card,textAlign:'center',padding:36}}>
         <div style={{fontSize:48,marginBottom:12}}>🎴</div>
         <div style={{fontWeight:800,fontSize:20,marginBottom:8}}>{t(lang,'flashcards.allReviewed')}</div>
@@ -715,7 +751,7 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
 
   return(
     <div>
-      <BackBar title={topicTitle(tp,lang)} onBack={onBack}/>
+      <BackBar title={tp.title} onBack={onBack}/>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
         <div style={{fontSize:13,color:C.sub,fontWeight:600}}>{session.length-idx} {t(lang,'flashcards.remaining')}</div>
         <div style={{display:'flex',gap:5}}>
@@ -732,7 +768,7 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
           </div>
           <div className="fc-face fc-back" style={{background:C.tealSoft}}>
             <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.teal,textTransform:'uppercase',marginBottom:12}}>{cardBackLabel(lang)}</div>
-            <div style={{fontWeight:800,fontSize:lang==='es'?20:18,lineHeight:1.4,color:C.teal}}>{cardBack(card,lang)}</div>
+            <div style={{fontWeight:800,fontSize:lang==='es'?20:18,lineHeight:1.4,color:C.teal}}>{tp.flashcards[card.index].back}</div>
             <div style={{fontSize:13,color:C.teal,marginTop:14,opacity:.7}}>{t(lang,'flashcards.howWell')}</div>
           </div>
         </div>
@@ -784,7 +820,7 @@ function WeakPointsScreen({lang,onBack}){
   );
 
   const w=list[idx];
-  const tp=CURRICULUM[w.topicId];
+  const tp=resolvedTopic(w.topicId,lang);
   const qdata=tp&&tp.quiz[w.qi];
   if(!tp||!qdata) return null;
 
@@ -794,7 +830,7 @@ function WeakPointsScreen({lang,onBack}){
     <div>
       <BackBar title={title} onBack={onBack}/>
       <div style={{...S.card,background:C.coralSoft,border:'none',padding:'10px 14px',marginBottom:12}}>
-        <div style={{fontWeight:700,fontSize:13,color:C.coral}}>{w.count}× {t(lang,'weak.missed')} · {tp.icon} {topicTitle(tp,lang)}</div>
+        <div style={{fontWeight:700,fontSize:13,color:C.coral}}>{w.count}× {t(lang,'weak.missed')} · {tp.icon} {tp.title}</div>
       </div>
       <div style={{marginBottom:12}}><ProgBar value={idx} max={list.length} color={C.coral}/></div>
       <div style={{...S.card,marginBottom:14}}>
@@ -805,7 +841,7 @@ function WeakPointsScreen({lang,onBack}){
           <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={qdata.correct} onPick={setPicked}/>
         ))}
       </div>
-      {checked&&<QuizFeedback isRight={isRight} explain={quizExplain(qdata,lang)} lang={lang}/>}
+      {checked&&<QuizFeedback isRight={isRight} explain={qdata.explain} lang={lang}/>}
       <div style={{marginTop:14}}>
         <QuizNav checked={checked} picked={picked} lang={lang} color={C.coral}
           onCheck={()=>setChecked(true)}
@@ -899,11 +935,11 @@ function ProgressScreen({xp,lang,completed,streak,onBack}){
             <div style={{marginBottom:10}}><ProgBar value={done} max={ids.length}/></div>
             <div style={{display:'grid',gap:7}}>
               {ids.map(id=>{
-                const tp=CURRICULUM[id]; const tdone=(completed||[]).includes(id); const m=masteryMap[id];
+                const tp=resolvedTopic(id,lang); const tdone=(completed||[]).includes(id); const m=masteryMap[id];
                 return(
                   <div key={id} style={{display:'flex',alignItems:'center',gap:8}}>
                     <span style={{fontSize:15}}>{tp.icon}</span>
-                    <span style={{flex:1,fontSize:14,fontWeight:600,color:tdone?C.ink:C.sub}}>{topicTitle(tp,lang)}</span>
+                    <span style={{flex:1,fontSize:14,fontWeight:600,color:tdone?C.ink:C.sub}}>{tp.title}</span>
                     {tdone&&<Badge color={C.green} bg={C.greenSoft}>✓</Badge>}
                     <span style={{fontSize:12,color:C.sub}}>{m}/{tp.flashcards.length} {t(lang,'progress.cards')}</span>
                   </div>
