@@ -74,42 +74,68 @@ const C = {
 const FONT = "'Avenir Next','Segoe UI',system-ui,-apple-system,sans-serif";
 
 /* ══ Course data ═══════════════════════════════════════════════
-   The current (and only) course: English up to B1, loaded from
-   courses/en.core.js (target-language content + placement +
-   pronunciation) and courses/en.support.es.js (Spanish overlay,
-   keyed by topic id + item id) into window.PTB_COURSES.en. */
-const COURSE = window.PTB_COURSES.en;
-const COURSE_META = COURSE.meta;
-const CORE_TOPICS = COURSE.core.topics;
+   All loaded courses live in window.PTB_COURSES — one <script src> per
+   course core plus its overlays; a new course file lights up here
+   automatically, no code changes needed. The ACTIVE course id is stored
+   under ptb1:course, and every content/progress helper below is
+   parameterized by course id (cid). */
+const COURSES = window.PTB_COURSES;
+const COURSE_IDS = Object.keys(COURSES);
+
+/* Per-course derived bundle (meta + topic/level indexes + resolver
+   cache). Content is static, so bundles are cached for the session.
+   levelTopics preserves the core's topic insertion order per level. */
+const COURSE_BUNDLES = {};
+function courseBundle(cid){
+  if(COURSE_BUNDLES[cid]) return COURSE_BUNDLES[cid];
+  const c=COURSES[cid];
+  const coreTopics=c.core.topics;
+  const allTopicIds=Object.keys(coreTopics);
+  const levelTopics={};
+  c.meta.levels.forEach(lv=>{levelTopics[lv]=[];});
+  allTopicIds.forEach(id=>{levelTopics[coreTopics[id].level].push(id);});
+  const totalCards=allTopicIds.reduce((s,id)=>s+coreTopics[id].flashcards.length,0);
+  return COURSE_BUNDLES[cid]={
+    id:cid, meta:c.meta, coreTopics, allTopicIds, levelTopics, totalCards,
+    placement:c.core.placement, pron:c.core.pronunciation,
+    support:c.support||{}, resolved:{},
+  };
+}
+function courseName(cid,uiLang){ const m=COURSES[cid].meta; return (m.nameByLang||{})[uiLang]||m.name; }
 
 /* ══ Localization ══════════════════════════════════════════════
-   lang is 'en' (English immersion — no translations shown) or 'es' (Spanish).
-   UI strings live in strings.js — use t(lang,'key') (plus the pluralDays /
-   cardBackLabel shims defined there). Curriculum content is localized by
-   the resolver below. */
+   Two independent settings (Phase 4):
+     uiLang  — GLOBAL: the language of the app chrome; drives t()
+               (table in strings.js; pluralDays/tPlural too).
+     support — PER-COURSE: overlay id ('es', …) or 'none' (immersion);
+               drives the content resolver below. Stored under
+               ptb1:<course>:support and mirrored in ptb1:courses.
+   Both are threaded as props — no React context. */
 
 /* ══ Content resolver ══════════════════════════════════════════
-   resolveCourse(supportLang) merges the course core (target-language
+   resolveCourse(cid,supportId) merges the course core (target-language
    content) with the support-language overlay BY ITEM ID into topics whose
-   presentation fields are already chosen for the given support language
-   ('es' = Spanish, anything else = immersion — core only). Fallback rules
-   (identical to the Phase 2 resolver over the old merged schema):
-     title:               es → overlay.title||title,  en → title
-     theory heading/body: es → overlay||core,         en → core
-     examples.translation:es → overlay||'',           en → ''
-     flashcards.back:     es → overlay||def||'',      en → def||overlay||''
-     quiz explain:        es → overlay||explain,      en → explain
-   (The immersion card-back falls back to the es overlay string, mirroring
-   the old enDef||es path; def coverage is 100%, so it is a dead path.)
+   presentation fields are already chosen for the given support id
+   (an overlay id like 'es', or 'none' = immersion — core only).
+   Fallback rules (unchanged since Phase 2; "ov" = active overlay):
+     title:               ov → overlay.title||title,  none → title
+     theory heading/body: ov → overlay||core,         none → core
+     examples.translation:ov → overlay||'',           none → ''
+     flashcards.back:     ov → overlay||def||'',      none → def||overlay||''
+   quiz explain:          ov → overlay||explain,      none → explain
+   (The immersion card-back falls back to the course's first overlay
+   string, mirroring the old enDef||es path; def coverage is validated
+   100%, so it is a dead path.)
    Everything else on the topic (id, icon, level, …) passes through. */
-function resolveCourse(supportLang){
-  const support = COURSE.support||{};
-  const ov = support[supportLang]||null;            // active overlay, null in immersion
+function resolveCourse(cid,supportId){
+  const b=courseBundle(cid);
+  const ov=(supportId&&supportId!=='none')?(b.support[supportId]||null):null;
   const ovTopics = ov ? ov.topics : {};
-  const fbTopics = (support.es||{}).topics||{};     // immersion card-back fallback (dead path)
+  const fbIds=Object.keys(b.support);               // immersion card-back fallback (dead path)
+  const fbTopics=fbIds.length?(b.support[fbIds[0]].topics||{}):{};
   const out = {};
-  Object.keys(CORE_TOPICS).forEach(id=>{
-    const tp = CORE_TOPICS[id];
+  b.allTopicIds.forEach(id=>{
+    const tp = b.coreTopics[id];
     const o = ovTopics[id]||{};
     const oTheory=o.theory||{}, oEx=o.examples||{}, oFc=o.flashcards||{}, oQz=o.quiz||{};
     const fFc = (fbTopics[id]||{}).flashcards||{};
@@ -136,28 +162,32 @@ function resolveCourse(supportLang){
   });
   return out;
 }
-const RESOLVED_COURSES = {};
-function resolvedTopic(id,lang){
-  const course = RESOLVED_COURSES[lang] || (RESOLVED_COURSES[lang] = resolveCourse(lang));
+function resolvedTopic(cid,id,supportId){
+  const b=courseBundle(cid);
+  const key=supportId||'none';
+  const course=b.resolved[key]||(b.resolved[key]=resolveCourse(cid,key));
   return course[id];
 }
 
-const LEVELS = ["A1","A2","B1"];
-/* Module-level content constants, all derived from the course core.
-   LEVEL_TOPICS preserves the core's topic insertion order per level. */
-const ALL_TOPIC_IDS=Object.keys(CORE_TOPICS);
-const LEVEL_TOPICS={};
-COURSE_META.levels.forEach(lv=>{LEVEL_TOPICS[lv]=[];});
-ALL_TOPIC_IDS.forEach(id=>{LEVEL_TOPICS[CORE_TOPICS[id].level].push(id);});
-const TOTAL_CARDS=ALL_TOPIC_IDS.reduce((s,id)=>s+CORE_TOPICS[id].flashcards.length,0);
-const PRON_SENTENCES = COURSE.core.pronunciation;
-
-/* ══ Placement Test Questions (course content, from the core) ══ */
-const PLACEMENT_QS = COURSE.core.placement;
-
-/* ══ Safe localStorage JSON helpers ═════════════════════════ */
+/* ══ Safe localStorage helpers ══════════════════════════════
+   lsGet/lsSet — JSON values;  lsRaw/lsRawSet — raw strings
+   (level, support, placementDone, uiLang, course are raw). */
 function lsGet(key,fallback){ try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback; }catch{ return fallback; } }
 function lsSet(key,value){ try{ localStorage.setItem(key,JSON.stringify(value)); }catch{} }
+function lsRaw(key,fallback){ try{ const v=localStorage.getItem(key); return v===null?fallback:v; }catch{ return fallback; } }
+function lsRawSet(key,value){ try{ localStorage.setItem(key,value); }catch{} }
+function lsDel(key){ try{ localStorage.removeItem(key); }catch{} }
+
+/* ══ Storage schema (Phase 4) ═══════════════════════════════
+   Global:      ptb1:uiLang  ptb1:course  ptb1:courses  ptb1:xp  ptb1:streak
+   Per-course:  ptb1:<c>:support  ptb1:<c>:level  ptb1:<c>:placementDone
+                ptb1:<c>:completed  ptb1:<c>:wrongs
+                ptb1:<c>:fc:<topic>:<cardId>
+   Progress belongs to the TARGET language (the course); support is a
+   per-course presentation preference; xp and streak are global. */
+const ck=(cid,rest)=>`ptb1:${cid}:${rest}`;
+function getEnrolled(){ return lsGet('ptb1:courses',[]); }
+function getSupportPref(cid){ return lsRaw(ck(cid,'support'),'none'); }
 
 /* ══ Streak Tracking ════════════════════════════════════════ */
 const todayStr=()=>new Date().toISOString().slice(0,10);
@@ -172,40 +202,37 @@ function touchStreak(){
   return updated;
 }
 
-/* ══ Wrong Answer Tracking ══════════════════════════════════ */
-function getWrongs(){ return lsGet('ptb1:wrongs',[]); }
-function addWrong(topicId,qi){
-  const ws=getWrongs(); const idx=ws.findIndex(w=>w.topicId===topicId&&w.qi===qi);
-  if(idx>=0){ws[idx].count++;ws[idx].last=Date.now();}else{ws.push({topicId,qi,count:1,last:Date.now()});}
-  lsSet('ptb1:wrongs',ws);
+/* ══ Wrong Answer Tracking (per course, keyed by stable quiz item id) ══ */
+function wrongsKey(cid){ return ck(cid,'wrongs'); }
+function getWrongs(cid){ return lsGet(wrongsKey(cid),[]); }
+function addWrong(cid,topicId,qid){
+  const ws=getWrongs(cid); const idx=ws.findIndex(w=>w.topicId===topicId&&w.qid===qid);
+  if(idx>=0){ws[idx].count++;ws[idx].last=Date.now();}else{ws.push({topicId,qid,count:1,last:Date.now()});}
+  lsSet(wrongsKey(cid),ws);
 }
-function clearWrong(topicId,qi){ lsSet('ptb1:wrongs',getWrongs().filter(w=>!(w.topicId===topicId&&w.qi===qi))); }
-function getTopWrongs(n=12){ return getWrongs().sort((a,b)=>b.count-a.count).slice(0,n); }
+function clearWrong(cid,topicId,qid){ lsSet(wrongsKey(cid),getWrongs(cid).filter(w=>!(w.topicId===topicId&&w.qid===qid))); }
+function getTopWrongs(cid,n=12){ return getWrongs(cid).sort((a,b)=>b.count-a.count).slice(0,n); }
 
 /* ══ Spaced Repetition (Leitner) ═══════════════════════════ */
 const MIN=60000,HOUR=60*MIN,DAY=24*HOUR;
 const BOX_INTERVALS=[0,MIN,12*HOUR,DAY,3*DAY,7*DAY];
 
-/* PHASE 3 INVARIANT: fcKey stays INDEX-based (and wrongs keep their `qi`
-   index) so existing localStorage progress keys keep working unchanged —
-   flashcard/quiz arrays kept their pre-split order, so index-based keys
-   still match. The stable item ids in the course core are dormant until
-   the Phase 4 storage migration rekeys progress by item id. */
-function fcKey(id,i){ return `ptb1:fc:${id}:${i}`; }
-function getFCS(id,i){ return lsGet(fcKey(id,i),{box:0,next:0}); }
-function setFCS(id,i,s){ lsSet(fcKey(id,i),s); }
-function answerCard(id,i,result){
-  const s=getFCS(id,i);
+/* PHASE 4: flashcard progress keys are namespaced by course and keyed by
+   STABLE CARD ID — ptb1:<course>:fc:<topic>:<cardId>. migrateStorage()
+   rekeys the old index-based keys on startup; from here on content
+   arrays may be reordered safely (ids are still never renumbered). */
+function fcKey(cid,topicId,cardId){ return ck(cid,`fc:${topicId}:${cardId}`); }
+function getFCS(cid,topicId,cardId){ return lsGet(fcKey(cid,topicId,cardId),{box:0,next:0}); }
+function setFCS(cid,topicId,cardId,s){ lsSet(fcKey(cid,topicId,cardId),s); }
+function answerCard(cid,topicId,cardId,result){
+  const s=getFCS(cid,topicId,cardId);
   const nb=result==='good'?Math.min(s.box+1,5):result==='close'?Math.max(s.box-1,1):1;
-  setFCS(id,i,{box:nb,next:Date.now()+BOX_INTERVALS[nb]});
+  setFCS(cid,topicId,cardId,{box:nb,next:Date.now()+BOX_INTERVALS[nb]});
 }
-function getAllCards(id){ const tp=CORE_TOPICS[id]; if(!tp)return[]; return tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(id,i)})); }
-function getDueCards(id){ const now=Date.now(); return getAllCards(id).filter(c=>c.next<=now); }
-function allDue(){ return ALL_TOPIC_IDS.reduce((s,id)=>s+getDueCards(id).length,0); }
-
-/* ══ Persistence ════════════════════════════════════════════ */
-function loadApp(){ return lsGet('ptb1:app',null); }
-function saveApp(s){ lsSet('ptb1:app',s); }
+function getAllCards(cid,topicId){ const tp=courseBundle(cid).coreTopics[topicId]; if(!tp)return[]; return tp.flashcards.map((c,i)=>({...c,index:i,...getFCS(cid,topicId,c.id)})); }
+function getDueCards(cid,topicId){ const now=Date.now(); return getAllCards(cid,topicId).filter(c=>c.next<=now); }
+function allDue(cid){ return courseBundle(cid).allTopicIds.reduce((s,id)=>s+getDueCards(cid,id).length,0); }
+function cardsInReview(cid){ const b=courseBundle(cid); let n=0; b.allTopicIds.forEach(tid=>{ b.coreTopics[tid].flashcards.forEach(c=>{ if(getFCS(cid,tid,c.id).box>0)n++; }); }); return n; }
 
 /* ══ Supabase sync ══════════════════════════════════════════ */
 async function restoreFromSupabase(client,userId){
@@ -221,26 +248,149 @@ async function syncToSupabase(client,userId){
     await client.from('user_progress').upsert({user_id:userId,data,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   }catch(e){}
 }
-
-/* ══ Reset helpers ══════════════════════════════════════════ */
-function clearLevelStorage(lv){
-  const ids=LEVEL_TOPICS[lv]||[];
-  try{ ids.forEach(id=>CORE_TOPICS[id].flashcards.forEach((_,i)=>localStorage.removeItem(fcKey(id,i)))); }catch{}
-  lsSet('ptb1:wrongs',getWrongs().filter(w=>!ids.includes(w.topicId)));
-}
-function clearAllProgress(){
-  // Wipe everything except the chosen tutor language.
-  try{ Object.keys(localStorage).filter(k=>k.startsWith('ptb1:')&&k!=='ptb1:lang').forEach(k=>localStorage.removeItem(k)); }catch{}
-}
-
-/* ══ TTS ════════════════════════════════════════════════════ */
-function speak(text,rate=0.9){
+/* Empty the cloud row ("start over as a new user"). Caller must cancel
+   any pending debounced sync FIRST, and clear localStorage only AFTER
+   this resolves — otherwise a pending sync or the next restore
+   reintroduces the old data. */
+async function wipeSupabase(client,userId){
   try{
+    await client.from('user_progress').upsert({user_id:userId,data:{},updated_at:new Date().toISOString()},{onConflict:'user_id'});
+  }catch(e){}
+}
+
+/*__MIGRATE_START__*/
+/* ══ Phase 4 storage migration ══════════════════════════════
+   IDEMPOTENT — detects legacy (pre-Phase-4, course-'en'-era) keys, maps
+   them to the namespaced schema, and DELETES them; on already-migrated
+   storage it is a no-op. It runs on EVERY startup, sequenced AFTER
+   restoreFromSupabase (and in the no-auth path): a fresh device restores
+   old-format keys from the cloud after a local-only migration would have
+   no-oped. Deleting legacy keys locally means the ptb1:* sync sweep never
+   resurrects them. Existing new-format values are never clobbered by
+   restored legacy values (setIfMissing).
+
+   Legacy → new (see docs/i18n-plan.md table):
+     ptb1:lang                 → ptb1:uiLang + ptb1:en:support
+                                 ('es'→es/es, 'en'→en/none)
+     ptb1:level                → ptb1:en:level
+     ptb1:placementDone        → ptb1:en:placementDone
+     ptb1:fc:<topic>:<index>   → ptb1:en:fc:<topic>:<cardId> (index→stable id)
+     ptb1:wrongs (qi index)    → ptb1:en:wrongs (qid stable id)
+     ptb1:app {xp,completed}   → ptb1:xp (global) + ptb1:en:completed
+     ptb1:streak               → unchanged
+     —                         → ptb1:course ('en'), ptb1:courses
+                                 (silent enrollment: existing users never
+                                  see onboarding)
+   Depends only on localStorage and window.PTB_COURSES (unit-testable). */
+function migrateStorage(){
+  try{
+    const get=k=>{ try{ return localStorage.getItem(k); }catch{ return null; } };
+    const setIfMissing=(k,v)=>{ try{ if(localStorage.getItem(k)===null)localStorage.setItem(k,v); }catch{} };
+    const del=k=>{ try{ localStorage.removeItem(k); }catch{} };
+    const enTopics=(((window.PTB_COURSES||{}).en||{}).core||{}).topics||{};
+    let legacy=false;
+
+    const lang=get('ptb1:lang');                       // raw 'en' | 'es'
+    if(lang!==null){
+      legacy=true;
+      setIfMissing('ptb1:uiLang',lang==='es'?'es':'en');
+      setIfMissing('ptb1:en:support',lang==='es'?'es':'none');
+      del('ptb1:lang');
+    }
+
+    const level=get('ptb1:level');
+    if(level!==null){ legacy=true; setIfMissing('ptb1:en:level',level); del('ptb1:level'); }
+
+    const pd=get('ptb1:placementDone');
+    if(pd!==null){ legacy=true; setIfMissing('ptb1:en:placementDone',pd); del('ptb1:placementDone'); }
+
+    let keys=[]; try{ keys=Object.keys(localStorage); }catch{}
+    keys.filter(k=>k.indexOf('ptb1:fc:')===0).forEach(k=>{
+      legacy=true;
+      const m=k.match(/^ptb1:fc:(.+):(\d+)$/);
+      if(m){
+        const tp=enTopics[m[1]]; const card=tp&&tp.flashcards[Number(m[2])];
+        if(card) setIfMissing('ptb1:en:fc:'+m[1]+':'+card.id,get(k));
+      }
+      del(k);
+    });
+
+    const wr=get('ptb1:wrongs');
+    if(wr!==null){
+      legacy=true;
+      try{
+        const mapped=(JSON.parse(wr)||[]).map(w=>{
+          const tp=enTopics[w.topicId]; const q=tp&&tp.quiz[w.qi];
+          if(!q) return null;
+          const nw={...w,qid:q.id}; delete nw.qi; return nw;
+        }).filter(Boolean);
+        setIfMissing('ptb1:en:wrongs',JSON.stringify(mapped));
+      }catch{}
+      del('ptb1:wrongs');
+    }
+
+    const app=get('ptb1:app');
+    if(app!==null){
+      legacy=true;
+      try{
+        const a=JSON.parse(app)||{};
+        setIfMissing('ptb1:xp',JSON.stringify(a.xp||0));
+        setIfMissing('ptb1:en:completed',JSON.stringify(a.completed||[]));
+      }catch{}
+      del('ptb1:app');
+    }
+
+    if(legacy){
+      setIfMissing('ptb1:course','en');
+      if(get('ptb1:courses')===null){
+        const support=get('ptb1:en:support')||'none';
+        try{ localStorage.setItem('ptb1:courses',JSON.stringify([{target:'en',support}])); }catch{}
+      }
+    }
+  }catch(e){}
+}
+/*__MIGRATE_END__*/
+
+/* ══ Reset helpers — the three tiers ════════════════════════
+   1. clearCourseStorage(cid)    — ptb1:<cid>:* only, except the support
+      preference (support is presentation, not progress).
+   2. clearAllCoursesProgress()  — every course's ptb1:<x>:* plus the
+      global PROGRESS keys (xp, streak); preserves uiLang, course,
+      courses and each course's support preference.
+   3. "Start over as a new user" — clearAllPtb1() removes EVERY ptb1:*
+      key; the caller must first cancel the pending debounced sync and
+      await wipeSupabase (cloud row emptied) BEFORE clearing. */
+function clearLevelStorage(cid,lv){
+  const b=courseBundle(cid); const ids=b.levelTopics[lv]||[];
+  try{ ids.forEach(id=>b.coreTopics[id].flashcards.forEach(c=>localStorage.removeItem(fcKey(cid,id,c.id)))); }catch{}
+  lsSet(wrongsKey(cid),getWrongs(cid).filter(w=>!ids.includes(w.topicId)));
+}
+function clearCourseStorage(cid){
+  const keep=ck(cid,'support');
+  try{ Object.keys(localStorage).filter(k=>k.startsWith(`ptb1:${cid}:`)&&k!==keep).forEach(k=>localStorage.removeItem(k)); }catch{}
+}
+function clearAllCoursesProgress(){
+  const keep=new Set(['ptb1:uiLang','ptb1:course','ptb1:courses']);
+  try{
+    Object.keys(localStorage).filter(k=>k.startsWith('ptb1:')).forEach(k=>{
+      if(keep.has(k)||/^ptb1:[^:]+:support$/.test(k)) return;
+      localStorage.removeItem(k);
+    });
+  }catch{}
+}
+function clearAllPtb1(){
+  try{ Object.keys(localStorage).filter(k=>k.startsWith('ptb1:')).forEach(k=>localStorage.removeItem(k)); }catch{}
+}
+
+/* ══ TTS (locale from the active course's meta) ═════════════ */
+function speak(cid,text,rate=0.9){
+  try{
+    const locale=courseBundle(cid).meta.speechLocale;
     window.speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text); u.lang=COURSE_META.speechLocale; u.rate=rate;
+    const u=new SpeechSynthesisUtterance(text); u.lang=locale; u.rate=rate;
     const vs=window.speechSynthesis.getVoices();
-    const base=COURSE_META.speechLocale.split('-')[0];
-    const v=vs.find(v=>v.lang&&v.lang.startsWith(COURSE_META.speechLocale))||vs.find(v=>v.lang&&v.lang.startsWith(base));
+    const base=locale.split('-')[0];
+    const v=vs.find(v=>v.lang&&v.lang.startsWith(locale))||vs.find(v=>v.lang&&v.lang.startsWith(base));
     if(v)u.voice=v;
     window.speechSynthesis.speak(u);
   }catch(e){}
@@ -257,7 +407,8 @@ function scorePron(target,heard){
   const pts=words.reduce((a,x)=>a+(x.s==='good'?1:x.s==='close'?0.5:0),0);
   return{words,pct:Math.round(pts/tw.length*100)};
 }
-function useListen(onResult){
+function useListen(cid,onResult){
+  const locale=courseBundle(cid).meta.speechLocale;
   const[listening,setListening]=useState(false);
   const[micErr,setMicErr]=useState(null);
   const recRef=useRef(null);
@@ -272,13 +423,13 @@ function useListen(onResult){
     setMicErr(null);
     try{ window.speechSynthesis&&window.speechSynthesis.cancel(); }catch(e){}
     try{
-      const rec=new SR(); recRef.current=rec; rec.lang=COURSE_META.speechLocale; rec.interimResults=false; rec.maxAlternatives=1; rec.continuous=false;
+      const rec=new SR(); recRef.current=rec; rec.lang=locale; rec.interimResults=false; rec.maxAlternatives=1; rec.continuous=false;
       rec.onresult=e=>{ setListening(false); try{ cbRef.current(e.results[0][0].transcript); }catch(_){} };
       rec.onerror=e=>{ setListening(false); const c=(e&&e.error)||'unknown'; setMicErr(c==='not-allowed'||c==='service-not-allowed'?'perm':c==='no-speech'?'nospeech':c==='aborted'?null:'error'); };
       rec.onend=()=>setListening(false);
       setListening(true); rec.start();
     }catch(e){ setListening(false); setMicErr('error'); }
-  },[]);
+  },[locale]);
   const stop=useCallback(()=>{ try{recRef.current&&recRef.current.stop();}catch(e){} setListening(false); },[]);
   return{listening,start,stop,supported:!!SR,micErr};
 }
@@ -325,24 +476,25 @@ function QuizOption({op,i,checked,picked,correct,onPick}){
     </button>
   );
 }
-function QuizFeedback({isRight,explain,lang}){
+function QuizFeedback({isRight,explain,uiLang}){
   return(
     <div style={{...S.card,marginTop:12,background:isRight?C.greenSoft:C.coralSoft,border:'none'}}>
-      <div style={{fontWeight:800,color:isRight?C.green:C.coral}}>{isRight?t(lang,'quiz.correct'):t(lang,'quiz.notQuite')}</div>
+      <div style={{fontWeight:800,color:isRight?C.green:C.coral}}>{isRight?t(uiLang,'quiz.correct'):t(uiLang,'quiz.notQuite')}</div>
       <div style={{fontSize:14,marginTop:4,lineHeight:1.5}}>{explain}</div>
     </div>
   );
 }
-function QuizNav({checked,picked,onCheck,onNext,nextLabel,lang,color=C.teal}){
+function QuizNav({checked,picked,onCheck,onNext,nextLabel,uiLang,color=C.teal}){
   if(!checked) return(
     <button disabled={picked==null} onClick={onCheck}
-      style={{...S.btn(picked==null?C.line:color,'#fff',picked==null),width:'100%'}}>{t(lang,'quiz.check')}</button>
+      style={{...S.btn(picked==null?C.line:color,'#fff',picked==null),width:'100%'}}>{t(uiLang,'quiz.check')}</button>
   );
   return <button onClick={onNext} style={{...S.btn(C.teal),width:'100%'}}>{nextLabel}</button>;
 }
 
 /* ══ Login ════════════════════════════════════════════════════ */
-function LoginScreen({lang='en'}){
+function LoginScreen(){
+  const lang=lsRaw('ptb1:uiLang','en');  // app-level chrome: uiLang if known, else English
   const[email,setEmail]=useState('');
   const[sent,setSent]=useState(false);
   const[loading,setLoading]=useState(false);
@@ -395,8 +547,10 @@ function LoginScreen({lang='en'}){
   );
 }
 
-/* ══ Placement Test ══════════════════════════════════════════ */
-function PlacementTest({onDone,lang='en'}){
+/* ══ Placement Test (placement is course content — per course) ══ */
+function PlacementTest({course,onDone,uiLang='en'}){
+  const lang=uiLang;
+  const PLACEMENT_QS=courseBundle(course).placement;
   const[qi,setQi]=useState(0);
   const[picked,setPicked]=useState(null);
   const[checked,setChecked]=useState(false);
@@ -405,7 +559,7 @@ function PlacementTest({onDone,lang='en'}){
   const q=PLACEMENT_QS[qi];
   const last=qi===PLACEMENT_QS.length-1;
 
-  const finish=(lv)=>{ try{localStorage.setItem('ptb1:placementDone','1');}catch{} onDone(lv); };
+  const finish=(lv)=>{ lsRawSet(ck(course,'placementDone'),'1'); onDone(lv); };
   const doNext=()=>{
     const newAnswers=[...answers,{level:q.level,correct:picked===q.ans}];
     if(last){
@@ -445,7 +599,7 @@ function PlacementTest({onDone,lang='en'}){
           <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={q.ans} onPick={setPicked}/>
         ))}
       </div>
-      <QuizNav checked={checked} picked={picked} onCheck={()=>setChecked(true)} onNext={doNext} lang={lang}
+      <QuizNav checked={checked} picked={picked} onCheck={()=>setChecked(true)} onNext={doNext} uiLang={lang}
         nextLabel={last?t(lang,'placement.seeMyLevel'):t(lang,'common.next')}/>
       <button onClick={()=>finish('A1')}
         style={{...S.ghost,width:'100%',marginTop:10,fontSize:13}}>{t(lang,'placement.skip')}</button>
@@ -454,13 +608,14 @@ function PlacementTest({onDone,lang='en'}){
 }
 
 /* ══ Level Path ══════════════════════════════════════════════ */
-function LevelPath({level,setLevel,lang,completed}){
+function LevelPath({course,level,setLevel,uiLang,completed}){
+  const b=courseBundle(course);
   return(
     <div style={{...S.card,padding:'18px 16px'}}>
-      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',marginBottom:12}}>{t(lang,'home.yourLevel')}</div>
+      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',marginBottom:12}}>{t(uiLang,'home.yourLevel')}</div>
       <div style={{display:'flex',alignItems:'center'}}>
-        {LEVELS.map((lv,i)=>{
-          const ids=LEVEL_TOPICS[lv];
+        {b.meta.levels.map((lv,i)=>{
+          const ids=b.levelTopics[lv];
           const done=ids.filter(id=>(completed||[]).includes(id)).length;
           const active=level===lv;
           return(
@@ -479,7 +634,10 @@ function LevelPath({level,setLevel,lang,completed}){
 }
 
 /* ══ Home ════════════════════════════════════════════════════ */
-function HomeScreen({level,setLevel,lang,xp,completed,dueCount,streak,weakCount,onNav}){
+function HomeScreen({course,level,setLevel,uiLang,xp,completed,dueCount,streak,weakCount,onNav}){
+  const lang=uiLang;
+  const meta=courseBundle(course).meta;
+  const tagline=(meta.tagline||{})[uiLang]||(meta.tagline||{}).en||'';
   const modes=[
     {id:'lessons',icon:'📚',title:t(lang,'nav.lessons'),desc:t(lang,'home.lessonsDesc'),col:C.teal,bg:C.tealSoft},
     {id:'cards',icon:'🃏',title:t(lang,'nav.flashcards'),desc:`${t(lang,'home.spacedRepetition')}${dueCount>0?` · ${dueCount} ${t(lang,'flashcards.due')}`:''}`,col:C.purple,bg:C.purpleSoft,badge:dueCount||null},
@@ -491,8 +649,15 @@ function HomeScreen({level,setLevel,lang,xp,completed,dueCount,streak,weakCount,
     <div>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}}>
         <div>
-          <h1 style={{margin:0,fontSize:27,fontWeight:800,letterSpacing:-0.5,color:C.teal}}>Pathway to B1</h1>
-          <div style={{color:C.sub,fontSize:14,marginTop:2}}>{t(lang,'home.tagline')}</div>
+          <h1 style={{margin:0,fontSize:27,fontWeight:800,letterSpacing:-0.5,color:C.teal}}>{meta.title||meta.name}</h1>
+          <div style={{color:C.sub,fontSize:14,marginTop:2}}>{tagline}</div>
+          <button onClick={()=>onNav('courses')} aria-label={t(lang,'courses.title')}
+            style={{marginTop:10,display:'inline-flex',alignItems:'center',gap:7,background:C.card,border:`1.5px solid ${C.line}`,borderRadius:99,padding:'5px 12px',cursor:'pointer',fontFamily:FONT,fontWeight:700,fontSize:13,color:C.ink}}>
+            <span style={{fontSize:15}}>{meta.icon||'📘'}</span>
+            <span>{courseName(course,uiLang)}</span>
+            <Badge color={C.teal} bg={C.tealSoft}>{level}</Badge>
+            <span style={{color:C.sub,fontSize:11}}>▾</span>
+          </button>
         </div>
         <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6,flexShrink:0}}>
           <button onClick={()=>onNav('settings')} aria-label="Settings" style={{background:'transparent',border:'none',cursor:'pointer',fontSize:22,lineHeight:1,padding:'0 2px'}}>⚙️</button>
@@ -500,7 +665,7 @@ function HomeScreen({level,setLevel,lang,xp,completed,dueCount,streak,weakCount,
           {streak.streak>0&&<div style={{background:'#FFF0E8',color:'#C05000',fontWeight:800,borderRadius:99,padding:'4px 10px',fontSize:13,whiteSpace:'nowrap'}}>🔥 {streak.streak} {pluralDays(lang,streak.streak)}</div>}
         </div>
       </div>
-      <div style={{margin:'16px 0'}}><LevelPath level={level} setLevel={setLevel} lang={lang} completed={completed}/></div>
+      <div style={{margin:'16px 0'}}><LevelPath course={course} level={level} setLevel={setLevel} uiLang={uiLang} completed={completed}/></div>
       <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'18px 0 10px'}}>{t(lang,'home.practiceModes')}</div>
       <div style={{display:'grid',gap:10}}>
         {modes.map(m=>(
@@ -522,15 +687,16 @@ function HomeScreen({level,setLevel,lang,xp,completed,dueCount,streak,weakCount,
 }
 
 /* ══ Lessons ═════════════════════════════════════════════════ */
-function LessonsScreen({level,lang,completed,onComplete,addXP,onBack}){
+function LessonsScreen({course,support,uiLang,level,completed,onComplete,addXP,onBack}){
+  const lang=uiLang;
   const[topic,setTopic]=useState(null);
   if(!topic) return(
     <div>
       <BackBar title={`${t(lang,'nav.lessons')} · ${level}`} onBack={onBack}/>
       <div style={{fontWeight:700,color:C.sub,marginBottom:10,fontSize:14}}>{t(lang,'lessons.chooseTopic')}</div>
       <div style={{display:'grid',gap:10}}>
-        {LEVEL_TOPICS[level].map(id=>{
-          const tp=resolvedTopic(id,lang); const done=(completed||[]).includes(id);
+        {courseBundle(course).levelTopics[level].map(id=>{
+          const tp=resolvedTopic(course,id,support); const done=(completed||[]).includes(id);
           return(
             <button key={id} onClick={()=>setTopic(id)} style={{...S.card,display:'flex',alignItems:'center',gap:12,cursor:'pointer',textAlign:'left',fontFamily:FONT,fontSize:16}}>
               <span style={{fontSize:26}}>{tp.icon}</span>
@@ -542,11 +708,12 @@ function LessonsScreen({level,lang,completed,onComplete,addXP,onBack}){
       </div>
     </div>
   );
-  return <LessonFlow topicId={topic} lang={lang} onBack={()=>setTopic(null)} onComplete={(score)=>{onComplete(topic,score);setTopic(null);}} addXP={addXP}/>;
+  return <LessonFlow course={course} support={support} uiLang={uiLang} topicId={topic} onBack={()=>setTopic(null)} onComplete={(score)=>{onComplete(topic,score);setTopic(null);}} addXP={addXP}/>;
 }
 
-function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
-  const tp=resolvedTopic(topicId,lang);
+function LessonFlow({course,support,uiLang,topicId,onBack,onComplete,addXP}){
+  const lang=uiLang;
+  const tp=resolvedTopic(course,topicId,support);
   const[step,setStep]=useState('theory');
   const[tIdx,setTIdx]=useState(0);
   const[qi,setQi]=useState(0);
@@ -591,7 +758,7 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
           const tr=ex.translation;
           return(
             <div key={i} style={{...S.card,padding:14,display:'flex',gap:10,alignItems:'flex-start'}}>
-              <button onClick={()=>speak(ex.en)} aria-label="Listen" style={{background:C.tealSoft,border:'none',borderRadius:10,width:38,height:38,cursor:'pointer',fontSize:17,flexShrink:0}}>🔊</button>
+              <button onClick={()=>speak(course,ex.en)} aria-label="Listen" style={{background:C.tealSoft,border:'none',borderRadius:10,width:38,height:38,cursor:'pointer',fontSize:17,flexShrink:0}}>🔊</button>
               <div>
                 <div style={{fontWeight:700,fontSize:15}}>{ex.en}</div>
                 {tr&&<div style={{fontSize:13,color:C.sub,marginTop:3}}>{tr}</div>}
@@ -618,10 +785,10 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
             <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={ex.correct} onPick={setPicked}/>
           ))}
         </div>
-        {checked&&<QuizFeedback isRight={isRight} explain={ex.explain} lang={lang}/>}
+        {checked&&<QuizFeedback isRight={isRight} explain={ex.explain} uiLang={lang}/>}
         <div style={{marginTop:14}}>
-          <QuizNav checked={checked} picked={picked} lang={lang}
-            onCheck={()=>{setChecked(true);if(isRight){setRight(r=>r+1);clearWrong(topicId,qi);}else{addWrong(topicId,qi);}}}
+          <QuizNav checked={checked} picked={picked} uiLang={lang}
+            onCheck={()=>{setChecked(true);if(isRight){setRight(r=>r+1);clearWrong(course,topicId,ex.id);}else{addWrong(course,topicId,ex.id);}}}
             onNext={()=>{ if(qi+1<tp.quiz.length){setQi(qi+1);setPicked(null);setChecked(false);}else setStep('done'); }}
             nextLabel={qi+1<tp.quiz.length?t(lang,'common.next'):t(lang,'quiz.seeResults')}/>
         </div>
@@ -654,12 +821,13 @@ function LessonFlow({topicId,lang,onBack,onComplete,addXP}){
 }
 
 /* ══ Flashcards ══════════════════════════════════════════════ */
-function FlashcardsScreen({level,lang,addXP,onBack}){
+function FlashcardsScreen({course,support,uiLang,level,addXP,onBack}){
+  const lang=uiLang;
   const[topic,setTopic]=useState(null);
   if(!topic){
-    const ids=LEVEL_TOPICS[level];
+    const ids=courseBundle(course).levelTopics[level];
     const now=Date.now();
-    const stats=Object.fromEntries(ids.map(id=>{ const cards=getAllCards(id); return[id,{due:cards.filter(c=>c.next<=now).length,mastered:cards.filter(c=>c.box>=5).length}]; }));
+    const stats=Object.fromEntries(ids.map(id=>{ const cards=getAllCards(course,id); return[id,{due:cards.filter(c=>c.next<=now).length,mastered:cards.filter(c=>c.box>=5).length}]; }));
     return(
       <div>
         <BackBar title={`${t(lang,'nav.flashcards')} · ${level}`} onBack={onBack}/>
@@ -671,7 +839,7 @@ function FlashcardsScreen({level,lang,addXP,onBack}){
         )}
         <div style={{display:'grid',gap:8}}>
           {ids.map(id=>{
-            const tp=resolvedTopic(id,lang); const{due,mastered}=stats[id];
+            const tp=resolvedTopic(course,id,support); const{due,mastered}=stats[id];
             return(
               <button key={id} onClick={()=>setTopic(id)} style={{...S.card,display:'flex',alignItems:'center',gap:12,cursor:'pointer',textAlign:'left',fontFamily:FONT}}>
                 <span style={{fontSize:24}}>{tp.icon}</span>
@@ -688,15 +856,19 @@ function FlashcardsScreen({level,lang,addXP,onBack}){
       </div>
     );
   }
-  return <FlashcardDeck topicId={topic} lang={lang} addXP={addXP} onBack={()=>setTopic(null)}/>;
+  return <FlashcardDeck course={course} support={support} uiLang={uiLang} topicId={topic} addXP={addXP} onBack={()=>setTopic(null)}/>;
 }
 
-function FlashcardDeck({topicId,lang,addXP,onBack}){
-  const tp=resolvedTopic(topicId,lang);
+function FlashcardDeck({course,support,uiLang,topicId,addXP,onBack}){
+  const lang=uiLang;
+  const b=courseBundle(course);
+  const tp=resolvedTopic(course,topicId,support);
+  const hasOverlay=support&&support!=='none'&&b.support[support];
+  const backLabel=hasOverlay?b.support[support].name:t(uiLang,'flashcards.back.definition');
   const[done,setDone]=useState(false);
   const[idx,setIdx]=useState(0);
   const[flipped,setFlipped]=useState(false);
-  const[session]=useState(()=>{ const all=getAllCards(topicId),now=Date.now(); const due=all.filter(c=>c.next<=now); return due.length>0?due:all; });
+  const[session]=useState(()=>{ const all=getAllCards(course,topicId),now=Date.now(); const due=all.filter(c=>c.next<=now); return due.length>0?due:all; });
 
   useEffect(()=>setFlipped(false),[idx]);
 
@@ -713,7 +885,7 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
   );
 
   const card=session[idx];
-  const answer=(result)=>{ answerCard(topicId,card.index,result); if(result==='good')addXP(5); if(idx+1>=session.length)setDone(true); else{setIdx(idx+1);setFlipped(false);} };
+  const answer=(result)=>{ answerCard(course,topicId,card.id,result); if(result==='good')addXP(5); if(idx+1>=session.length)setDone(true); else{setIdx(idx+1);setFlipped(false);} };
 
   return(
     <div>
@@ -728,13 +900,13 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
       <div style={{marginTop:12}} className="fc-scene" role="button" tabIndex={0} aria-label="Flip card" onClick={()=>setFlipped(f=>!f)} onKeyDown={e=>(e.key==='Enter'||e.key===' ')&&setFlipped(f=>!f)}>
         <div className={`fc-card${flipped?' flipped':''}`}>
           <div className="fc-face" style={{background:C.card}}>
-            <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.sub,textTransform:'uppercase',marginBottom:12}}>English</div>
+            <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.sub,textTransform:'uppercase',marginBottom:12}}>{b.meta.frontLabel||b.meta.name}</div>
             <div style={{fontWeight:800,fontSize:20,lineHeight:1.4}}>{card.front}</div>
             <div style={{fontSize:13,color:C.sub,marginTop:14}}>{t(lang,'flashcards.tapToReveal')}</div>
           </div>
           <div className="fc-face fc-back" style={{background:C.tealSoft}}>
-            <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.teal,textTransform:'uppercase',marginBottom:12}}>{cardBackLabel(lang)}</div>
-            <div style={{fontWeight:800,fontSize:lang==='es'?20:18,lineHeight:1.4,color:C.teal}}>{tp.flashcards[card.index].back}</div>
+            <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.teal,textTransform:'uppercase',marginBottom:12}}>{backLabel}</div>
+            <div style={{fontWeight:800,fontSize:hasOverlay?20:18,lineHeight:1.4,color:C.teal}}>{tp.flashcards[card.index].back}</div>
             <div style={{fontSize:13,color:C.teal,marginTop:14,opacity:.7}}>{t(lang,'flashcards.howWell')}</div>
           </div>
         </div>
@@ -748,14 +920,15 @@ function FlashcardDeck({topicId,lang,addXP,onBack}){
       ):(
         <button onClick={()=>setFlipped(true)} style={{...S.btn(C.purple),width:'100%',marginTop:14}}>{t(lang,'flashcards.reveal')}</button>
       )}
-      <button onClick={()=>speak(card.front)} style={{...S.ghost,width:'100%',marginTop:8,fontSize:14}}>🔊 {t(lang,'flashcards.hearPron')}</button>
+      <button onClick={()=>speak(course,card.front)} style={{...S.ghost,width:'100%',marginTop:8,fontSize:14}}>🔊 {t(lang,'flashcards.hearPron')}</button>
     </div>
   );
 }
 
 /* ══ Weak Points ═════════════════════════════════════════════ */
-function WeakPointsScreen({lang,onBack}){
-  const[list]=useState(()=>getTopWrongs());
+function WeakPointsScreen({course,support,uiLang,onBack}){
+  const lang=uiLang;
+  const[list]=useState(()=>getTopWrongs(course));
   const[idx,setIdx]=useState(0);
   const[picked,setPicked]=useState(null);
   const[checked,setChecked]=useState(false);
@@ -786,8 +959,8 @@ function WeakPointsScreen({lang,onBack}){
   );
 
   const w=list[idx];
-  const tp=resolvedTopic(w.topicId,lang);
-  const qdata=tp&&tp.quiz[w.qi];
+  const tp=resolvedTopic(course,w.topicId,support);
+  const qdata=tp&&tp.quiz.find(q=>q.id===w.qid);
   if(!tp||!qdata) return null;
 
   const isRight=picked===qdata.correct;
@@ -807,11 +980,11 @@ function WeakPointsScreen({lang,onBack}){
           <QuizOption key={i} op={op} i={i} checked={checked} picked={picked} correct={qdata.correct} onPick={setPicked}/>
         ))}
       </div>
-      {checked&&<QuizFeedback isRight={isRight} explain={qdata.explain} lang={lang}/>}
+      {checked&&<QuizFeedback isRight={isRight} explain={qdata.explain} uiLang={lang}/>}
       <div style={{marginTop:14}}>
-        <QuizNav checked={checked} picked={picked} lang={lang} color={C.coral}
+        <QuizNav checked={checked} picked={picked} uiLang={lang} color={C.coral}
           onCheck={()=>setChecked(true)}
-          onNext={()=>{if(isRight)clearWrong(w.topicId,w.qi);setIdx(i=>i+1);setPicked(null);setChecked(false);}}
+          onNext={()=>{if(isRight)clearWrong(course,w.topicId,w.qid);setIdx(i=>i+1);setPicked(null);setChecked(false);}}
           nextLabel={idx+1<list.length?t(lang,'common.next'):t(lang,'weak.finish')}/>
       </div>
     </div>
@@ -819,12 +992,13 @@ function WeakPointsScreen({lang,onBack}){
 }
 
 /* ══ Pronunciation ═══════════════════════════════════════════ */
-function PronScreen({level,lang,addXP,onBack}){
-  const sentences=PRON_SENTENCES[level];
+function PronScreen({course,uiLang,level,addXP,onBack}){
+  const lang=uiLang;
+  const sentences=courseBundle(course).pron[level];
   const[idx,setIdx]=useState(0);
   const[result,setResult]=useState(null);
   const target=sentences[idx%sentences.length];
-  const{listening,start,stop,supported,micErr}=useListen(heard=>{ const r=scorePron(target,heard); setResult({...r,heard}); addXP(Math.round(r.pct/10)); });
+  const{listening,start,stop,supported,micErr}=useListen(course,heard=>{ const r=scorePron(target,heard); setResult({...r,heard}); addXP(Math.round(r.pct/10)); });
   const next=()=>{setIdx(idx+1);setResult(null);try{window.speechSynthesis.cancel();}catch(e){}};
   return(
     <div>
@@ -833,7 +1007,7 @@ function PronScreen({level,lang,addXP,onBack}){
       <div style={{...S.card,textAlign:'center',padding:28,marginBottom:12}}>
         <div style={{fontSize:11,fontWeight:700,letterSpacing:1,color:C.sub,textTransform:'uppercase',marginBottom:14}}>{t(lang,'pron.sayThis')}</div>
         <div style={{fontSize:19,fontWeight:800,lineHeight:1.55,marginBottom:18}}>"{target}"</div>
-        <button onClick={()=>speak(target,0.82)} style={{...S.ghost,marginBottom:20,fontSize:14}}>🔊 {t(lang,'pron.hearFirst')}</button>
+        <button onClick={()=>speak(course,target,0.82)} style={{...S.ghost,marginBottom:20,fontSize:14}}>🔊 {t(lang,'pron.hearFirst')}</button>
         <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:10}}>
           <button onClick={listening?stop:start} disabled={!supported} aria-label="Microphone" className={listening?'mic-recording':''}
             style={{width:72,height:72,borderRadius:'50%',border:'none',cursor:supported?'pointer':'default',background:listening?C.coral:C.teal,color:'#fff',fontSize:30,boxShadow:listening?'none':'0 2px 6px rgba(0,0,0,.15)',transition:'background .2s',opacity:supported?1:0.4}}>
@@ -863,25 +1037,27 @@ function PronScreen({level,lang,addXP,onBack}){
   );
 }
 
-/* ══ Progress ════════════════════════════════════════════════ */
-function ProgressScreen({xp,lang,completed,streak,onBack}){
+/* ══ Progress (a view over the ACTIVE course; header names it) ══ */
+function ProgressScreen({course,support,uiLang,xp,completed,streak,onBack}){
+  const lang=uiLang;
+  const b=courseBundle(course);
   const now=Date.now();
   let masteredCards=0,dueNow=0;
   const masteryMap={};
-  ALL_TOPIC_IDS.forEach(id=>{
-    const cards=getAllCards(id);
+  b.allTopicIds.forEach(id=>{
+    const cards=getAllCards(course,id);
     masteryMap[id]=cards.filter(c=>c.box>=5).length;
     masteredCards+=masteryMap[id];
     dueNow+=cards.filter(c=>c.next<=now).length;
   });
   return(
     <div>
-      <BackBar title={t(lang,'nav.progress')} onBack={onBack}/>
+      <BackBar title={`${t(lang,'nav.progress')} · ${courseName(course,uiLang)}`} onBack={onBack}/>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
         {[
           {label:t(lang,'progress.totalXP'),val:`${xp} XP`,icon:'⭐',col:C.amber,bg:C.amberSoft},
-          {label:t(lang,'progress.topicsDone'),val:`${(completed||[]).length}/${ALL_TOPIC_IDS.length}`,icon:'📚',col:C.teal,bg:C.tealSoft},
-          {label:t(lang,'progress.cardsMastered'),val:`${masteredCards}/${TOTAL_CARDS}`,icon:'🃏',col:C.purple,bg:C.purpleSoft},
+          {label:t(lang,'progress.topicsDone'),val:`${(completed||[]).length}/${b.allTopicIds.length}`,icon:'📚',col:C.teal,bg:C.tealSoft},
+          {label:t(lang,'progress.cardsMastered'),val:`${masteredCards}/${b.totalCards}`,icon:'🃏',col:C.purple,bg:C.purpleSoft},
           {label:t(lang,'progress.cardsDueNow'),val:`${dueNow}`,icon:'🔔',col:C.coral,bg:C.coralSoft},
           {label:t(lang,'progress.currentStreak'),val:`${streak.streak} ${pluralDays(lang,streak.streak)}`,icon:'🔥',col:'#C05000',bg:'#FFF0E8'},
           {label:t(lang,'progress.bestStreak'),val:`${streak.best} ${pluralDays(lang,streak.best)}`,icon:'🏆',col:C.amber,bg:C.amberSoft},
@@ -893,15 +1069,15 @@ function ProgressScreen({xp,lang,completed,streak,onBack}){
           </div>
         ))}
       </div>
-      {LEVELS.map(lv=>{
-        const ids=LEVEL_TOPICS[lv]; const done=ids.filter(id=>(completed||[]).includes(id)).length;
+      {b.meta.levels.map(lv=>{
+        const ids=b.levelTopics[lv]; const done=ids.filter(id=>(completed||[]).includes(id)).length;
         return(
           <div key={lv} style={{...S.card,marginBottom:10}}>
             <div style={{fontWeight:800,fontSize:15,color:C.teal,marginBottom:8}}>{lv} — {done}/{ids.length} {t(lang,'progress.topics')}</div>
             <div style={{marginBottom:10}}><ProgBar value={done} max={ids.length}/></div>
             <div style={{display:'grid',gap:7}}>
               {ids.map(id=>{
-                const tp=resolvedTopic(id,lang); const tdone=(completed||[]).includes(id); const m=masteryMap[id];
+                const tp=resolvedTopic(course,id,support); const tdone=(completed||[]).includes(id); const m=masteryMap[id];
                 return(
                   <div key={id} style={{display:'flex',alignItems:'center',gap:8}}>
                     <span style={{fontSize:15}}>{tp.icon}</span>
@@ -919,26 +1095,229 @@ function ProgressScreen({xp,lang,completed,streak,onBack}){
   );
 }
 
+/* ══ Onboarding (first run — no ptb1:courses key) ═════════════
+   1. "I speak…"  — options derived from all support overlays + target
+      languages across window.PTB_COURSES; sets uiLang and the default
+      support language.
+   2. "I want to learn…" — courses from window.PTB_COURSES (name from
+      meta.nameByLang); pairs without an overlay for the chosen support
+      are offered as immersion.
+   The chosen course's placement test then runs inside App (per-course
+   placementDone key). Existing users never see this — the storage
+   migration enrolls them silently. */
+function speakOptions(){
+  const map={};
+  COURSE_IDS.forEach(cid=>{
+    Object.keys(COURSES[cid].support||{}).forEach(sid=>{
+      if(!map[sid]) map[sid]=COURSES[cid].support[sid].name||sid;
+    });
+    if(!map[cid]) map[cid]=courseName(cid,cid);
+  });
+  return Object.keys(map).map(id=>({id,name:map[id]}));
+}
+function Onboarding({onDone}){
+  const[step,setStep]=useState(1);
+  const[speaks,setSpeaks]=useState(null);
+  const[ui,setUi]=useState('en');
+  const opts=speakOptions();
+  const pickSpeak=(id)=>{ setSpeaks(id); if(UI_LANGS.includes(id))setUi(id); setStep(2); };
+  const pickCourse=(cid)=>{
+    const hasOverlay=!!((COURSES[cid].support||{})[speaks])&&speaks!==cid;
+    onDone({uiLang:ui,target:cid,support:hasOverlay?speaks:'none'});
+  };
+  const shellCard={...S.card,padding:32,maxWidth:420,width:'100%'};
+  const optBtn={display:'flex',alignItems:'center',gap:12,background:C.card,border:`2px solid ${C.line}`,borderRadius:12,padding:'14px 16px',textAlign:'left',cursor:'pointer',fontFamily:FONT};
+  return(
+    <div style={S.page}>
+      <div style={{...S.shell,display:'flex',alignItems:'center',justifyContent:'center',minHeight:'100vh'}}>
+        <div style={shellCard}>
+          <div style={{textAlign:'center',marginBottom:24}}>
+            <div style={{fontSize:52,marginBottom:8}}>{step===1?'👋':'🎓'}</div>
+            <h1 style={{margin:0,fontSize:24,fontWeight:800,color:C.teal}}>{t(ui,step===1?'onboard.iSpeak':'onboard.iWantToLearn')}</h1>
+            <div style={{color:C.sub,fontSize:14,marginTop:4}}>{t(ui,step===1?'onboard.iSpeakSub':'onboard.iWantToLearnSub')}</div>
+          </div>
+          {step===1?(
+            <div style={{display:'grid',gap:8}}>
+              {opts.map(o=>(
+                <button key={o.id} onClick={()=>pickSpeak(o.id)} style={optBtn}>
+                  <span style={{fontSize:22}}>🗣️</span>
+                  <span style={{fontWeight:800,fontSize:16}}>{o.name}</span>
+                </button>
+              ))}
+            </div>
+          ):(
+            <>
+              <div style={{display:'grid',gap:8}}>
+                {COURSE_IDS.map(cid=>{
+                  const meta=COURSES[cid].meta;
+                  const ov=(COURSES[cid].support||{})[speaks];
+                  const immersion=!ov||speaks===cid;
+                  return(
+                    <button key={cid} onClick={()=>pickCourse(cid)} style={optBtn}>
+                      <span style={{fontSize:24}}>{meta.icon||'📘'}</span>
+                      <div style={{flex:1}}>
+                        <div style={{fontWeight:800,fontSize:16}}>{courseName(cid,ui)}</div>
+                        <div style={{fontSize:12.5,color:C.sub,marginTop:1}}>
+                          {immersion?t(ui,'onboard.immersion',{lang:courseName(cid,ui)}):t(ui,'onboard.fullSupport',{lang:ov.name})}
+                        </div>
+                      </div>
+                      <span style={{color:C.teal,fontWeight:800,fontSize:20}}>›</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <button onClick={()=>setStep(1)} style={{...S.ghost,width:'100%',marginTop:14,fontSize:14}}>{t(ui,'onboard.back')}</button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ══ Course switcher (reachable ONLY from Home and Settings) ══
+   Enrolled courses with a progress summary + "+ Add a course"
+   (mini-onboarding target pick). Switching is instant — progress is
+   per-course, nothing is ever lost. */
+function CoursePanel({uiLang,enrolled,course,onSwitch,onAdd}){
+  const[adding,setAdding]=useState(false);
+  const available=COURSE_IDS.filter(cid=>!enrolled.some(e=>e.target===cid));
+  return(
+    <div style={{display:'grid',gap:8}}>
+      {enrolled.map(e=>{
+        const cid=e.target;
+        if(!COURSES[cid]) return null;
+        const b=courseBundle(cid);
+        const done=lsGet(ck(cid,'completed'),[]).length;
+        const level=lsRaw(ck(cid,'level'),b.meta.levels[0]);
+        const active=cid===course;
+        const sup=getSupportPref(cid);
+        const supLabel=sup!=='none'&&b.support[sup]?b.support[sup].name:t(uiLang,'settings.supportNone');
+        return(
+          <button key={cid} onClick={()=>onSwitch(cid)}
+            style={{...S.card,display:'flex',alignItems:'center',gap:12,cursor:'pointer',textAlign:'left',fontFamily:FONT,border:`2px solid ${active?C.teal:C.line}`,background:active?C.tealSoft:C.card}}>
+            <span style={{fontSize:26}}>{b.meta.icon||'📘'}</span>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:800,fontSize:15,color:active?C.teal:C.ink}}>{courseName(cid,uiLang)}</div>
+              <div style={{fontSize:12.5,color:C.sub,marginTop:1}}>{t(uiLang,'courses.progress',{done,total:b.allTopicIds.length,level})} · {supLabel}</div>
+            </div>
+            {active&&<Badge color="#fff" bg={C.teal}>{t(uiLang,'courses.active')}</Badge>}
+          </button>
+        );
+      })}
+      {adding?(
+        <div style={{...S.card}}>
+          <div style={{fontWeight:700,fontSize:14,marginBottom:10}}>{t(uiLang,'courses.addPick')}</div>
+          <div style={{display:'grid',gap:8}}>
+            {available.map(cid=>{
+              const ov=(COURSES[cid].support||{})[uiLang];
+              const support=(ov&&uiLang!==cid)?uiLang:'none';
+              return(
+                <button key={cid} onClick={()=>{setAdding(false);onAdd(cid,support);}}
+                  style={{display:'flex',alignItems:'center',gap:10,background:C.card,border:`2px solid ${C.line}`,borderRadius:12,padding:'12px 14px',textAlign:'left',cursor:'pointer',fontFamily:FONT}}>
+                  <span style={{fontSize:22}}>{COURSES[cid].meta.icon||'📘'}</span>
+                  <div style={{flex:1}}>
+                    <div style={{fontWeight:800,fontSize:15}}>{courseName(cid,uiLang)}</div>
+                    <div style={{fontSize:12.5,color:C.sub}}>{support==='none'?t(uiLang,'onboard.immersion',{lang:courseName(cid,uiLang)}):t(uiLang,'onboard.fullSupport',{lang:ov.name})}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          <button onClick={()=>setAdding(false)} style={{...S.ghost,width:'100%',marginTop:10,fontSize:13}}>{t(uiLang,'common.cancel')}</button>
+        </div>
+      ):(
+        available.length>0
+          ?<button onClick={()=>setAdding(true)} style={{...S.ghost,width:'100%'}}>{t(uiLang,'courses.add')}</button>
+          :<div style={{borderRadius:12,border:`1.5px dashed ${C.line}`,padding:'12px 14px',textAlign:'center',color:C.sub,fontSize:13,fontWeight:600}}>{t(uiLang,'courses.add')} — {t(uiLang,'courses.noneToAdd')}</div>
+      )}
+    </div>
+  );
+}
+function CoursesScreen({uiLang,enrolled,course,onSwitch,onAdd,onBack}){
+  return(
+    <div>
+      <BackBar title={t(uiLang,'courses.title')} onBack={onBack}/>
+      <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(uiLang,'courses.subtitle')}</div>
+      <CoursePanel uiLang={uiLang} enrolled={enrolled} course={course} onSwitch={onSwitch} onAdd={onAdd}/>
+    </div>
+  );
+}
+
+/* ══ "Start over as a new user" confirmation (danger zone) ════
+   Heavier than any other flow, deliberately: summary of everything that
+   will be deleted, a typed confirmation word, and a destructive-red
+   button worded as the outcome. */
+function StartOverPanel({uiLang,enrolled,streak,xp,signedIn,onConfirm,onCancel}){
+  const[word,setWord]=useState('');
+  const[busy,setBusy]=useState(false);
+  const confirmWord=t(uiLang,'startover.confirmWord');
+  const ok=word.trim().toUpperCase()===confirmWord;
+  return(
+    <div style={{...S.card,border:`2px solid ${C.coral}`,marginTop:10}}>
+      <div style={{fontWeight:800,fontSize:16,color:C.coral,marginBottom:8}}>{t(uiLang,'startover.title')}</div>
+      <div style={{fontWeight:700,fontSize:13.5,marginBottom:6}}>{t(uiLang,'startover.willDelete')}</div>
+      <ul style={{margin:'0 0 12px 18px',padding:0,fontSize:13.5,lineHeight:1.7}}>
+        {enrolled.map(e=>{
+          const cid=e.target; if(!COURSES[cid]) return null;
+          return <li key={cid}>{t(uiLang,'startover.courseLine',{name:courseName(cid,uiLang),topics:lsGet(ck(cid,'completed'),[]).length,cards:cardsInReview(cid)})}</li>;
+        })}
+        <li>🔥 {t(uiLang,'startover.streakLine',{n:streak.streak,best:streak.best||0})}</li>
+        <li>⭐ {t(uiLang,'startover.xpLine',{xp})}</li>
+        {signedIn&&<li>☁️ {t(uiLang,'startover.cloud')}</li>}
+      </ul>
+      <div style={{fontSize:13,fontWeight:700,marginBottom:6}}>{t(uiLang,'startover.typeWord',{word:confirmWord})}</div>
+      <input value={word} onChange={e=>setWord(e.target.value)} placeholder={confirmWord} autoCapitalize="characters"
+        style={{width:'100%',padding:'10px 12px',fontSize:15,borderRadius:10,border:`1.5px solid ${C.line}`,fontFamily:FONT,outline:'none',marginBottom:10}}/>
+      <button disabled={!ok||busy} onClick={()=>{setBusy(true);onConfirm();}}
+        style={{...S.btn(ok&&!busy?'#B3261E':C.line,'#fff',!ok||busy),width:'100%'}}>
+        {busy?t(uiLang,'startover.working'):t(uiLang,'startover.button')}
+      </button>
+      <button onClick={onCancel} disabled={busy} style={{...S.ghost,width:'100%',marginTop:8,fontSize:13}}>{t(uiLang,'common.cancel')}</button>
+    </div>
+  );
+}
+
 /* ══ Settings ════════════════════════════════════════════════ */
-function SettingsScreen({lang,setLang,user,onSignOut,onBack,onRerunPlacement,onResetLevel,onResetAll}){
-  const langOpts=[
-    {id:'en',flag:'🇬🇧',label:'English',sub:t(lang,'settings.immersionSub')},
-    {id:'es',flag:'🇪🇸',label:'Español',sub:t(lang,'settings.spanishSub')},
+function SettingsScreen({course,uiLang,setUiLang,support,setSupport,enrolled,streak,xp,user,onSwitchCourse,onAddCourse,onSignOut,onBack,onRerunPlacement,onResetLevel,onResetCourse,onResetAllProgress,onStartOver}){
+  const lang=uiLang;
+  const b=courseBundle(course);
+  const[showStartOver,setShowStartOver]=useState(false);
+  const secHead=txt=><div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'4px 0 10px'}}>{txt}</div>;
+  const optStyle=active=>({display:'flex',alignItems:'center',gap:12,background:active?C.tealSoft:C.card,border:`2px solid ${active?C.teal:C.line}`,borderRadius:12,padding:'12px 14px',textAlign:'left',cursor:'pointer',fontFamily:FONT});
+  const supportOpts=[
+    ...Object.keys(b.support).map(sid=>({id:sid,label:b.support[sid].name,sub:t(lang,'settings.supportOverlaySub',{name:b.support[sid].name})})),
+    {id:'none',label:t(lang,'settings.supportNone'),sub:t(lang,'settings.immersionSub')},
   ];
   return(
     <div>
       <BackBar title={t(lang,'settings.title')} onBack={onBack}/>
 
-      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'4px 0 10px'}}>{t(lang,'settings.tutorLanguage')}</div>
+      {secHead(t(lang,'settings.uiLanguage'))}
       <div style={{...S.card,marginBottom:18}}>
-        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.tutorLanguageDesc')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.uiLanguageDesc')}</div>
         <div style={{display:'grid',gap:8}}>
-          {langOpts.map(o=>{
-            const active=lang===o.id;
+          {UI_LANGS.map(id=>{
+            const active=uiLang===id;
             return(
-              <button key={o.id} onClick={()=>setLang(o.id)}
-                style={{display:'flex',alignItems:'center',gap:12,background:active?C.tealSoft:C.card,border:`2px solid ${active?C.teal:C.line}`,borderRadius:12,padding:'12px 14px',textAlign:'left',cursor:'pointer',fontFamily:FONT}}>
-                <span style={{fontSize:26}}>{o.flag}</span>
+              <button key={id} onClick={()=>setUiLang(id)} style={optStyle(active)}>
+                <div style={{flex:1,fontWeight:800,fontSize:15,color:active?C.teal:C.ink}}>{uiLangName(id)}</div>
+                {active&&<span style={{color:C.teal,fontWeight:800,fontSize:18}}>✓</span>}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {secHead(t(lang,'settings.courseSection',{name:courseName(course,uiLang)}))}
+      <div style={{...S.card,marginBottom:12}}>
+        <div style={{fontWeight:700,fontSize:15,marginBottom:4}}>{t(lang,'settings.supportLanguage')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.supportLanguageDesc')}</div>
+        <div style={{display:'grid',gap:8}}>
+          {supportOpts.map(o=>{
+            const active=support===o.id;
+            return(
+              <button key={o.id} onClick={()=>setSupport(o.id)} style={optStyle(active)}>
                 <div style={{flex:1}}>
                   <div style={{fontWeight:800,fontSize:15,color:active?C.teal:C.ink}}>{o.label}</div>
                   <div style={{fontSize:12.5,color:C.sub,marginTop:1}}>{o.sub}</div>
@@ -949,53 +1328,76 @@ function SettingsScreen({lang,setLang,user,onSignOut,onBack,onRerunPlacement,onR
           })}
         </div>
       </div>
-
-      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'4px 0 10px'}}>{t(lang,'settings.onboarding')}</div>
-      <div style={{...S.card,marginBottom:18}}>
+      <div style={{...S.card,marginBottom:12}}>
         <div style={{fontWeight:700,fontSize:15,marginBottom:4}}>{t(lang,'settings.placementTest')}</div>
         <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.placementDesc')}</div>
         <button onClick={onRerunPlacement} style={{...S.btn(C.teal),width:'100%'}}>🎯 {t(lang,'settings.rerunPlacement')}</button>
       </div>
-
-      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'4px 0 10px'}}>{t(lang,'settings.resetProgress')}</div>
       <div style={{...S.card,marginBottom:12}}>
         <div style={{fontWeight:700,fontSize:15,marginBottom:4}}>{t(lang,'settings.resetLevel')}</div>
         <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.resetLevelDesc')}</div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8}}>
-          {LEVELS.map(lv=>(
+        <div style={{display:'grid',gridTemplateColumns:`repeat(${b.meta.levels.length},1fr)`,gap:8}}>
+          {b.meta.levels.map(lv=>(
             <button key={lv} onClick={()=>onResetLevel(lv)} style={{...S.ghost,padding:'10px 0'}}>{t(lang,'settings.reset')} {lv}</button>
           ))}
         </div>
       </div>
       <div style={{...S.card,marginBottom:18,border:`1.5px solid ${C.coral}`}}>
-        <div style={{fontWeight:700,fontSize:15,marginBottom:4,color:C.coral}}>{t(lang,'settings.resetEverything')}</div>
-        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.resetEverythingDesc')}</div>
-        <button onClick={onResetAll} style={{...S.btn(C.coral),width:'100%'}}>🗑️ {t(lang,'settings.resetAll')}</button>
+        <div style={{fontWeight:700,fontSize:15,marginBottom:4,color:C.coral}}>{t(lang,'settings.resetCourse')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.resetCourseDesc')}</div>
+        <button onClick={onResetCourse} style={{...S.btn(C.coral),width:'100%'}}>🗑️ {t(lang,'settings.resetCourse')}</button>
+      </div>
+
+      {secHead(t(lang,'settings.myCourses'))}
+      <div style={{marginBottom:18}}>
+        <CoursePanel uiLang={uiLang} enrolled={enrolled} course={course} onSwitch={onSwitchCourse} onAdd={onAddCourse}/>
+      </div>
+
+      {secHead(t(lang,'settings.resetProgress'))}
+      <div style={{...S.card,marginBottom:18,border:`1.5px solid ${C.coral}`}}>
+        <div style={{fontWeight:700,fontSize:15,marginBottom:4,color:C.coral}}>{t(lang,'settings.resetAllProgress')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.resetAllProgressDesc')}</div>
+        <button onClick={onResetAllProgress} style={{...S.btn(C.coral),width:'100%'}}>🗑️ {t(lang,'settings.resetAllProgress')}</button>
       </div>
 
       {sbClient&&(
         <>
-          <div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'4px 0 10px'}}>{t(lang,'settings.account')}</div>
+          {secHead(t(lang,'settings.account'))}
           <div style={{...S.card,marginBottom:18}}>
             {user?.email&&<div style={{fontSize:13,color:C.sub,marginBottom:12}}>{user.email}</div>}
             <button onClick={onSignOut} style={{...S.btn(C.line,C.ink),width:'100%'}}>{t(lang,'settings.signout')}</button>
           </div>
         </>
       )}
+
+      {secHead(t(lang,'settings.dangerZone'))}
+      <div style={{...S.card,border:`2px solid #B3261E`,background:'#FDF3F2'}}>
+        <div style={{fontWeight:800,fontSize:15,marginBottom:4,color:'#B3261E'}}>{t(lang,'settings.startOver')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(lang,'settings.startOverDesc')}</div>
+        {!showStartOver&&(
+          <button onClick={()=>setShowStartOver(true)} style={{...S.btn('#B3261E'),width:'100%'}}>⚠️ {t(lang,'settings.startOver')}</button>
+        )}
+        {showStartOver&&(
+          <StartOverPanel uiLang={uiLang} enrolled={enrolled} streak={streak} xp={xp} signedIn={!!(sbClient&&user)}
+            onConfirm={onStartOver} onCancel={()=>setShowStartOver(false)}/>
+        )}
+      </div>
     </div>
   );
 }
 
-/* ══ App Root ════════════════════════════════════════════════ */
-function App({user}){
+/* ══ App Root (one ACTIVE course; remounted with key={course}) ══ */
+function App({user,course,uiLang,setUiLang,enrolled,onSwitchCourse,onAddCourse,onSetSupport,onFactoryReset}){
+  const b=courseBundle(course);
   const[screen,setScreen]=useState('home');
-  const[level,setLevelState]=useState(()=>{ try{return localStorage.getItem('ptb1:level')||'A1';}catch{return'A1';} });
-  const[lang,setLangState]=useState(()=>{ try{return localStorage.getItem('ptb1:lang')||'en';}catch{return'en';} });
-  const[st,setSt]=useState(()=>loadApp()||{xp:0,completed:[]});
-  const[dueCount,setDueCount]=useState(()=>allDue());
+  const[level,setLevelState]=useState(()=>lsRaw(ck(course,'level'),b.meta.levels[0]));
+  const[support,setSupportState]=useState(()=>getSupportPref(course));
+  const[xp,setXp]=useState(()=>lsGet('ptb1:xp',0));
+  const[completed,setCompleted]=useState(()=>lsGet(ck(course,'completed'),[]));
+  const[dueCount,setDueCount]=useState(()=>allDue(course));
   const[streak,setStreak]=useState(()=>loadStreak());
-  const[weakCount,setWeakCount]=useState(()=>getTopWrongs().length);
-  const[showPlacement,setShowPlacement]=useState(()=>{ try{return!localStorage.getItem('ptb1:placementDone');}catch{return false;} });
+  const[weakCount,setWeakCount]=useState(()=>getTopWrongs(course).length);
+  const[showPlacement,setShowPlacement]=useState(()=>!lsRaw(ck(course,'placementDone'),''));
 
   const syncTimerRef=useRef(null);
   const scheduleSync=useCallback((delay=1500)=>{
@@ -1006,53 +1408,122 @@ function App({user}){
   },[user]);
   const syncNow=useCallback(()=>scheduleSync(0),[scheduleSync]);
 
-  useEffect(()=>{ saveApp(st); scheduleSync(); },[st,scheduleSync]);
-  useEffect(()=>{ scheduleSync(); setDueCount(allDue()); setWeakCount(getTopWrongs().length); },[screen,scheduleSync]);
+  useEffect(()=>{ lsSet('ptb1:xp',xp); scheduleSync(); },[xp,scheduleSync]);
+  useEffect(()=>{ lsSet(ck(course,'completed'),completed); scheduleSync(); },[completed,course,scheduleSync]);
+  useEffect(()=>{ scheduleSync(); setDueCount(allDue(course)); setWeakCount(getTopWrongs(course).length); },[screen,course,scheduleSync]);
   useEffect(()=>{
     const h=()=>{if(document.visibilityState==='hidden')syncNow();};
     document.addEventListener('visibilitychange',h);
     return()=>document.removeEventListener('visibilitychange',h);
   },[syncNow]);
 
-  const setLevel=(lv)=>{ setLevelState(lv); try{localStorage.setItem('ptb1:level',lv);}catch{} scheduleSync(); };
-  const setLang=(l)=>{ setLangState(l); try{localStorage.setItem('ptb1:lang',l);}catch{} scheduleSync(); };
-  const addXP=n=>{ setSt(s=>({...s,xp:(s.xp||0)+n})); setStreak(touchStreak()); };
-  const completeTopic=id=>setSt(s=>({...s,completed:s.completed.includes(id)?s.completed:[...s.completed,id]}));
+  const setLevel=(lv)=>{ setLevelState(lv); lsRawSet(ck(course,'level'),lv); scheduleSync(); };
+  const setSupport=(s)=>{ setSupportState(s); onSetSupport(course,s); scheduleSync(); };
+  const changeUiLang=(l)=>{ setUiLang(l); scheduleSync(); };
+  const addXP=n=>{ setXp(x=>(x||0)+n); setStreak(touchStreak()); };
+  const completeTopic=id=>setCompleted(c=>c.includes(id)?c:[...c,id]);
 
-  const rerunPlacement=()=>{ try{localStorage.removeItem('ptb1:placementDone');}catch{} setScreen('home'); setShowPlacement(true); };
+  const rerunPlacement=()=>{ lsDel(ck(course,'placementDone')); setScreen('home'); setShowPlacement(true); };
+  /* Reset tier 1a: one level of the active course */
   const resetLevel=(lv)=>{
-    if(!window.confirm(`Reset all ${lv} progress?\n\nThis clears your completed ${lv} lessons, flashcard memory and weak points for ${lv}. It cannot be undone.`)) return;
-    clearLevelStorage(lv);
-    setSt(s=>({...s,completed:(s.completed||[]).filter(id=>!LEVEL_TOPICS[lv].includes(id))}));
-    setDueCount(allDue()); setWeakCount(getTopWrongs().length);
+    if(!window.confirm(t(uiLang,'confirm.resetLevel',{lv}))) return;
+    clearLevelStorage(course,lv);
+    setCompleted(c=>(c||[]).filter(id=>!b.levelTopics[lv].includes(id)));
+    setDueCount(allDue(course)); setWeakCount(getTopWrongs(course).length);
+    scheduleSync();
   };
-  const resetAll=()=>{
-    if(!window.confirm('Reset ALL progress?\n\nThis erases your XP, streaks, completed lessons, flashcard progress and weak points, and restarts onboarding. It cannot be undone.')) return;
-    clearAllProgress();
-    setSt({xp:0,completed:[]}); setStreak({streak:0,best:0,last:null});
-    setDueCount(0); setWeakCount(0); setLevelState('A1'); setScreen('home'); setShowPlacement(true);
+  /* Reset tier 1: the active course only (ptb1:<course>:*) */
+  const resetCourse=()=>{
+    if(!window.confirm(t(uiLang,'confirm.resetCourse',{name:courseName(course,uiLang)}))) return;
+    clearCourseStorage(course);
+    setCompleted([]); setLevelState(b.meta.levels[0]); setDueCount(0); setWeakCount(0);
+    setScreen('home'); setShowPlacement(true);
+    scheduleSync();
+  };
+  /* Reset tier 2: every course's progress + global xp/streak;
+     keeps uiLang, course, courses and support preferences */
+  const resetAllProgress=()=>{
+    if(!window.confirm(t(uiLang,'confirm.resetAllProgress'))) return;
+    clearAllCoursesProgress();
+    setXp(0); setStreak(loadStreak());
+    setCompleted([]); setLevelState(b.meta.levels[0]); setDueCount(0); setWeakCount(0);
+    setScreen('home'); setShowPlacement(true);
+    scheduleSync();
+  };
+  /* Reset tier 3: "start over as a new user" — order matters:
+     1. cancel the pending debounced sync
+     2. await the empty cloud upsert
+     3. clear ALL ptb1:* keys
+     4. route back to onboarding */
+  const startOver=async()=>{
+    clearTimeout(syncTimerRef.current);
+    if(sbClient&&user) await wipeSupabase(sbClient,user.id);
+    clearAllPtb1();
+    onFactoryReset();
   };
   const signOut=async()=>{ syncNow(); if(sbClient)await sbClient.auth.signOut(); };
 
   if(showPlacement) return(
     <div style={S.page}><div style={S.shell}>
-      <PlacementTest lang={lang} onDone={(lv)=>{ setLevel(lv); setShowPlacement(false); }}/>
+      <PlacementTest course={course} uiLang={uiLang} onDone={(lv)=>{ setLevel(lv); setShowPlacement(false); }}/>
     </div></div>
   );
 
   return(
     <div style={S.page}>
       <div style={S.shell}>
-        {screen==='home'&&<HomeScreen level={level} setLevel={setLevel} lang={lang} xp={st.xp} completed={st.completed} dueCount={dueCount} streak={streak} weakCount={weakCount} onNav={setScreen}/>}
-        {screen==='lessons'&&<LessonsScreen level={level} lang={lang} completed={st.completed} onComplete={(id,score)=>{completeTopic(id);addXP(score*10);}} addXP={addXP} onBack={()=>setScreen('home')}/>}
-        {screen==='cards'&&<FlashcardsScreen level={level} lang={lang} addXP={addXP} onBack={()=>setScreen('home')}/>}
-        {screen==='pron'&&<PronScreen level={level} lang={lang} addXP={addXP} onBack={()=>setScreen('home')}/>}
-        {screen==='progress'&&<ProgressScreen xp={st.xp} lang={lang} completed={st.completed} streak={streak} onBack={()=>setScreen('home')}/>}
-        {screen==='weakpoints'&&<WeakPointsScreen lang={lang} onBack={()=>{ setWeakCount(getTopWrongs().length); setScreen('home'); }}/>}
-        {screen==='settings'&&<SettingsScreen lang={lang} setLang={setLang} user={user} onSignOut={signOut} onBack={()=>setScreen('home')} onRerunPlacement={rerunPlacement} onResetLevel={resetLevel} onResetAll={resetAll}/>}
+        {screen==='home'&&<HomeScreen course={course} level={level} setLevel={setLevel} uiLang={uiLang} xp={xp} completed={completed} dueCount={dueCount} streak={streak} weakCount={weakCount} onNav={setScreen}/>}
+        {screen==='lessons'&&<LessonsScreen course={course} support={support} uiLang={uiLang} level={level} completed={completed} onComplete={(id,score)=>{completeTopic(id);addXP(score*10);}} addXP={addXP} onBack={()=>setScreen('home')}/>}
+        {screen==='cards'&&<FlashcardsScreen course={course} support={support} uiLang={uiLang} level={level} addXP={addXP} onBack={()=>setScreen('home')}/>}
+        {screen==='pron'&&<PronScreen course={course} uiLang={uiLang} level={level} addXP={addXP} onBack={()=>setScreen('home')}/>}
+        {screen==='progress'&&<ProgressScreen course={course} support={support} uiLang={uiLang} xp={xp} completed={completed} streak={streak} onBack={()=>setScreen('home')}/>}
+        {screen==='weakpoints'&&<WeakPointsScreen course={course} support={support} uiLang={uiLang} onBack={()=>{ setWeakCount(getTopWrongs(course).length); setScreen('home'); }}/>}
+        {screen==='courses'&&<CoursesScreen uiLang={uiLang} enrolled={enrolled} course={course} onSwitch={(cid)=>{ if(cid!==course)onSwitchCourse(cid); else setScreen('home'); }} onAdd={onAddCourse} onBack={()=>setScreen('home')}/>}
+        {screen==='settings'&&<SettingsScreen course={course} uiLang={uiLang} setUiLang={changeUiLang} support={support} setSupport={setSupport} enrolled={enrolled} streak={streak} xp={xp} user={user}
+          onSwitchCourse={(cid)=>{ if(cid!==course)onSwitchCourse(cid); else setScreen('home'); }} onAddCourse={onAddCourse}
+          onSignOut={signOut} onBack={()=>setScreen('home')} onRerunPlacement={rerunPlacement}
+          onResetLevel={resetLevel} onResetCourse={resetCourse} onResetAllProgress={resetAllProgress} onStartOver={startOver}/>}
       </div>
     </div>
   );
+}
+
+/* ══ Root: enrollment + active course + uiLang ═══════════════
+   First run (no ptb1:courses) → Onboarding. Existing users never see it:
+   migrateStorage() creates ptb1:courses before Root ever renders.
+   App is remounted via key={course} on switch, so all per-course state
+   initializers re-run — switching is instant, nothing to reconcile. */
+function Root({user}){
+  const[uiLang,setUiLangState]=useState(()=>lsRaw('ptb1:uiLang','en'));
+  const[enrolled,setEnrolled]=useState(()=>getEnrolled());
+  const[course,setCourseState]=useState(()=>{
+    const c=lsRaw('ptb1:course','');
+    if(c&&COURSES[c]) return c;
+    const e=getEnrolled();
+    return (e.length&&COURSES[e[0].target])?e[0].target:null;
+  });
+  const setUiLang=useCallback(l=>{ setUiLangState(l); lsRawSet('ptb1:uiLang',l); },[]);
+  const setCourse=useCallback(cid=>{ setCourseState(cid); lsRawSet('ptb1:course',cid); },[]);
+  const setCourseSupport=useCallback((cid,s)=>{
+    lsRawSet(ck(cid,'support'),s);
+    setEnrolled(prev=>{ const next=prev.map(e=>e.target===cid?{...e,support:s}:e); lsSet('ptb1:courses',next); return next; });
+  },[]);
+  const addCourse=useCallback((target,support)=>{
+    lsRawSet(ck(target,'support'),support);
+    setEnrolled(prev=>{ const next=prev.some(e=>e.target===target)?prev:[...prev,{target,support}]; lsSet('ptb1:courses',next); return next; });
+    setCourse(target);
+  },[setCourse]);
+  const factoryReset=useCallback(()=>{ setEnrolled([]); setCourseState(null); setUiLangState('en'); },[]);
+  const finishOnboarding=({uiLang:ul,target,support})=>{
+    lsRawSet('ptb1:uiLang',ul); setUiLangState(ul);
+    lsRawSet(ck(target,'support'),support);
+    const list=[{target,support}]; lsSet('ptb1:courses',list); setEnrolled(list);
+    lsRawSet('ptb1:course',target); setCourseState(target);
+  };
+
+  if(!enrolled.length||!course) return <Onboarding onDone={finishOnboarding}/>;
+  return <App key={course} user={user} course={course} uiLang={uiLang} setUiLang={setUiLang} enrolled={enrolled}
+    onSwitchCourse={setCourse} onAddCourse={addCourse} onSetSupport={setCourseSupport} onFactoryReset={factoryReset}/>;
 }
 
 /* ══ App Shell (auth wrapper) ═══════════════════════════════ */
@@ -1062,12 +1533,15 @@ function AppShell(){
   const userRef=useRef(null);
 
   useEffect(()=>{
-    if(!sbClient){ setPhase('app'); return; }
+    /* migrateStorage() runs on EVERY startup, sequenced AFTER the cloud
+       restore (fresh devices restore old-format keys from the cloud). */
+    if(!sbClient){ migrateStorage(); setPhase('app'); return; }
 
     const enterApp=async(u)=>{
       userRef.current=u;
       setUser(u);
       await restoreFromSupabase(sbClient,u.id);
+      migrateStorage();
       setPhase('app');
     };
 
@@ -1095,7 +1569,7 @@ function AppShell(){
     </div>
   );
   if(phase==='login') return <LoginScreen/>;
-  return <App user={user}/>;
+  return <Root user={user}/>;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<AppShell/>);

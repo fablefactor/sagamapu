@@ -23,7 +23,14 @@ window.PTB_COURSES.en = {
     "nameByLang": {
       "en": "English",
       "es": "Inglés"
-    }
+    },
+    "icon": "🇬🇧",
+    "title": "Pathway to B1",
+    "tagline": {
+      "en": "Your English journey, one level at a time",
+      "es": "Tu camino al inglés, un nivel a la vez"
+    },
+    "frontLabel": "English"
   },
   "core": {
     "topics": {

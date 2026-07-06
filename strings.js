@@ -6,16 +6,22 @@
    t(lang, key, {n: 3})  → same, with {placeholder} interpolation
    tPlural(lang, n, key) → key+'.one' / key+'.other' via per-language plural rule
    pluralDays(lang, n)   → day/days/día/días
-   cardBackLabel(lang)   → flashcard back label (shim — Phase 2/4 replaces it
-                           with the overlay's own name / target word for "Definition")
+
+   lang here is always the UI language (uiLang). Course content is
+   localized by the resolver in index.html, not by this table.
+   The 'lang.name' entry doubles as the registry of available UI
+   languages: its keys are the selectable uiLang ids, its values their
+   native names. Add a language here + translate the table = new UI lang.
    ══════════════════════════════════════════════════════ */
 
 const STRINGS = {
+  // ── UI languages (keys = selectable uiLang ids, values = native names) ──
+  "lang.name": {en: "English", es: "Español"},
   // ── Common ──
   "common.next": {en: "Next →", es: "Siguiente →"},
   "common.backToHome": {en: "Back to home", es: "Volver al inicio"},
+  "common.cancel": {en: "Cancel", es: "Cancelar"},
   // ── Home ──
-  "home.tagline": {en: "Your English journey, one level at a time", es: "Tu camino al inglés, un nivel a la vez"},
   "home.yourLevel": {en: "Your Level", es: "Tu nivel"},
   "home.practiceModes": {en: "Practice modes", es: "Modos de práctica"},
   "nav.lessons": {en: "Lessons", es: "Lecciones"},
@@ -81,7 +87,6 @@ const STRINGS = {
   "flashcards.reveal": {en: "Reveal answer", es: "Revelar respuesta"},
   "flashcards.hearPron": {en: "Hear pronunciation", es: "Oír pronunciación"},
   "flashcards.back.definition": {en: "Definition", es: "Definición"},
-  "flashcards.back.supportName": {en: "Español", es: "Español"},
   // ── Weak points ──
   "weak.none": {en: "No weak points yet!", es: "¡Aún no hay puntos débiles!"},
   "weak.noneSub": {en: "Complete some quizzes — missed questions will appear here for extra practice.", es: "Completa algunos cuestionarios — las preguntas falladas aparecerán aquí para practicar más."},
@@ -112,25 +117,64 @@ const STRINGS = {
   "progress.bestStreak": {en: "Best streak", es: "Mejor racha"},
   "progress.topics": {en: "topics", es: "temas"},
   "progress.cards": {en: "cards", es: "tarjetas"},
+  // ── Onboarding ──
+  "onboard.iSpeak": {en: "I speak…", es: "Yo hablo…"},
+  "onboard.iSpeakSub": {en: "Pick the language that should explain things to you.", es: "Elige el idioma que debe explicarte las cosas."},
+  "onboard.iWantToLearn": {en: "I want to learn…", es: "Quiero aprender…"},
+  "onboard.iWantToLearnSub": {en: "You'll take a short placement test next.", es: "Después harás una breve prueba de nivel."},
+  "onboard.fullSupport": {en: "Explanations in {lang}", es: "Explicaciones en {lang}"},
+  "onboard.immersion": {en: "Immersion — explanations in {lang}", es: "Inmersión — explicaciones en {lang}"},
+  "onboard.back": {en: "← Back", es: "← Atrás"},
+  // ── Courses (chip + switcher) ──
+  "courses.title": {en: "My courses", es: "Mis cursos"},
+  "courses.subtitle": {en: "Tap a course to switch — progress is saved per course.", es: "Toca un curso para cambiar — el progreso se guarda por curso."},
+  "courses.active": {en: "Active", es: "Activo"},
+  "courses.progress": {en: "{done}/{total} topics · level {level}", es: "{done}/{total} temas · nivel {level}"},
+  "courses.add": {en: "+ Add a course", es: "+ Añadir un curso"},
+  "courses.addPick": {en: "Choose a course to add", es: "Elige un curso para añadir"},
+  "courses.noneToAdd": {en: "More courses coming soon", es: "Más cursos próximamente"},
   // ── Settings ──
   "settings.title": {en: "Settings", es: "Ajustes"},
-  "settings.tutorLanguage": {en: "Tutor language", es: "Idioma del tutor"},
-  "settings.tutorLanguageDesc": {en: "Choose how translations and explanations are shown. English uses full immersion (English definitions, no translations); Spanish shows everything translated into Spanish.", es: "Elige cómo se muestran las traducciones y explicaciones. English usa inmersión total (definiciones en inglés, sin traducciones); Español lo muestra todo traducido al español."},
+  "settings.uiLanguage": {en: "App language", es: "Idioma de la aplicación"},
+  "settings.uiLanguageDesc": {en: "The language of menus, buttons and messages. It doesn't change your course content.", es: "El idioma de los menús, botones y mensajes. No cambia el contenido de tu curso."},
+  "settings.courseSection": {en: "Course · {name}", es: "Curso · {name}"},
+  "settings.supportLanguage": {en: "Support language", es: "Idioma de apoyo"},
+  "settings.supportLanguageDesc": {en: "How translations and explanations are shown for this course. Switching never touches your progress.", es: "Cómo se muestran las traducciones y explicaciones de este curso. Cambiarlo nunca afecta a tu progreso."},
+  "settings.supportNone": {en: "None (immersion)", es: "Ninguno (inmersión)"},
   "settings.immersionSub": {en: "Immersion — no translations", es: "Inmersión — sin traducciones"},
-  "settings.spanishSub": {en: "Spanish translations & explanations", es: "Traducciones y explicaciones en español"},
-  "settings.onboarding": {en: "Onboarding", es: "Configuración inicial"},
+  "settings.supportOverlaySub": {en: "Translations & explanations in {name}", es: "Traducciones y explicaciones en {name}"},
+  "settings.myCourses": {en: "My courses", es: "Mis cursos"},
   "settings.placementTest": {en: "Placement test", es: "Prueba de nivel"},
   "settings.placementDesc": {en: "Retake the short test to recalculate your recommended starting level.", es: "Repite la breve prueba para recalcular tu nivel inicial recomendado."},
   "settings.rerunPlacement": {en: "Run placement test again", es: "Hacer la prueba de nivel otra vez"},
   "settings.resetProgress": {en: "Reset progress", es: "Reiniciar progreso"},
   "settings.resetLevel": {en: "Reset a single level", es: "Reiniciar un solo nivel"},
-  "settings.resetLevelDesc": {en: "Clear completed lessons, flashcard memory and weak points for one level only.", es: "Borra las lecciones completadas, la memoria de tarjetas y los puntos débiles de un solo nivel."},
+  "settings.resetLevelDesc": {en: "Clear completed lessons, flashcard memory and weak points for one level of this course only.", es: "Borra las lecciones completadas, la memoria de tarjetas y los puntos débiles de un solo nivel de este curso."},
   "settings.reset": {en: "Reset", es: "Reiniciar"},
-  "settings.resetEverything": {en: "Reset everything", es: "Reiniciar todo"},
-  "settings.resetEverythingDesc": {en: "Erase all XP, streaks, completed lessons, flashcard progress and weak points, and restart onboarding. This cannot be undone.", es: "Borra todo el XP, las rachas, las lecciones completadas, el progreso de tarjetas y los puntos débiles, y reinicia la configuración inicial. Esto no se puede deshacer."},
-  "settings.resetAll": {en: "Reset all progress", es: "Reiniciar todo el progreso"},
+  "settings.resetCourse": {en: "Reset course progress", es: "Reiniciar el progreso del curso"},
+  "settings.resetCourseDesc": {en: "Erase this course's completed lessons, flashcard memory, weak points, level and placement result. Other courses, your XP and your streak are kept.", es: "Borra las lecciones completadas, la memoria de tarjetas, los puntos débiles, el nivel y el resultado de la prueba de este curso. Los demás cursos, tu XP y tu racha se conservan."},
+  "settings.resetAllProgress": {en: "Reset all progress", es: "Reiniciar todo el progreso"},
+  "settings.resetAllProgressDesc": {en: "Erase progress in every course plus your XP and streaks. Your courses, languages and account are kept.", es: "Borra el progreso de todos los cursos además de tu XP y tus rachas. Tus cursos, idiomas y cuenta se conservan."},
   "settings.account": {en: "Account", es: "Cuenta"},
   "settings.signout": {en: "Sign out", es: "Cerrar sesión"},
+  "settings.dangerZone": {en: "Danger zone", es: "Zona de peligro"},
+  "settings.startOver": {en: "Start over as a new user", es: "Empezar de nuevo como usuario nuevo"},
+  "settings.startOverDesc": {en: "Delete absolutely everything — every course, XP, streaks and your cloud backup — and go back to the very first screen.", es: "Borra absolutamente todo — todos los cursos, XP, rachas y tu copia en la nube — y vuelve a la primera pantalla."},
+  // ── Reset confirmations ──
+  "confirm.resetLevel": {en: "Reset all {lv} progress?\n\nThis clears your completed {lv} lessons, flashcard memory and weak points for {lv} in this course. It cannot be undone.", es: "¿Reiniciar todo el progreso de {lv}?\n\nEsto borra tus lecciones completadas, la memoria de tarjetas y los puntos débiles de {lv} en este curso. No se puede deshacer."},
+  "confirm.resetCourse": {en: "Reset all progress in {name}?\n\nThis clears completed lessons, flashcard memory, weak points, level and placement for this course. It cannot be undone.", es: "¿Reiniciar todo el progreso de {name}?\n\nEsto borra las lecciones completadas, la memoria de tarjetas, los puntos débiles, el nivel y la prueba de nivel de este curso. No se puede deshacer."},
+  "confirm.resetAllProgress": {en: "Reset progress in ALL courses?\n\nThis erases every course's progress plus your XP and streaks. Your courses and languages are kept. It cannot be undone.", es: "¿Reiniciar el progreso de TODOS los cursos?\n\nEsto borra el progreso de todos los cursos además de tu XP y tus rachas. Tus cursos e idiomas se conservan. No se puede deshacer."},
+  // ── Start over as a new user ──
+  "startover.title": {en: "Start over as a new user?", es: "¿Empezar de nuevo como usuario nuevo?"},
+  "startover.willDelete": {en: "This will permanently delete:", es: "Esto eliminará permanentemente:"},
+  "startover.courseLine": {en: "{name} — {topics} topics completed, {cards} cards in review", es: "{name} — {topics} temas completados, {cards} tarjetas en repaso"},
+  "startover.streakLine": {en: "Streak: {n} (best {best})", es: "Racha: {n} (mejor {best})"},
+  "startover.xpLine": {en: "{xp} XP", es: "{xp} XP"},
+  "startover.cloud": {en: "Your cloud backup will also be deleted.", es: "Tu copia de seguridad en la nube también se eliminará."},
+  "startover.typeWord": {en: "Type {word} to confirm", es: "Escribe {word} para confirmar"},
+  "startover.confirmWord": {en: "DELETE", es: "BORRAR"},
+  "startover.button": {en: "Delete everything and start over", es: "Borrar todo y empezar de nuevo"},
+  "startover.working": {en: "Deleting…", es: "Borrando…"},
 };
 
 function t(lang, key, params) {
@@ -155,7 +199,6 @@ function tPlural(lang, n, key) {
 }
 function pluralDays(lang, n) { return tPlural(lang, n, 'streak.day'); }
 
-/* Card-back label shim: support-language name in Spanish mode, "Definition" in immersion. */
-function cardBackLabel(lang) {
-  return lang === 'es' ? t(lang, 'flashcards.back.supportName') : t(lang, 'flashcards.back.definition');
-}
+/* Available UI languages, derived from the 'lang.name' registry entry. */
+const UI_LANGS = Object.keys(STRINGS['lang.name']);
+function uiLangName(id) { return STRINGS['lang.name'][id] || id; }
