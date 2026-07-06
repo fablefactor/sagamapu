@@ -9,6 +9,7 @@
 **Files:**
 - `index.html` — the entire app: all React components, CSS, and hooks in one file (~960 lines).
 - `curriculum.js` — pure data: 18 topics (6 each for A1, A2, B1), loaded via `<script src>` before the Babel block.
+- `strings.js` — UI string table (`STRINGS`) + `t(lang,key)` helper (plus `tPlural`/`pluralDays`/`cardBackLabel`), loaded via `<script src>` after `curriculum.js`, before the Babel block.
 
 **Deployment:** GitHub Pages serves `master` branch root. Develop on a feature branch; push to `master` only when asked to "go live". Never create a PR unless explicitly requested.
 
@@ -31,24 +32,25 @@ console.log('JSX ok');
 ```
 This requires `@babel/core` and `@babel/preset-react` installed globally or in a local `node_modules`.
 
-### `curriculum.js` is plain JS, not JSX
-It's loaded by a regular `<script src>` tag before the Babel block, so it must be valid JavaScript only — no JSX syntax.
+### `curriculum.js` and `strings.js` are plain JS, not JSX
+They're loaded by regular `<script src>` tags before the Babel block, so they must be valid JavaScript only — no JSX syntax.
 
 ### Two-language mode (not three)
 `lang` is either `'en'` (English immersion) or `'es'` (Spanish). In English immersion mode, translations are hidden; flashcard backs show a plain-English definition (`enDef`). In Spanish mode, all UI labels, theory text, example translations, and quiz explanations are in Spanish.
 
-The localization helpers in `index.html` (defined just after `const FONT = ...`):
+**UI strings** live in `strings.js`: a `STRINGS` table of dot-namespaced keys (`'nav.lessons'`, `'settings.signout'`, …) with `{en, es}` values, read via `t(lang, 'key')` (optional third argument interpolates `{placeholder}`s, e.g. `t(lang,'lessons.finishEarn',{xp:earned})`). Pluralization goes through `tPlural(lang, n, key)` (per-language rules; `pluralDays(lang,n)` is a convenience wrapper) and the flashcard back label through the `cardBackLabel(lang)` shim — all defined in `strings.js`. The old inline `UI(lang,'…','…')` helper is gone; don't reintroduce it.
+
+The six **content helpers** still live in `index.html` (defined just after `COURSE_META`) until Phase 2 of `docs/i18n-plan.md` replaces them with a resolver:
 ```js
 const topicTitle   = (tp,lang)   => lang==='es' ? (tp.titleEs||tp.title)     : tp.title;
 const theoryHeading= (sec,lang)  => lang==='es' ? (sec.headingEs||sec.heading): sec.heading;
 const theoryBody   = (sec,lang)  => lang==='es' ? (sec.bodyEs||sec.body)      : sec.body;
 const exTranslation= (ex,lang)   => lang==='es' ? (ex.es||'')                 : '';
 const cardBack     = (card,lang) => lang==='es' ? (card.es||card.enDef||'')   : (card.enDef||card.es||'');
-const cardBackLabel= (lang)      => lang==='es' ? 'Español'                   : 'Definition';
 const quizExplain  = (q,lang)    => lang==='es' ? (q.explainEs||q.explain)    : q.explain;
-const UI           = (lang,en,es)=> lang==='es' ? es                          : en;
 ```
-Note the `UI` helper argument order: `UI(lang, englishString, spanishString)`.
+
+`COURSE_META` (top of the Babel block) describes the current course: `{id:'en', name:'English', levels:['A1','A2','B1'], speechLocale:'en-GB'}`. The Web Speech API (`speak()` and `SpeechRecognition`) uses `COURSE_META.speechLocale` — no hardcoded `'en-GB'`.
 
 ### Curriculum data schema
 Each topic object has:
