@@ -97,6 +97,85 @@ courses/
    exactly the bug classes this catches — it becomes the pre-commit gate
    alongside the JSX check.
 
+## The Course concept (product level)
+
+Architecturally a course is a target-language core; at the product level a
+**course is what the learner enrolls in**: a pairing of target language +
+support language, e.g. "English, explained in Spanish", "English
+(immersion)", "Spanish, explained in English".
+
+The single most important product decision:
+
+> **Progress belongs to the target language, not to the pairing.**
+
+Leitner boxes, completed topics, placement result, weak points, and level
+all live under the target-language namespace (`ptb1:en:*`). The support
+language is a per-course *presentation preference*. Consequences:
+
+- Switching support language (Spanish → Danish → immersion) never touches
+  progress. Immersion stops being a mode and becomes "support = none".
+- Switching target language switches to a separate progress space; coming
+  back restores exactly where you left off.
+- The **streak stays global** (`ptb1:streak`): a day you studied *any*
+  course counts. Streaks motivate the person, not the course.
+
+New storage keys:
+
+```
+ptb1:uiLang                    UI chrome language (global)
+ptb1:course                    active target-language id
+ptb1:courses                   enrolled courses: [{target:'en', support:'es'}, ...]
+ptb1:<target>:*                all per-course progress (existing key shapes, namespaced)
+```
+
+## UX: selecting, switching, and managing courses
+
+**First run (no enrolled courses)** — onboarding before anything else:
+
+1. "I speak…" → sets support language AND defaults `uiLang` to it.
+2. "I want to learn…" → target languages that have a core, with a badge
+   when full support in the chosen language exists (from `courses/index.json`).
+   Pairs without an overlay are offered as "(immersion — explanations in
+   <target language>)".
+3. Placement test for that course → home. (Placement is course content,
+   so each course brings its own.)
+
+**Existing users**: the storage migration silently enrolls them in
+English/Spanish and skips onboarding entirely. The 1–3 real users never
+see a breaking change.
+
+**Switching courses** — two entry points, one rule:
+
+- A compact course chip on the Home header (icon + "English · B1") opens
+  the switcher: enrolled courses with per-course progress summary, plus
+  "+ Add a course".
+- The same list lives in Settings under "My courses".
+- The rule: the switcher is reachable only from Home and Settings — never
+  mid-lesson, mid-deck, or mid-quiz — so there is no partial-activity state
+  to reconcile. Switching is instant and needs no confirmation, because
+  nothing is ever lost.
+
+**Adding a course**: "+ Add a course" runs a mini-onboarding (pick target,
+optionally adjust support, take that course's placement test) and appends
+to `ptb1:courses`.
+
+**Per-course settings** (in Settings, scoped to the active course):
+
+- Support language — dropdown of available overlays + "None (immersion)".
+  Replaces today's global two-way language toggle.
+- Reset course progress — replaces "reset level/all" semantics; clears
+  `ptb1:<target>:*` only, never other courses, never `uiLang`/`courses`.
+- Removing a course from the enrolled list keeps its `ptb1:<target>:*`
+  data (cheap, and re-adding restores everything); actual deletion only
+  via explicit reset.
+
+**Global settings**: UI language (independent of any course), account/sync.
+
+**Screens whose scope changes**: Home, Flashcards, Progress, Weak Points
+all become views over the *active course* (weak points' stored `topicId`s
+are already course-scoped once namespaced). The Progress screen header
+names the course to keep multi-course users oriented.
+
 ## Migration in four safe phases
 
 Each phase ships independently with no user-visible breakage:
@@ -108,8 +187,9 @@ Each phase ships independently with no user-visible breakage:
    fields map 1:1 to the overlay); swap helpers for the resolver. App
    behaves identically.
 3. **Course selection + namespaced storage** with the legacy-key migration;
-   onboarding asks "I speak…" / "I want to learn…", offering only pairs
-   that exist in the manifest.
+   implements the Course concept and the onboarding/switcher UX described
+   above (existing users are silently enrolled in English/Spanish and never
+   see onboarding).
 4. **Prove both axes**: author `support.da.json` (Danish support — fitting,
    given the app's origin) to prove the L1 axis cheaply, then a small
    `es/core.json` (Spanish for English speakers, even 6 A1 topics) to prove
