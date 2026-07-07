@@ -9,10 +9,9 @@
    NEVER renumber or reuse existing ids, even when inserting mid-array
    or deleting items.
 
-   PART 1 (A1): meta, 7 A1 topics, full placement (20), pronunciation.
-   A2/B1 topics are appended at the //__APPEND_HERE__ sentinel inside
-   core.topics (which is deliberately the LAST key of core): replace
-   "//__APPEND_HERE__\n}}};" with "<next topics>,\n//__APPEND_HERE__\n}}};" */
+   COMPLETE: meta, full placement (20), pronunciation, and all 23 topics
+   (A1 x7, A2 x8, B1 x8), authored in three parts. The append sentinel
+   used during authoring has been removed. */
 window.PTB_COURSES = window.PTB_COURSES || {};
 window.PTB_COURSES.da = {
   "meta": {
@@ -1319,5 +1318,660 @@ window.PTB_COURSES.da = {
           }
         ]
       },
-//__APPEND_HERE__
+      "b1-perf": {
+        "id": "b1-perf",
+        "icon": "⏳",
+        "level": "B1",
+        "title": "Førnutid — har eller er?",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Førnutid med 'har'",
+            "body": "Førnutid dannes med <strong>har</strong> + kort tillægsform: <em>Jeg <strong>har spist</strong> morgenmad</em>. Den bruges, når en handling i fortiden stadig betyder noget nu, eller når tidspunktet er ligegyldigt: <em>Har du nogensinde prøvet at vinterbade?</em> De fleste verber danner førnutid med 'har'."
+          },
+          {
+            "id": "t2",
+            "heading": "'Er' ved bevægelse og overgang",
+            "body": "Verber, der beskriver <strong>bevægelse fra ét sted til et andet</strong> eller en <strong>overgang</strong>, danner førnutid med <strong>er</strong>: <em>er gået, er kommet, er rejst, er flyttet, er begyndt</em> — og <em>er blevet</em>! Sammenlign: <em>Hun <strong>er gået</strong></em> (= hun er her ikke mere) og <em>Hun <strong>har gået</strong> en lang tur</em> (= aktiviteten). Fokus på resultatet → 'er'; fokus på aktiviteten → 'har'."
+          },
+          {
+            "id": "t3",
+            "heading": "Siden, i — og hvornår man bruger datid",
+            "body": "Med førnutid bruger man <strong>siden</strong> + et tidspunkt og <strong>i</strong> + en varighed: <em>Jeg har boet her <strong>siden 2020</strong> / <strong>i fem år</strong></em> — og jeg bor her stadig. Men med et afsluttet tidspunkt som <em>i går</em>, <em>sidste sommer</em> eller <em>i 2010</em> skal man bruge <strong>datid</strong>: <em>I går <strong>spiste</strong> jeg stegt flæsk</em> — aldrig 'i går har jeg spist'."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Jeg har boet i København i tre år." },
+          { "id": "e2", "text": "Hun er lige gået — måske kan du stadig nå hende." },
+          { "id": "e3", "text": "Vi har kendt hinanden siden gymnasiet." },
+          { "id": "e4", "text": "Toget er allerede kørt, så vi må vente på det næste." },
+          { "id": "e5", "text": "Han er blevet far — de fik en datter i onsdags." },
+          { "id": "e6", "text": "Har du nogensinde prøvet at vinterbade?" },
+          { "id": "e7", "text": "I går spiste vi stegt flæsk hos min mormor." },
+          { "id": "e8", "text": "Foråret er kommet — bøgen er sprunget ud." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "førnutid", "def": "Verbetiden med 'har/er' + kort tillægsform: Jeg har spist." },
+          { "id": "f2", "front": "er gået", "def": "Førnutid af 'at gå' med 'er': Hun er gået = hun er her ikke mere." },
+          { "id": "f3", "front": "er kommet", "def": "Førnutid af 'at komme' med 'er': Gæsterne er kommet." },
+          { "id": "f4", "front": "er blevet", "def": "Førnutid af 'at blive' med 'er': Han er blevet far." },
+          { "id": "f5", "front": "siden", "def": "Fra et tidspunkt og indtil nu: Jeg har boet her siden 2020." },
+          { "id": "f6", "front": "i tre år", "def": "'I' + varighed sammen med førnutid: Jeg har boet her i tre år — og bor her stadig." },
+          { "id": "f7", "front": "nogensinde", "def": "På noget tidspunkt i sit liv: Har du nogensinde været i Skagen?" },
+          { "id": "f8", "front": "endnu ikke", "def": "Om noget, der ikke er sket indtil nu: Jeg har endnu ikke set filmen." },
+          { "id": "f9", "front": "kort tillægsform", "def": "Verbets form efter 'har/er': spist, gået, kommet." },
+          { "id": "f10", "front": "allerede", "def": "Tidligere end ventet: Toget er allerede kørt." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hun ___ gået hjem — hun er her ikke mere.",
+            "options": ["har", "er", "vil", "skal"],
+            "correct": 1,
+            "explain": "Bevægelsesverber som 'gå' danner førnutid med 'er': Hun er gået."
+          },
+          {
+            "id": "q2",
+            "q": "Jeg har boet i Aarhus ___ 2019.",
+            "options": ["siden", "i", "for", "om"],
+            "correct": 0,
+            "explain": "'Siden' + tidspunkt (siden 2019); 'i' + varighed (i fem år)."
+          },
+          {
+            "id": "q3",
+            "q": "Hvilken sætning er korrekt?",
+            "options": ["I går har jeg spist rugbrød.", "I går spiste jeg rugbrød.", "I går er jeg spist rugbrød.", "I går jeg spiste rugbrød."],
+            "correct": 1,
+            "explain": "Med et afsluttet tidspunkt som 'i går' bruger man datid, ikke førnutid: I går spiste jeg rugbrød."
+          },
+          {
+            "id": "q4",
+            "q": "Vi ___ kendt hinanden siden gymnasiet.",
+            "options": ["har", "er", "blev", "vil"],
+            "correct": 0,
+            "explain": "'Kende' er ikke et bevægelses- eller overgangsverbum → førnutid med 'har': Vi har kendt hinanden."
+          },
+          {
+            "id": "q5",
+            "q": "Hvad er forskellen på 'hun har gået' og 'hun er gået'?",
+            "options": ["Der er ingen forskel", "'Har gået' beskriver aktiviteten, 'er gået' betyder, at hun er væk", "'Er gået' er forkert dansk", "'Har gået' bruges kun om fremtiden"],
+            "correct": 1,
+            "explain": "'Har gået' beskriver aktiviteten (hun har gået en lang tur); 'er gået' fokuserer på resultatet — hun er her ikke mere."
+          }
+        ]
+      },
+      "b1-fortael": {
+        "id": "b1-fortael",
+        "icon": "📖",
+        "level": "B1",
+        "title": "At fortælle — dengang, da og plejede at",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Før datid: pluskvamperfektum",
+            "body": "Når noget skete <strong>før</strong> noget andet i fortiden, bruger man pluskvamperfektum: <strong>havde/var</strong> + kort tillægsform: <em>Da vi nåede stationen, <strong>var</strong> toget allerede <strong>kørt</strong></em>. Valget mellem 'havde' og 'var' følger samme regel som i førnutid: bevægelse og overgang → var (<em>var gået, var blevet</em>); resten → havde (<em>havde spist, havde set</em>)."
+          },
+          {
+            "id": "t2",
+            "heading": "Da, når og dengang — fælden",
+            "body": "<strong>Da</strong> bruges om ÉN bestemt gang eller periode i fortiden: <em><strong>Da</strong> jeg var ti, flyttede vi til Odense</em>. <strong>Når</strong> bruges om <strong>gentagne</strong> handlinger — også i fortiden! — og om fremtid: <em><strong>Når</strong> vi besøgte farmor, fik vi altid boller</em>. <strong>Dengang</strong> er et adverbium, der betyder 'på det tidspunkt': <em><strong>Dengang</strong> var der ingen mobiltelefoner</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "Plejede at — og gode fortælleord",
+            "body": "Vaner i fortiden udtrykkes med <strong>plejede at</strong> + infinitiv: <em>Jeg <strong>plejede at</strong> cykle til skole</em>. Byg din fortælling op med <strong>først</strong>, <strong>så</strong>, <strong>derefter</strong>, <strong>bagefter</strong>, <strong>pludselig</strong> og <strong>til sidst</strong>. To klassiske rammer om en dansk barndom: <strong>kolonihaven</strong> (familiens lille have med hus uden for byen) og <strong>efterskolen</strong> (kostskolen, hvor mange unge tager 9. eller 10. klasse)."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Da jeg var barn, tilbragte vi hver sommer i kolonihaven." },
+          { "id": "e2", "text": "Når vi besøgte min farmor, fik vi altid boller og kakao." },
+          { "id": "e3", "text": "Jeg plejede at cykle til skole, selv når det sneede." },
+          { "id": "e4", "text": "Da vi nåede stationen, var toget allerede kørt." },
+          { "id": "e5", "text": "Hun havde aldrig set havet, før hun flyttede til Danmark." },
+          { "id": "e6", "text": "Dengang var der ingen mobiltelefoner — vi legede bare på gaden." },
+          { "id": "e7", "text": "Efter niende klasse tog min bror på efterskole i Jylland." },
+          { "id": "e8", "text": "Først cyklede vi til stranden, så badede vi, og til sidst spiste vi is." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "pluskvamperfektum", "def": "'Havde/var' + kort tillægsform om noget, der skete før noget andet i fortiden: Toget var kørt." },
+          { "id": "f2", "front": "plejede at", "def": "Om en vane i fortiden: Jeg plejede at cykle til skole." },
+          { "id": "f3", "front": "dengang", "def": "Adverbium: på det tidspunkt i fortiden: Dengang var der ingen mobiltelefoner." },
+          { "id": "f4", "front": "da", "def": "Konjunktion om ÉN bestemt gang i fortiden: Da jeg var barn, boede vi i Odense." },
+          { "id": "f5", "front": "når", "def": "Konjunktion om gentagne handlinger og fremtid: Når vi besøgte farmor, fik vi altid kage." },
+          { "id": "f6", "front": "en kolonihave", "def": "En lille have med et lille hus uden for byen, som mange danske familier lejer." },
+          { "id": "f7", "front": "en efterskole", "def": "En kostskole, hvor mange unge tager 9. eller 10. klasse." },
+          { "id": "f8", "front": "pludselig", "def": "Uden varsel, fra det ene øjeblik til det andet: Pludselig begyndte det at regne." },
+          { "id": "f9", "front": "til sidst", "def": "Som det sidste i en række hændelser: Til sidst spiste vi is." },
+          { "id": "f10", "front": "en barndom", "def": "Den tid i livet, hvor man er barn." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "___ jeg var ti år, flyttede vi til Odense.",
+            "options": ["Da", "Når", "Om", "At"],
+            "correct": 0,
+            "explain": "Én bestemt gang eller periode i fortiden → 'da'. 'Når' bruges om gentagelser og fremtid."
+          },
+          {
+            "id": "q2",
+            "q": "___ vi besøgte mormor, fik vi altid æblekage.",
+            "options": ["Når", "Da", "Hvis", "At"],
+            "correct": 0,
+            "explain": "Gentagne handlinger i fortiden ('altid') → 'når'. 'Da' bruges kun om én enkelt gang."
+          },
+          {
+            "id": "q3",
+            "q": "Da vi kom til perronen, ___ toget allerede kørt.",
+            "options": ["var", "har", "er", "blev"],
+            "correct": 0,
+            "explain": "Noget, der skete FØR noget andet i fortiden → pluskvamperfektum. 'Køre' tager 'er/var': toget var kørt."
+          },
+          {
+            "id": "q4",
+            "q": "'Jeg plejede at spille fodbold' betyder…",
+            "options": ["Jeg spiller stadig fodbold hver dag", "Det var en vane i fortiden", "Jeg vil gerne spille fodbold i morgen", "Jeg spillede fodbold én enkelt gang"],
+            "correct": 1,
+            "explain": "'Plejede at' udtrykker en vane i fortiden: dengang spillede jeg tit fodbold."
+          },
+          {
+            "id": "q5",
+            "q": "Hvad er en efterskole?",
+            "options": ["En aftenskole for voksne", "En kostskole, hvor unge tager 9. eller 10. klasse", "En børnehave", "Et universitet"],
+            "correct": 1,
+            "explain": "Efterskolen er en kostskole for unge i 9. eller 10. klasse. Aftenskolen for voksne hedder 'aftenskole'."
+          }
+        ]
+      },
+      "b1-hvis": {
+        "id": "b1-hvis",
+        "icon": "🌦️",
+        "level": "B1",
+        "title": "Hvis — betingelser og vejrsnak",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Hvis-sætningen er en ledsætning",
+            "body": "<strong>Hvis</strong> indleder en betingelse: <em>Hvis det regner, bliver vi hjemme</em>. Hvis-sætningen er en <strong>ledsætning</strong>, så adverbier som 'ikke' står <strong>før</strong> verbet: <em>hvis det <strong>ikke</strong> regner</em>. Og når hvis-sætningen står først, begynder hovedsætningen med verbet: <em>Hvis solen skinner, <strong>cykler vi</strong> til stranden</em> — ikke 'vi cykler'."
+          },
+          {
+            "id": "t2",
+            "heading": "Tænkte situationer med ville og kunne",
+            "body": "Om noget, der ikke er virkeligt — kun tænkt — bruger man <strong>datid</strong> i hvis-sætningen og <strong>ville/kunne + infinitiv</strong> i hovedsætningen: <em>Hvis jeg <strong>havde</strong> mere tid, <strong>ville</strong> jeg lære at sejle</em>. Råd giver man med det faste udtryk: <em><strong>Hvis jeg var dig</strong>, ville jeg tage toget</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "Vejret — det evige samtaleemne",
+            "body": "Vejret er danskernes yndlingsemne, og det passer perfekt til hvis-sætninger: <em>Hvis vejret bliver godt på lørdag, griller vi i haven</em>. Nyttige ord: <strong>det blæser</strong>, <strong>en byge</strong>, <strong>gråvejr</strong>, <strong>vejrudsigten</strong>. Og husk det danske motto: <em>Der findes ikke dårligt vejr — kun forkert tøj</em>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Hvis det regner i morgen, bliver vi hjemme og hygger os." },
+          { "id": "e2", "text": "Vi cykler til stranden, hvis solen skinner." },
+          { "id": "e3", "text": "Hvis jeg var dig, ville jeg tage regnjakken med." },
+          { "id": "e4", "text": "Hvis jeg havde mere tid, ville jeg lære at sejle." },
+          { "id": "e5", "text": "Hvis toget ikke kommer, kan vi tage bussen." },
+          { "id": "e6", "text": "Hvis vejret bliver godt på lørdag, griller vi i haven." },
+          { "id": "e7", "text": "Hun ville flytte til Bornholm, hvis hun kunne arbejde hjemmefra." },
+          { "id": "e8", "text": "Der findes ikke dårligt vejr — kun forkert tøj." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "hvis", "def": "Konjunktion om en betingelse: Hvis det regner, bliver vi hjemme." },
+          { "id": "f2", "front": "en betingelse", "def": "Noget, der skal ske, før noget andet kan ske." },
+          { "id": "f3", "front": "Hvis jeg var dig…", "def": "Fast udtryk, når man giver et råd." },
+          { "id": "f4", "front": "ville", "def": "Datid af 'vil' — bruges om tænkte situationer: Hvis jeg kunne, ville jeg rejse." },
+          { "id": "f5", "front": "en regnjakke", "def": "En jakke, der holder regnen ude." },
+          { "id": "f6", "front": "en vejrudsigt", "def": "En prognose for, hvordan vejret bliver." },
+          { "id": "f7", "front": "det blæser", "def": "Vinden er stærk — meget almindeligt vejr i Danmark." },
+          { "id": "f8", "front": "en byge", "def": "Kort og pludselig regn: Der kommer byger i eftermiddag." },
+          { "id": "f9", "front": "at grille", "def": "At lave mad over åben ild udenfor, fx i haven." },
+          { "id": "f10", "front": "alligevel", "def": "Selvom noget taler imod: Det regnede, men vi gik en tur alligevel." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvis det ___ i morgen, tager vi til stranden.",
+            "options": ["ikke regner", "regner ikke", "ikke at regne", "ikke regnet"],
+            "correct": 0,
+            "explain": "Hvis-sætningen er en ledsætning, så 'ikke' står før verbet: hvis det ikke regner."
+          },
+          {
+            "id": "q2",
+            "q": "Hvilken sætning er korrekt?",
+            "options": ["Hvis det regner, vi bliver hjemme.", "Hvis det regner, bliver vi hjemme.", "Hvis det regner, vi hjemme bliver.", "Hvis regner det, bliver vi hjemme."],
+            "correct": 1,
+            "explain": "Når hvis-sætningen står først, kommer verbet lige efter kommaet: …, bliver vi hjemme."
+          },
+          {
+            "id": "q3",
+            "q": "Hvis jeg ___ dig, ville jeg tage toget.",
+            "options": ["var", "er", "bliver", "vil være"],
+            "correct": 0,
+            "explain": "Fast udtryk med datid om en tænkt situation: Hvis jeg var dig…"
+          },
+          {
+            "id": "q4",
+            "q": "Hvis jeg havde flere penge, ___ jeg købe et sommerhus.",
+            "options": ["ville", "vil", "skal", "må"],
+            "correct": 0,
+            "explain": "Tænkt situation → datid i hvis-sætningen og 'ville' + infinitiv i hovedsætningen."
+          },
+          {
+            "id": "q5",
+            "q": "'Der findes ikke dårligt vejr, kun…' — hvordan slutter det danske mundheld?",
+            "options": ["forkert tøj", "dårlig kaffe", "for få paraplyer", "kolde vintre"],
+            "correct": 0,
+            "explain": "Mundheldet lyder: Der findes ikke dårligt vejr — kun forkert tøj."
+          }
+        ]
+      },
+      "b1-mening": {
+        "id": "b1-mening",
+        "icon": "💬",
+        "level": "B1",
+        "title": "Meninger — synes, tror og mener",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Synes, tror eller mener?",
+            "body": "Tre verber, som B1-elever ofte blander sammen: <strong>synes</strong> = en personlig smag eller vurdering ud fra egen oplevelse (<em>Jeg synes, kaffen smager godt</em>). <strong>Tror</strong> = noget, man regner for sandsynligt, men ikke ved sikkert (<em>Jeg tror, det regner i morgen</em>). <strong>Mener</strong> = et gennemtænkt standpunkt (<em>Jeg mener, at kommunen bør bygge flere cykelstier</em>). Test: Har du oplevet det selv? → synes. Er du usikker på fakta? → tror."
+          },
+          {
+            "id": "t2",
+            "heading": "Enig og uenig",
+            "body": "Man er <strong>enig med</strong> en person <strong>i</strong> noget: <em>Jeg er enig med dig i, at prisen er for høj</em>. Gradbøj din enighed: <strong>helt enig</strong>, <strong>delvist enig</strong>, <strong>helt uenig</strong>. Gode diskussionsudtryk: <em>på den ene side… på den anden side…</em>, <em>det kommer an på…</em>, <em>det er et godt argument, men…</em>"
+          },
+          {
+            "id": "t3",
+            "heading": "Foreningsliv og konsensus",
+            "body": "Danmark er foreningernes land: de fleste danskere er medlem af mindst én <strong>forening</strong> — en idrætsklub, et kor eller en kolonihaveforening. Den danske diskussionskultur søger <strong>konsensus</strong>: man diskuterer, lytter og finder <strong>et kompromis</strong>, som alle kan leve med. Derfor er høflige udtryk vigtige: <em>Hvad synes du? Skal vi ikke finde en fælles løsning?</em>"
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Jeg synes, den nye cykelsti er en rigtig god idé." },
+          { "id": "e2", "text": "Jeg tror, det bliver regnvejr i morgen." },
+          { "id": "e3", "text": "Jeg mener, at kommunen bør bygge flere billige boliger." },
+          { "id": "e4", "text": "Jeg er helt enig med dig i, at prisen er for høj." },
+          { "id": "e5", "text": "Jeg er uenig — men på den anden side forstår jeg godt dit argument." },
+          { "id": "e6", "text": "Det kommer an på, hvad det koster." },
+          { "id": "e7", "text": "De fleste danskere er medlem af mindst én forening." },
+          { "id": "e8", "text": "Lad os finde et kompromis, som alle kan leve med." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "at synes", "def": "At have en mening ud fra egen smag eller oplevelse: Jeg synes, filmen er god." },
+          { "id": "f2", "front": "at tro", "def": "At regne noget for sandsynligt uden at vide det sikkert: Jeg tror, det regner i morgen." },
+          { "id": "f3", "front": "at mene", "def": "At have et gennemtænkt standpunkt: Jeg mener, at skatten er for høj." },
+          { "id": "f4", "front": "enig", "def": "Når man har samme mening som en anden: Jeg er enig med dig." },
+          { "id": "f5", "front": "uenig", "def": "Når man IKKE har samme mening: Vi er uenige om politik." },
+          { "id": "f6", "front": "et kompromis", "def": "En løsning, hvor begge parter giver sig lidt." },
+          { "id": "f7", "front": "en forening", "def": "En gruppe mennesker organiseret om en fælles interesse, fx en idrætsforening." },
+          { "id": "f8", "front": "på den anden side", "def": "Udtryk, der indleder et modsat argument." },
+          { "id": "f9", "front": "det kommer an på", "def": "Det afhænger af noget: Det kommer an på prisen." },
+          { "id": "f10", "front": "et argument", "def": "En grund, man giver for sin mening." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Jeg ___, at filmen var kedelig — jeg faldt næsten i søvn.",
+            "options": ["synes", "tror", "håber", "ved"],
+            "correct": 0,
+            "explain": "Egen oplevelse eller smag → 'synes'. 'Tror' bruges, når man er usikker på fakta."
+          },
+          {
+            "id": "q2",
+            "q": "Jeg ___, at toget kommer klokken ti, men jeg er ikke sikker.",
+            "options": ["tror", "synes", "mener", "smager"],
+            "correct": 0,
+            "explain": "Noget sandsynligt, som man ikke ved sikkert → 'tror'."
+          },
+          {
+            "id": "q3",
+            "q": "Politikeren ___, at kommunen bør bygge flere cykelstier.",
+            "options": ["mener", "tror", "smager", "plejer"],
+            "correct": 0,
+            "explain": "Et gennemtænkt standpunkt → 'mener'."
+          },
+          {
+            "id": "q4",
+            "q": "'Det er jeg helt enig i' betyder…",
+            "options": ["Jeg har en anden mening", "Jeg har præcis samme mening", "Jeg forstår ikke spørgsmålet", "Jeg er ligeglad"],
+            "correct": 1,
+            "explain": "'Helt enig' = jeg har præcis samme mening."
+          },
+          {
+            "id": "q5",
+            "q": "Hvad er en forening?",
+            "options": ["En slags skat", "En gruppe mennesker organiseret om en fælles interesse", "Et supermarked", "En bank"],
+            "correct": 1,
+            "explain": "En forening er en gruppe organiseret om en fælles interesse — sport, musik, kolonihaver. De fleste danskere er medlem af mindst én."
+          }
+        ]
+      },
+      "b1-nyheder": {
+        "id": "b1-nyheder",
+        "icon": "📰",
+        "level": "B1",
+        "title": "Nyheder og indirekte tale",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "At-sætninger og indirekte tale",
+            "body": "Når man gengiver, hvad andre siger, bruger man en <strong>at-sætning</strong>: <em>Han siger, <strong>at</strong> han kommer</em>. Der står altid komma før 'at'. I nyhederne møder man formen hele tiden: <em>DR skriver, at regeringen fremlægger en ny klimaplan</em>. <strong>DR</strong> (Danmarks Radio) er Danmarks public service-medie med tv, radio og nyheder."
+          },
+          {
+            "id": "t2",
+            "heading": "Ikke FØR verbet i ledsætninger",
+            "body": "Den vigtigste B1-regel om ordstilling: i en <strong>ledsætning</strong> står 'ikke' (og andre adverbier som 'aldrig', 'altid', 'ofte') <strong>før</strong> det bøjede verbum. Hovedsætning: <em>Han kommer <strong>ikke</strong></em>. Ledsætning: <em>Hun siger, at han <strong>ikke kommer</strong></em> — aldrig 'at han kommer ikke'. Huskeregel: konjunktion + subjekt + adverbium + verbum."
+          },
+          {
+            "id": "t3",
+            "heading": "Indirekte spørgsmål",
+            "body": "Ja/nej-spørgsmål gengives med <strong>om</strong>: <em>Hun spurgte, <strong>om</strong> jeg kunne komme</em>. Hv-spørgsmål beholder hv-ordet, men får <strong>almindelig ledsætningsordstilling</strong> (subjekt før verbum): <em>Han spurgte, hvor <strong>jeg boede</strong></em> — ikke 'hvor boede jeg'. Når hv-ordet selv er subjekt, tilføjer man <strong>der</strong>: <em>Han spurgte, hvem <strong>der</strong> havde vundet</em>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "DR skriver, at regeringen fremlægger en ny klimaplan i dag." },
+          { "id": "e2", "text": "Hun siger, at hun ikke har tid i weekenden." },
+          { "id": "e3", "text": "Han fortalte, at han aldrig havde set så meget sne." },
+          { "id": "e4", "text": "Journalisten spurgte ministeren, om planen bliver dyr." },
+          { "id": "e5", "text": "Min nabo spurgte, hvor jeg havde købt min cykel." },
+          { "id": "e6", "text": "Jeg hørte i radioen, at broen er lukket på grund af blæst." },
+          { "id": "e7", "text": "Hun ville vide, hvornår toget kørte." },
+          { "id": "e8", "text": "Han spurgte, hvem der havde vundet valget." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "en nyhed", "def": "En ny information, ofte fra medierne: Har du hørt nyheden?" },
+          { "id": "f2", "front": "DR", "def": "Danmarks Radio — Danmarks public service-medie med tv, radio og nyheder." },
+          { "id": "f3", "front": "en avis", "def": "Trykte eller digitale nyheder, fx Politiken." },
+          { "id": "f4", "front": "en journalist", "def": "En person, der arbejder med nyheder." },
+          { "id": "f5", "front": "at spørge", "def": "At stille et spørgsmål: Hun spurgte, om jeg kom." },
+          { "id": "f6", "front": "at svare", "def": "At give et svar på et spørgsmål." },
+          { "id": "f7", "front": "regeringen", "def": "De ministre, der leder landet." },
+          { "id": "f8", "front": "et valg", "def": "Når borgerne stemmer, fx et folketingsvalg." },
+          { "id": "f9", "front": "ifølge", "def": "Efter hvad nogen siger eller skriver: Ifølge DR bliver vinteren mild." },
+          { "id": "f10", "front": "at fortælle", "def": "At give nogen en historie eller en information: Han fortalte, at…" }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hun siger, at hun ___ i dag.",
+            "options": ["ikke kommer", "kommer ikke", "ikke kommet", "ikke at komme"],
+            "correct": 0,
+            "explain": "I ledsætninger står 'ikke' FØR verbet: …, at hun ikke kommer."
+          },
+          {
+            "id": "q2",
+            "q": "Han spurgte, ___ jeg ville med i biografen.",
+            "options": ["om", "at", "hvis", "for"],
+            "correct": 0,
+            "explain": "Indirekte ja/nej-spørgsmål indledes med 'om'. Pas på: betingelsen hedder 'hvis', men det indirekte spørgsmål hedder 'om'."
+          },
+          {
+            "id": "q3",
+            "q": "Hvilken sætning er korrekt?",
+            "options": ["Hun spurgte, hvor boede jeg.", "Hun spurgte, hvor jeg boede.", "Hun spurgte, hvor der jeg boede.", "Hun spurgte, jeg boede hvor."],
+            "correct": 1,
+            "explain": "Efter hv-ordet følger almindelig ledsætningsordstilling — subjekt før verbum: hvor jeg boede."
+          },
+          {
+            "id": "q4",
+            "q": "Han fortalte, at han ___ havde set så meget sne før.",
+            "options": ["aldrig", "ingen", "intet", "ingenting"],
+            "correct": 0,
+            "explain": "Adverbier som 'aldrig' står før verbet i ledsætningen: …, at han aldrig havde set så meget sne."
+          },
+          {
+            "id": "q5",
+            "q": "Hvad er DR?",
+            "options": ["Et dansk flyselskab", "Danmarks public service-medie", "En dansk bank", "Et politisk parti"],
+            "correct": 1,
+            "explain": "DR (Danmarks Radio) er Danmarks public service-medie med tv, radio og nyheder."
+          }
+        ]
+      },
+      "b1-skriv": {
+        "id": "b1-skriv",
+        "icon": "✉️",
+        "level": "B1",
+        "title": "Formelle mails og breve",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Du — også når det er formelt",
+            "body": "På dansk skriver man <strong>du</strong> — også i formelle mails til kommunen, banken og virksomheder. <strong>De</strong> bruges i dag næsten aldrig på skrift (kongehuset og enkelte meget formelle breve). Det formelle på dansk ligger i <strong>tonen og strukturen</strong>, ikke i 'De'. Indledning: <strong>Kære</strong> + navn (bruges både formelt og privat), <strong>Hej</strong> + navn (uformelt) eller <strong>Til rette vedkommende</strong>, når man ikke kender modtageren."
+          },
+          {
+            "id": "t2",
+            "heading": "Hilsner og opbygning",
+            "body": "En formel mail slutter med <strong>Med venlig hilsen</strong> (eller bare <strong>Venlig hilsen</strong>, forkortet <em>Mvh</em>). Til venner og familie skriver man <strong>Kærlig hilsen</strong> (<em>KH</em>). Skriv et klart <strong>emnefelt</strong>, og kom hurtigt til sagen: <em>Jeg skriver til jer, fordi…</em> Afslut gerne med: <em>På forhånd tak</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "Det digitale Danmark og jobansøgningen",
+            "body": "Det offentlige Danmark er digitalt: breve fra kommunen og Skat kommer i <strong>Digital Post (e-Boks)</strong>, man logger ind med <strong>MitID</strong>, og på <strong>borger.dk</strong> ordner man fx flytning og sundhedskort. En <strong>jobansøgning</strong> består af en kort ansøgning og et <strong>CV</strong>. Den klassiske åbning: <em>Jeg søger hermed stillingen som…</em>"
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Kære Hanne. Tak for din mail — jeg vender tilbage i morgen." },
+          { "id": "e2", "text": "Jeg skriver til jer, fordi jeg har et spørgsmål om min regning." },
+          { "id": "e3", "text": "Jeg søger hermed stillingen som køkkenmedarbejder." },
+          { "id": "e4", "text": "Vedhæftet finder du mit CV og min ansøgning." },
+          { "id": "e5", "text": "Du har fået ny post i e-Boks fra kommunen." },
+          { "id": "e6", "text": "Med venlig hilsen, Mette Jensen." },
+          { "id": "e7", "text": "På borger.dk kan man melde flytning og bestille nyt sundhedskort." },
+          { "id": "e8", "text": "Husk at logge ind med MitID, når du skal læse din digitale post." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "Kære…", "def": "Standardindledningen i breve og mails — bruges både formelt og til venner: Kære Anne." },
+          { "id": "f2", "front": "Med venlig hilsen", "def": "Den almindelige formelle afslutning i mails og breve (forkortes Mvh)." },
+          { "id": "f3", "front": "Kærlig hilsen", "def": "Afslutningen til familie og nære venner (forkortes KH)." },
+          { "id": "f4", "front": "en ansøgning", "def": "Et formelt brev, hvor man søger fx et job: en jobansøgning." },
+          { "id": "f5", "front": "et CV", "def": "En liste over ens uddannelse og erfaring, som sendes med en ansøgning." },
+          { "id": "f6", "front": "vedhæftet", "def": "Sendt med som fil i en mail: Vedhæftet finder du mit CV." },
+          { "id": "f7", "front": "e-Boks", "def": "Den digitale postkasse, hvor det offentlige sender sine breve (Digital Post)." },
+          { "id": "f8", "front": "borger.dk", "def": "Det offentliges hjemmeside, hvor man ordner fx flytning og sundhedskort." },
+          { "id": "f9", "front": "MitID", "def": "Danmarks digitale login til banken og det offentlige." },
+          { "id": "f10", "front": "en stilling", "def": "Et job: Jeg søger stillingen som kok." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvordan afslutter man normalt en formel mail på dansk?",
+            "options": ["Med venlig hilsen", "Kærlig hilsen", "Vi ses, makker", "Hej hej"],
+            "correct": 0,
+            "explain": "'Med venlig hilsen' er den formelle standardafslutning. 'Kærlig hilsen' er til familie og venner."
+          },
+          {
+            "id": "q2",
+            "q": "Du skriver en mail til en virksomhed, men kender ikke modtagerens navn. Hvad skriver du?",
+            "options": ["Til rette vedkommende", "Hej med jer!", "Halløj!", "Kære du"],
+            "correct": 0,
+            "explain": "Når man ikke kender modtageren, skriver man 'Til rette vedkommende' eller 'Kære' + afdelingen."
+          },
+          {
+            "id": "q3",
+            "q": "Hvad er e-Boks?",
+            "options": ["En digital postkasse til post fra det offentlige", "Et socialt medie", "En slags madkasse", "En musiktjeneste"],
+            "correct": 0,
+            "explain": "e-Boks (Digital Post) er den digitale postkasse, hvor kommunen, Skat og andre myndigheder sender deres breve."
+          },
+          {
+            "id": "q4",
+            "q": "'Jeg søger hermed stillingen som…' bruges i…",
+            "options": ["en jobansøgning", "en fødselsdagsinvitation", "en sms til en ven", "en indkøbsseddel"],
+            "correct": 0,
+            "explain": "Det er den klassiske åbning i en jobansøgning."
+          },
+          {
+            "id": "q5",
+            "q": "Hvem skriver man 'De' til i en moderne dansk mail?",
+            "options": ["Alle chefer", "Næsten ingen — man skriver 'du', også formelt", "Alle over 40 år", "Alle offentlige kontorer"],
+            "correct": 1,
+            "explain": "'De' bruges i dag næsten aldrig — selv formelle mails bruger 'du'. Det formelle ligger i tonen og strukturen."
+          }
+        ]
+      },
+      "b1-hygge": {
+        "id": "b1-hygge",
+        "icon": "🕯️",
+        "level": "B1",
+        "title": "Følelser og hygge",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "At have det godt — og skidt",
+            "body": "Spørgsmålet <em>Hvordan har du det?</em> besvares med <strong>at have det</strong> + adverbium: <em>Jeg har det godt/fint/skidt</em>. Vigtige følelsesord: <strong>glad</strong>, <strong>ked af det</strong> (= trist), <strong>sur</strong>, <strong>træt</strong>, <strong>stolt</strong>, <strong>bekymret</strong>, <strong>ensom</strong>: <em>Hun er ked af det, fordi hendes kat er syg</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Refleksivt 'sig' — og glæde sig til/over",
+            "body": "Mange følelsesverber er <strong>refleksive</strong>: <em>jeg glæder <strong>mig</strong>, du glæder <strong>dig</strong>, han/hun/de glæder <strong>sig</strong></em>. Også: <strong>at føle sig</strong> (<em>Han føler sig ensom</em>) og <strong>at hygge sig</strong>. Den store forskel: <strong>glæde sig TIL</strong> = at se frem til noget i fremtiden (<em>Jeg glæder mig til sommerferien</em>); <strong>glæde sig OVER</strong> = at være glad for noget, der sker nu eller er sket (<em>Hun glæder sig over den gode nyhed</em>)."
+          },
+          {
+            "id": "t3",
+            "heading": "Hygge, uhyggelig — og janteloven",
+            "body": "<strong>Hygge</strong> er den varme, afslappede stemning med stearinlys, tæpper og god tid — <em>en hyggelig aften</em>. Men pas på: <strong>uhyggelig</strong> betyder IKKE 'ikke-hyggelig' — det betyder <strong>skræmmende</strong>: <em>en uhyggelig film</em>. To ord til samtaler om det danske samfund: <strong>tillid</strong> (danskerne stoler på hinanden — barnevogne står udenfor caféen) og <strong>janteloven</strong> (den uskrevne regel: tro ikke, du er bedre end andre)."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Hvordan har du det i dag? — Jeg har det rigtig godt, tak." },
+          { "id": "e2", "text": "Jeg glæder mig til julefrokosten på fredag." },
+          { "id": "e3", "text": "Hun glæder sig over, at hendes søn har fået arbejde." },
+          { "id": "e4", "text": "Vi hyggede os med stearinlys, tæpper og varm kakao." },
+          { "id": "e5", "text": "Han følte sig ensom, da han lige var flyttet til Danmark." },
+          { "id": "e6", "text": "Filmen var så uhyggelig, at jeg ikke kunne sove." },
+          { "id": "e7", "text": "Danskerne har stor tillid til hinanden — barnevogne står ofte udenfor caféen." },
+          { "id": "e8", "text": "Janteloven siger, at man ikke skal tro, man er bedre end andre." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "at have det godt", "def": "At føle sig godt tilpas: Jeg har det godt i dag." },
+          { "id": "f2", "front": "ked af det", "def": "Trist: Hun er ked af det, fordi hendes kat er syg." },
+          { "id": "f3", "front": "at glæde sig til", "def": "At se frem til noget i fremtiden: Jeg glæder mig til sommerferien." },
+          { "id": "f4", "front": "at glæde sig over", "def": "At være glad for noget, der sker nu eller allerede er sket." },
+          { "id": "f5", "front": "at føle sig", "def": "Refleksivt verbum om ens tilstand: Han føler sig træt." },
+          { "id": "f6", "front": "at hygge sig", "def": "At have det rart og afslappet, ofte med stearinlys og god mad." },
+          { "id": "f7", "front": "hyggelig", "def": "Rar og varm stemning: en hyggelig aften." },
+          { "id": "f8", "front": "uhyggelig", "def": "Skræmmende — det MODSATTE af rar: en uhyggelig film." },
+          { "id": "f9", "front": "tillid", "def": "Troen på, at man kan stole på andre: Danskerne har stor tillid til hinanden." },
+          { "id": "f10", "front": "janteloven", "def": "Den uskrevne regel om, at man ikke skal tro, man er bedre end andre." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Jeg glæder mig ___ min fødselsdag på lørdag.",
+            "options": ["til", "over", "på", "af"],
+            "correct": 0,
+            "explain": "Noget i fremtiden → 'glæde sig til'. Noget, der allerede er sket → 'glæde sig over'."
+          },
+          {
+            "id": "q2",
+            "q": "Hun glæder sig ___, at hun bestod eksamen.",
+            "options": ["over", "til", "på", "for"],
+            "correct": 0,
+            "explain": "Noget, der allerede er sket (hun bestod) → 'glæde sig over'."
+          },
+          {
+            "id": "q3",
+            "q": "'En uhyggelig film' er…",
+            "options": ["en rar og hyggelig film", "en skræmmende film", "en kedelig film", "en morsom film"],
+            "correct": 1,
+            "explain": "'Uhyggelig' betyder skræmmende — ikke 'ikke-hyggelig'. Det er en klassisk fælde."
+          },
+          {
+            "id": "q4",
+            "q": "Han føler ___ ensom her i den mørke vinter.",
+            "options": ["sig", "ham", "han", "mig"],
+            "correct": 0,
+            "explain": "Det refleksive pronomen for han/hun/de er 'sig': Han føler sig ensom."
+          },
+          {
+            "id": "q5",
+            "q": "Hvad handler janteloven om?",
+            "options": ["At man skal betale sin skat", "At man ikke skal tro, man er bedre end andre", "At man skal cykle til arbejde", "At man altid skal komme til tiden"],
+            "correct": 1,
+            "explain": "Janteloven er den uskrevne regel: tro ikke, at du er bedre end andre."
+          }
+        ]
+      },
+      "b1-struktur": {
+        "id": "b1-struktur",
+        "icon": "🧩",
+        "level": "B1",
+        "title": "Som, der og passiv",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Som og der",
+            "body": "Henførende sætninger dannes med <strong>som</strong> eller <strong>der</strong>. Reglen: <strong>der kan KUN være subjekt</strong> i ledsætningen; <strong>som</strong> kan være både subjekt og objekt. Subjekt: <em>Kvinden, <strong>som/der</strong> bor på anden sal, er læge</em>. Objekt: <em>Bogen, <strong>som</strong> jeg læser, er spændende</em> — her er 'der' umuligt."
+          },
+          {
+            "id": "t2",
+            "heading": "To slags passiv",
+            "body": "Dansk har to passivformer. <strong>S-passiv</strong> bruges om noget generelt, gentaget eller om regler: <em>Rugbrødet <strong>bages</strong> hver morgen. Der <strong>tales</strong> dansk i Danmark</em>. <strong>Blive-passiv</strong> bruges om en konkret hændelse: <em>Broen <strong>blev bygget</strong> i 1998</em>. Nogle s-former er gensidige, ikke passive: <em>vi <strong>ses</strong>, vi <strong>mødes</strong></em> (= vi ser/møder hinanden)."
+          },
+          {
+            "id": "t3",
+            "heading": "Der er, det er — og infinitiv med eller uden 'at'",
+            "body": "<strong>Der er</strong> bruges om, at noget findes: <em>Der er flere cykler end biler i København</em>. <strong>Det er</strong> udpeger eller identificerer: <em>Det er min cykel</em>. Infinitiv har normalt <strong>at</strong>: <em>Det er svært <strong>at</strong> udtale 'rødgrød med fløde'</em> — men efter modalverber står infinitiven <strong>uden</strong> 'at': <em>Jeg kan <strong>svømme</strong></em>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Kvinden, der bor på anden sal, er læge." },
+          { "id": "e2", "text": "Filmen, som vi så i går, var rigtig uhyggelig." },
+          { "id": "e3", "text": "Rugbrødet bages hver morgen i det lille bageri." },
+          { "id": "e4", "text": "Der tales dansk i Danmark og på Færøerne." },
+          { "id": "e5", "text": "Broen blev bygget i 1998." },
+          { "id": "e6", "text": "Der er flere cykler end biler i København." },
+          { "id": "e7", "text": "Det er svært at udtale 'rødgrød med fløde'." },
+          { "id": "e8", "text": "Vi ses på fredag til fødselsdagen!" }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "som", "def": "Henførende ord, der kan være både subjekt og objekt: Bogen, som jeg læser." },
+          { "id": "f2", "front": "der", "def": "Henførende ord, der KUN kan være subjekt: Manden, der bor ved siden af." },
+          { "id": "f3", "front": "s-passiv", "def": "Passivformen med -s om noget generelt: Rugbrødet bages hver morgen." },
+          { "id": "f4", "front": "blive-passiv", "def": "Passiv med 'blive' om en konkret hændelse: Broen blev bygget i 1998." },
+          { "id": "f5", "front": "der er", "def": "Bruges om, at noget findes: Der er mange cykler i København." },
+          { "id": "f6", "front": "det er", "def": "Bruges til at udpege eller identificere: Det er min cykel." },
+          { "id": "f7", "front": "at mødes", "def": "S-form med gensidig betydning: Vi mødes klokken ti." },
+          { "id": "f8", "front": "vi ses", "def": "Fast afskedshilsen — 'vi ser hinanden igen'." },
+          { "id": "f9", "front": "at udtale", "def": "At sige et ord med de rigtige lyde: 'Rødgrød' er svært at udtale." },
+          { "id": "f10", "front": "at bygge", "def": "At opføre fx et hus eller en bro: Broen blev bygget i 1998." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Kvinden, ___ bor på anden sal, er læge.",
+            "options": ["der", "hvem", "hvad", "hvilken"],
+            "correct": 0,
+            "explain": "Som subjekt i den henførende sætning bruger man 'der' (eller 'som'). 'Hvem' bruges ikke som henførende ord her."
+          },
+          {
+            "id": "q2",
+            "q": "Bogen, ___ jeg læser lige nu, er spændende.",
+            "options": ["som", "der", "hvem", "hvis"],
+            "correct": 0,
+            "explain": "Som objekt kan man KUN bruge 'som' — 'der' kan kun være subjekt."
+          },
+          {
+            "id": "q3",
+            "q": "Kagerne ___ hver fredag i kantinen.",
+            "options": ["bages", "bager", "er bage", "at bages"],
+            "correct": 0,
+            "explain": "Noget generelt og gentaget → s-passiv: Kagerne bages hver fredag."
+          },
+          {
+            "id": "q4",
+            "q": "Storebæltsbroen ___ i 1998.",
+            "options": ["blev bygget", "bygges", "bygger", "er bygge"],
+            "correct": 0,
+            "explain": "En konkret, afsluttet hændelse → blive-passiv i datid: blev bygget."
+          },
+          {
+            "id": "q5",
+            "q": "___ flere cykler end biler i København.",
+            "options": ["Der er", "Det er", "Den er", "Han er"],
+            "correct": 0,
+            "explain": "Eksistens ('der findes') → 'der er': Der er flere cykler end biler."
+          }
+        ]
+      }
 }}};

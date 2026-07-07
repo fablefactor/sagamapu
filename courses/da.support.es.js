@@ -11,9 +11,9 @@
    NEVER renumber or reuse existing ids, even when inserting mid-array
    or deleting items.
 
-   PART 1 (A1): overlays for the 7 A1 topics. A2/B1 overlays are appended
-   at the //__APPEND_HERE__ sentinel inside topics: replace
-   "//__APPEND_HERE__\n}};" with "<next topics>,\n//__APPEND_HERE__\n}};" */
+   COMPLETE: overlays for all 23 topics (A1 x7, A2 x8, B1 x8), authored
+   in three parts. The append sentinel used during authoring has been
+   removed. */
 window.PTB_COURSES.da.support = window.PTB_COURSES.da.support || {};
 window.PTB_COURSES.da.support.es = {
   "name": "Español",
@@ -708,5 +708,372 @@ window.PTB_COURSES.da.support.es = {
         "q5": "Aquí 'må' significa necesidad: tengo que irme. Es la trampa de 'må' — también puede significar permiso."
       }
     },
-//__APPEND_HERE__
+    "b1-perf": {
+      "title": "El perfecto — ¿har o er?",
+      "theory": {
+        "t1": {
+          "heading": "El perfecto con 'har'",
+          "body": "El perfecto (førnutid) se forma con <strong>har</strong> + participio: <em>Jeg <strong>har spist</strong> morgenmad</em> (ya tomé desayuno). Se usa cuando una acción del pasado todavía importa ahora, o cuando el momento exacto no interesa: <em>Har du nogensinde prøvet at vinterbade?</em> (¿alguna vez has probado el baño de invierno?). La mayoría de los verbos forma el perfecto con 'har'."
+        },
+        "t2": {
+          "heading": "'Er' con movimiento y transición",
+          "body": "Los verbos que describen <strong>movimiento de un lugar a otro</strong> o una <strong>transición</strong> forman el perfecto con <strong>er</strong>: <em>er gået, er kommet, er rejst, er flyttet, er begyndt</em> — ¡y <em>er blevet</em>! Compara: <em>Hun <strong>er gået</strong></em> (= ya se fue, no está) y <em>Hun <strong>har gået</strong> en lang tur</em> (= la actividad de caminar). Foco en el resultado → 'er'; foco en la actividad → 'har'."
+        },
+        "t3": {
+          "heading": "Siden, i — y cuándo usar el pasado simple",
+          "body": "Con el perfecto se usa <strong>siden</strong> + un punto en el tiempo e <strong>i</strong> + una duración: <em>Jeg har boet her <strong>siden 2020</strong> / <strong>i fem år</strong></em> — y todavía vivo aquí. Pero con un momento terminado como <em>i går</em> (ayer), <em>sidste sommer</em> o <em>i 2010</em> hay que usar el <strong>pasado simple</strong>: <em>I går <strong>spiste</strong> jeg stegt flæsk</em> — nunca 'i går har jeg spist'."
+        }
+      },
+      "examples": {
+        "e1": "Llevo tres años viviendo en Copenhague.",
+        "e2": "Ella acaba de irse — quizás todavía la alcanzas.",
+        "e3": "Nos conocemos desde el liceo.",
+        "e4": "El tren ya se fue, así que tenemos que esperar el próximo.",
+        "e5": "Fue papá hace poco — tuvieron una hija el miércoles pasado.",
+        "e6": "¿Alguna vez has probado el baño de invierno en el mar?",
+        "e7": "Ayer comimos cerdo frito donde mi abuela.",
+        "e8": "Llegó la primavera — las hayas ya echaron hojas."
+      },
+      "flashcards": {
+        "f1": "el perfecto (har/er + participio): Jeg har spist = he comido",
+        "f2": "se fue / se ha ido: Hun er gået = ella ya no está",
+        "f3": "llegó / ha llegado: Gæsterne er kommet = llegaron los invitados",
+        "f4": "se ha vuelto / llegó a ser: Han er blevet far = fue papá",
+        "f5": "desde (un punto en el tiempo): siden 2020 = desde 2020",
+        "f6": "hace / durante (duración): i tre år = desde hace tres años",
+        "f7": "alguna vez (en la vida): Har du nogensinde…? = ¿alguna vez has…?",
+        "f8": "todavía no: Jeg har endnu ikke set filmen = todavía no he visto la película",
+        "f9": "el participio (la forma del verbo después de har/er): spist, gået, kommet",
+        "f10": "ya (antes de lo esperado): Toget er allerede kørt = el tren ya se fue"
+      },
+      "quiz": {
+        "q1": "Los verbos de movimiento como 'gå' forman el perfecto con 'er': Hun er gået = ella se fue.",
+        "q2": "'Siden' + punto en el tiempo (siden 2019 = desde 2019); 'i' + duración (i fem år = hace cinco años).",
+        "q3": "Con un momento terminado como 'i går' (ayer) se usa el pasado simple, no el perfecto: I går spiste jeg rugbrød.",
+        "q4": "'Kende' (conocer) no es un verbo de movimiento ni de transición → perfecto con 'har': Vi har kendt hinanden = nos conocemos.",
+        "q5": "'Har gået' describe la actividad (caminó una larga caminata); 'er gået' enfoca el resultado — ella ya no está aquí."
+      }
+    },
+    "b1-fortael": {
+      "title": "Contar historias — dengang, da y plejede at",
+      "theory": {
+        "t1": {
+          "heading": "Antes del pasado: el pluscuamperfecto",
+          "body": "Cuando algo pasó <strong>antes</strong> de otra cosa en el pasado, se usa el pluscuamperfecto: <strong>havde/var</strong> + participio: <em>Da vi nåede stationen, <strong>var</strong> toget allerede <strong>kørt</strong></em> (cuando llegamos a la estación, el tren ya se había ido). La elección entre 'havde' y 'var' sigue la misma regla que el perfecto: movimiento y transición → var (<em>var gået, var blevet</em>); el resto → havde (<em>havde spist, havde set</em>)."
+        },
+        "t2": {
+          "heading": "Da, når y dengang — la trampa",
+          "body": "<strong>Da</strong> se usa para UNA sola vez o período en el pasado: <em><strong>Da</strong> jeg var ti, flyttede vi til Odense</em> (cuando tenía diez, nos mudamos a Odense). <strong>Når</strong> se usa para acciones <strong>repetidas</strong> — ¡también en el pasado! — y para el futuro: <em><strong>Når</strong> vi besøgte farmor, fik vi altid boller</em> (cada vez que visitábamos a la abuela, siempre nos daba pancitos). <strong>Dengang</strong> es un adverbio que significa 'en ese entonces': <em><strong>Dengang</strong> var der ingen mobiltelefoner</em>."
+        },
+        "t3": {
+          "heading": "Plejede at — y palabras para narrar",
+          "body": "Los hábitos del pasado se expresan con <strong>plejede at</strong> + infinitivo: <em>Jeg <strong>plejede at</strong> cykle til skole</em> (yo solía ir en bici al colegio). Arma tu relato con <strong>først</strong> (primero), <strong>så</strong> (después), <strong>derefter</strong> (luego), <strong>bagefter</strong> (después de eso), <strong>pludselig</strong> (de repente) y <strong>til sidst</strong> (al final). Dos marcos clásicos de una infancia danesa: la <strong>kolonihave</strong> (el pequeño jardín familiar con casita fuera de la ciudad) y la <strong>efterskole</strong> (el internado donde muchos jóvenes hacen 9° o 10° grado)."
+        }
+      },
+      "examples": {
+        "e1": "Cuando era niño, pasábamos todos los veranos en el jardín familiar.",
+        "e2": "Cada vez que visitábamos a mi abuela, siempre nos daba pancitos y chocolate caliente.",
+        "e3": "Yo solía ir en bici al colegio, incluso cuando nevaba.",
+        "e4": "Cuando llegamos a la estación, el tren ya se había ido.",
+        "e5": "Ella nunca había visto el mar antes de mudarse a Dinamarca.",
+        "e6": "En ese entonces no había celulares — jugábamos en la calle nomás.",
+        "e7": "Después de noveno grado, mi hermano se fue a un internado (efterskole) en Jutlandia.",
+        "e8": "Primero fuimos en bici a la playa, después nos bañamos, y al final comimos un helado."
+      },
+      "flashcards": {
+        "f1": "el pluscuamperfecto (havde/var + participio): Toget var kørt = el tren se había ido",
+        "f2": "solía (hábito del pasado): Jeg plejede at cykle = yo solía andar en bici",
+        "f3": "en ese entonces / en aquella época",
+        "f4": "cuando (UNA sola vez en el pasado): Da jeg var barn… = cuando era niño…",
+        "f5": "cuando / cada vez que (repetición o futuro): Når vi besøgte farmor…",
+        "f6": "jardín familiar con casita fuera de la ciudad, que muchas familias danesas arriendan",
+        "f7": "internado donde muchos jóvenes daneses hacen 9° o 10° grado",
+        "f8": "de repente: Pludselig begyndte det at regne = de repente empezó a llover",
+        "f9": "al final (de una serie de hechos): Til sidst spiste vi is = al final comimos helado",
+        "f10": "la infancia"
+      },
+      "quiz": {
+        "q1": "Una sola vez o período en el pasado → 'da'. 'Når' se usa para repeticiones y para el futuro.",
+        "q2": "Acciones repetidas en el pasado ('altid' = siempre) → 'når'. 'Da' es solo para una única vez.",
+        "q3": "Algo que pasó ANTES de otra cosa en el pasado → pluscuamperfecto. 'Køre' va con 'er/var': toget var kørt = el tren se había ido.",
+        "q4": "'Plejede at' expresa un hábito del pasado: en ese entonces jugaba fútbol seguido.",
+        "q5": "La efterskole es un internado para jóvenes de 9° o 10° grado. La escuela vespertina para adultos se llama 'aftenskole'."
+      }
+    },
+    "b1-hvis": {
+      "title": "Hvis — condiciones y hablar del clima",
+      "theory": {
+        "t1": {
+          "heading": "La frase con hvis es subordinada",
+          "body": "<strong>Hvis</strong> (si) introduce una condición: <em>Hvis det regner, bliver vi hjemme</em> (si llueve, nos quedamos en casa). La frase con hvis es una <strong>subordinada</strong>, así que adverbios como 'ikke' van <strong>antes</strong> del verbo: <em>hvis det <strong>ikke</strong> regner</em> (si no llueve). Y cuando la frase con hvis va primero, la frase principal empieza con el verbo: <em>Hvis solen skinner, <strong>cykler vi</strong> til stranden</em> — no 'vi cykler'."
+        },
+        "t2": {
+          "heading": "Situaciones imaginarias con ville y kunne",
+          "body": "Para algo que no es real — solo imaginado — se usa el <strong>pasado</strong> en la frase con hvis y <strong>ville/kunne + infinitivo</strong> en la principal: <em>Hvis jeg <strong>havde</strong> mere tid, <strong>ville</strong> jeg lære at sejle</em> (si tuviera más tiempo, aprendería a navegar). Los consejos se dan con la expresión fija: <em><strong>Hvis jeg var dig</strong>, ville jeg tage toget</em> (yo que tú, tomaría el tren)."
+        },
+        "t3": {
+          "heading": "El clima — el tema eterno",
+          "body": "El clima es el tema favorito de los daneses y calza perfecto con las frases condicionales: <em>Hvis vejret bliver godt på lørdag, griller vi i haven</em> (si el sábado está bueno el tiempo, hacemos asado en el jardín). Palabras útiles: <strong>det blæser</strong> (hay viento), <strong>en byge</strong> (un chubasco), <strong>gråvejr</strong> (día gris), <strong>vejrudsigten</strong> (el pronóstico). Y recuerda el lema danés: <em>No existe el mal clima — solo la ropa equivocada</em>."
+        }
+      },
+      "examples": {
+        "e1": "Si mañana llueve, nos quedamos en casa pasándolo rico.",
+        "e2": "Vamos en bici a la playa si sale el sol.",
+        "e3": "Yo que tú, llevaría la chaqueta de lluvia.",
+        "e4": "Si tuviera más tiempo, aprendería a navegar.",
+        "e5": "Si el tren no llega, podemos tomar el bus.",
+        "e6": "Si el sábado está bueno el tiempo, hacemos un asado en el jardín.",
+        "e7": "Ella se mudaría a Bornholm si pudiera trabajar desde la casa.",
+        "e8": "No existe el mal clima — solo la ropa equivocada."
+      },
+      "flashcards": {
+        "f1": "si (condición): Hvis det regner… = si llueve…",
+        "f2": "una condición",
+        "f3": "yo que tú… / si yo fuera tú… (expresión fija para dar un consejo)",
+        "f4": "pasado de 'vil' — para situaciones imaginadas: Jeg ville rejse = yo viajaría",
+        "f5": "una chaqueta de lluvia / un impermeable",
+        "f6": "el pronóstico del tiempo",
+        "f7": "hay viento / está ventoso",
+        "f8": "un chubasco (lluvia corta y repentina)",
+        "f9": "hacer asado / asar a la parrilla",
+        "f10": "igual / de todas maneras: llovía, pero salimos a caminar igual"
+      },
+      "quiz": {
+        "q1": "La frase con hvis es subordinada, así que 'ikke' va antes del verbo: hvis det ikke regner (si no llueve).",
+        "q2": "Cuando la frase con hvis va primero, el verbo viene justo después de la coma: …, bliver vi hjemme.",
+        "q3": "Expresión fija con pasado para una situación imaginada: Hvis jeg var dig… = yo que tú…",
+        "q4": "Situación imaginada → pasado en la frase con hvis y 'ville' + infinitivo en la principal: compraría una casa de verano.",
+        "q5": "El dicho danés completo: Der findes ikke dårligt vejr — kun forkert tøj = no existe el mal clima, solo la ropa equivocada."
+      }
+    },
+    "b1-mening": {
+      "title": "Opiniones — synes, tror y mener",
+      "theory": {
+        "t1": {
+          "heading": "¿Synes, tror o mener?",
+          "body": "Tres verbos que los estudiantes de B1 suelen confundir: <strong>synes</strong> = un gusto o juicio personal basado en tu propia experiencia (<em>Jeg synes, kaffen smager godt</em> = encuentro rico el café). <strong>Tror</strong> = algo que consideras probable pero no sabes con seguridad (<em>Jeg tror, det regner i morgen</em> = creo que mañana llueve). <strong>Mener</strong> = una postura pensada (<em>Jeg mener, at kommunen bør bygge flere cykelstier</em> = opino que la comuna debería construir más ciclovías). Test: ¿Lo viviste tú mismo? → synes. ¿No estás seguro de los hechos? → tror."
+        },
+        "t2": {
+          "heading": "De acuerdo y en desacuerdo",
+          "body": "Uno está <strong>enig med</strong> una persona <strong>i</strong> algo: <em>Jeg er enig med dig i, at prisen er for høj</em> (estoy de acuerdo contigo en que el precio es muy alto). Gradúa tu acuerdo: <strong>helt enig</strong> (totalmente de acuerdo), <strong>delvist enig</strong> (en parte de acuerdo), <strong>helt uenig</strong> (en total desacuerdo). Frases útiles para discutir: <em>på den ene side… på den anden side…</em> (por un lado… por otro lado…), <em>det kommer an på…</em> (depende de…), <em>det er et godt argument, men…</em> (es un buen argumento, pero…)."
+        },
+        "t3": {
+          "heading": "Vida de asociaciones y consenso",
+          "body": "Dinamarca es el país de las asociaciones: la mayoría de los daneses es miembro de al menos una <strong>forening</strong> — un club deportivo, un coro o una asociación de jardines familiares. La cultura danesa de discusión busca el <strong>consenso</strong>: se discute, se escucha y se encuentra <strong>un compromiso</strong> con el que todos puedan vivir. Por eso importan las frases corteses: <em>Hvad synes du?</em> (¿tú qué opinas?) <em>Skal vi ikke finde en fælles løsning?</em> (¿no buscamos una solución común?)."
+        }
+      },
+      "examples": {
+        "e1": "Me parece muy buena idea la nueva ciclovía.",
+        "e2": "Creo que mañana va a llover.",
+        "e3": "Opino que la comuna debería construir más viviendas baratas.",
+        "e4": "Estoy totalmente de acuerdo contigo en que el precio es demasiado alto.",
+        "e5": "No estoy de acuerdo — pero por otro lado, entiendo bien tu argumento.",
+        "e6": "Depende de cuánto cueste.",
+        "e7": "La mayoría de los daneses es miembro de al menos una asociación.",
+        "e8": "Busquemos un compromiso con el que todos puedan vivir."
+      },
+      "flashcards": {
+        "f1": "parecerle a uno / opinar (gusto personal): Jeg synes, filmen er god = la película me parece buena",
+        "f2": "creer (sin estar seguro): Jeg tror, det regner i morgen = creo que mañana llueve",
+        "f3": "opinar / sostener (postura pensada): Jeg mener, at… = yo opino que…",
+        "f4": "de acuerdo: Jeg er enig med dig = estoy de acuerdo contigo",
+        "f5": "en desacuerdo: Vi er uenige = no estamos de acuerdo",
+        "f6": "un compromiso / un punto medio (donde ambas partes ceden un poco)",
+        "f7": "una asociación / un club (por ej. un club deportivo)",
+        "f8": "por otro lado / por otra parte",
+        "f9": "depende de: Det kommer an på prisen = depende del precio",
+        "f10": "un argumento (una razón para tu opinión)"
+      },
+      "quiz": {
+        "q1": "Experiencia o gusto propio → 'synes'. 'Tror' se usa cuando no estás seguro de los hechos.",
+        "q2": "Algo probable que no sabes con seguridad → 'tror': creo que el tren llega a las diez.",
+        "q3": "Una postura pensada y argumentada → 'mener'.",
+        "q4": "'Helt enig' = tengo exactamente la misma opinión, totalmente de acuerdo.",
+        "q5": "Una 'forening' es un grupo organizado en torno a un interés común — deporte, música, jardines. La mayoría de los daneses es miembro de al menos una."
+      }
+    },
+    "b1-nyheder": {
+      "title": "Noticias y estilo indirecto",
+      "theory": {
+        "t1": {
+          "heading": "Frases con 'at' y estilo indirecto",
+          "body": "Para reproducir lo que dicen otros se usa una frase con <strong>at</strong> (que): <em>Han siger, <strong>at</strong> han kommer</em> (dice que viene). Siempre hay coma antes de 'at'. En las noticias esta forma aparece todo el tiempo: <em>DR skriver, at regeringen fremlægger en ny klimaplan</em> (DR escribe que el gobierno presenta un nuevo plan climático). <strong>DR</strong> (Danmarks Radio) es el medio público danés con TV, radio y noticias."
+        },
+        "t2": {
+          "heading": "'Ikke' ANTES del verbo en subordinadas",
+          "body": "La regla de orden de palabras más importante del B1: en una frase <strong>subordinada</strong>, 'ikke' (y otros adverbios como 'aldrig', 'altid', 'ofte') va <strong>antes</strong> del verbo conjugado. Principal: <em>Han kommer <strong>ikke</strong></em> (él no viene). Subordinada: <em>Hun siger, at han <strong>ikke kommer</strong></em> — nunca 'at han kommer ikke'. Regla para recordar: conjunción + sujeto + adverbio + verbo."
+        },
+        "t3": {
+          "heading": "Preguntas indirectas",
+          "body": "Las preguntas de sí/no se reproducen con <strong>om</strong> (si): <em>Hun spurgte, <strong>om</strong> jeg kunne komme</em> (preguntó si yo podía venir). Las preguntas con palabra interrogativa la mantienen, pero con <strong>orden de frase subordinada</strong> (sujeto antes del verbo): <em>Han spurgte, hvor <strong>jeg boede</strong></em> — no 'hvor boede jeg'. Cuando la palabra interrogativa es el sujeto, se agrega <strong>der</strong>: <em>Han spurgte, hvem <strong>der</strong> havde vundet</em> (preguntó quién había ganado)."
+        }
+      },
+      "examples": {
+        "e1": "DR escribe que el gobierno presenta hoy un nuevo plan climático.",
+        "e2": "Ella dice que no tiene tiempo el fin de semana.",
+        "e3": "Contó que nunca había visto tanta nieve.",
+        "e4": "El periodista le preguntó al ministro si el plan va a salir caro.",
+        "e5": "Mi vecino me preguntó dónde había comprado mi bicicleta.",
+        "e6": "Escuché en la radio que el puente está cerrado por el viento.",
+        "e7": "Ella quería saber a qué hora salía el tren.",
+        "e8": "Preguntó quién había ganado la elección."
+      },
+      "flashcards": {
+        "f1": "una noticia: Har du hørt nyheden? = ¿supiste la noticia?",
+        "f2": "Danmarks Radio — el medio público danés (TV, radio y noticias)",
+        "f3": "un diario / periódico (por ej. Politiken)",
+        "f4": "un/una periodista",
+        "f5": "preguntar: Hun spurgte, om jeg kom = preguntó si yo venía",
+        "f6": "responder / contestar",
+        "f7": "el gobierno (los ministros que dirigen el país)",
+        "f8": "una elección (por ej. las elecciones parlamentarias)",
+        "f9": "según: Ifølge DR… = según DR…",
+        "f10": "contar / relatar: Han fortalte, at… = él contó que…"
+      },
+      "quiz": {
+        "q1": "En las subordinadas, 'ikke' va ANTES del verbo: …, at hun ikke kommer = que ella no viene.",
+        "q2": "Pregunta indirecta de sí/no → 'om'. ¡Ojo! El 'si' condicional es 'hvis', pero el 'si' de pregunta indirecta es 'om'.",
+        "q3": "Después de la palabra interrogativa viene orden de subordinada — sujeto antes del verbo: hvor jeg boede = dónde vivía yo.",
+        "q4": "Adverbios como 'aldrig' (nunca) van antes del verbo en la subordinada: …, at han aldrig havde set så meget sne.",
+        "q5": "DR (Danmarks Radio) es el medio público de Dinamarca, con TV, radio y noticias."
+      }
+    },
+    "b1-skriv": {
+      "title": "Mails y cartas formales",
+      "theory": {
+        "t1": {
+          "heading": "Du — también en lo formal",
+          "body": "En danés se escribe <strong>du</strong> (tú) — también en mails formales a la comuna, al banco y a empresas. <strong>De</strong> (usted) hoy casi no se usa por escrito (la casa real y algunas cartas muy formales). Lo formal en danés está en el <strong>tono y la estructura</strong>, no en 'De'. Para empezar: <strong>Kære</strong> + nombre (se usa tanto en lo formal como en lo privado), <strong>Hej</strong> + nombre (informal) o <strong>Til rette vedkommende</strong> (a quien corresponda) cuando no conoces al destinatario."
+        },
+        "t2": {
+          "heading": "Despedidas y estructura",
+          "body": "Un mail formal termina con <strong>Med venlig hilsen</strong> (o solo <strong>Venlig hilsen</strong>, abreviado <em>Mvh</em>) = saludos cordiales. A amigos y familia se les escribe <strong>Kærlig hilsen</strong> (<em>KH</em>) = con cariño. Escribe un <strong>asunto</strong> claro y anda al grano rápido: <em>Jeg skriver til jer, fordi…</em> (les escribo porque…). Buen cierre: <em>På forhånd tak</em> (gracias de antemano)."
+        },
+        "t3": {
+          "heading": "La Dinamarca digital y la postulación de trabajo",
+          "body": "La administración pública danesa es digital: las cartas de la comuna y de Skat (impuestos) llegan a <strong>Digital Post (e-Boks)</strong>, uno se identifica con <strong>MitID</strong>, y en <strong>borger.dk</strong> se hacen trámites como el cambio de domicilio y la tarjeta de salud. Una <strong>postulación de trabajo</strong> consiste en una carta corta y un <strong>CV</strong>. La apertura clásica: <em>Jeg søger hermed stillingen som…</em> (por la presente postulo al puesto de…)."
+        }
+      },
+      "examples": {
+        "e1": "Querida Hanne: gracias por tu mail — te respondo mañana.",
+        "e2": "Les escribo porque tengo una pregunta sobre mi cuenta.",
+        "e3": "Por la presente postulo al puesto de asistente de cocina.",
+        "e4": "Adjunto encontrarás mi CV y mi carta de postulación.",
+        "e5": "Tienes correo nuevo de la comuna en e-Boks.",
+        "e6": "Saludos cordiales, Mette Jensen.",
+        "e7": "En borger.dk se puede avisar un cambio de domicilio y pedir una nueva tarjeta de salud.",
+        "e8": "Acuérdate de entrar con MitID cuando vayas a leer tu correo digital."
+      },
+      "flashcards": {
+        "f1": "Querido/a… (inicio estándar de cartas y mails, formal e informal)",
+        "f2": "saludos cordiales (la despedida formal habitual, abreviada Mvh)",
+        "f3": "con cariño (despedida para la familia y los amigos cercanos, KH)",
+        "f4": "una postulación (carta formal para pedir un trabajo, por ej.)",
+        "f5": "un CV / currículum",
+        "f6": "adjunto (enviado como archivo en un mail)",
+        "f7": "el buzón digital donde el Estado envía sus cartas (Digital Post)",
+        "f8": "el sitio web del Estado danés para trámites (mudanza, tarjeta de salud…)",
+        "f9": "la identificación digital danesa para el banco y los servicios públicos",
+        "f10": "un puesto / un cargo: Jeg søger stillingen som kok = postulo al puesto de cocinero"
+      },
+      "quiz": {
+        "q1": "'Med venlig hilsen' es la despedida formal estándar. 'Kærlig hilsen' es para la familia y los amigos.",
+        "q2": "Si no conoces al destinatario: 'Til rette vedkommende' (a quien corresponda) o 'Kære' + el departamento.",
+        "q3": "e-Boks (Digital Post) es el buzón digital donde la comuna, Skat y otras autoridades envían sus cartas.",
+        "q4": "'Jeg søger hermed stillingen som…' es la apertura clásica de una postulación de trabajo.",
+        "q5": "Hoy 'De' casi no se usa: hasta los mails formales van con 'du'. Lo formal está en el tono y la estructura."
+      }
+    },
+    "b1-hygge": {
+      "title": "Sentimientos y hygge",
+      "theory": {
+        "t1": {
+          "heading": "At have det godt — y skidt",
+          "body": "La pregunta <em>Hvordan har du det?</em> (¿cómo estás?) se responde con <strong>at have det</strong> + adverbio: <em>Jeg har det godt/fint/skidt</em> (estoy bien / más o menos / mal). Palabras de emociones importantes: <strong>glad</strong> (contento), <strong>ked af det</strong> (triste), <strong>sur</strong> (enojado), <strong>træt</strong> (cansado), <strong>stolt</strong> (orgulloso), <strong>bekymret</strong> (preocupado), <strong>ensom</strong> (solo): <em>Hun er ked af det, fordi hendes kat er syg</em> (está triste porque su gato está enfermo)."
+        },
+        "t2": {
+          "heading": "El reflexivo 'sig' — y glæde sig til/over",
+          "body": "Muchos verbos de emociones son <strong>reflexivos</strong>: <em>jeg glæder <strong>mig</strong>, du glæder <strong>dig</strong>, han/hun/de glæder <strong>sig</strong></em>. También: <strong>at føle sig</strong> (sentirse: <em>Han føler sig ensom</em>) y <strong>at hygge sig</strong> (pasarlo rico y tranquilo). La gran diferencia: <strong>glæde sig TIL</strong> = tener muchas ganas de algo futuro (<em>Jeg glæder mig til sommerferien</em> = tengo muchas ganas de las vacaciones); <strong>glæde sig OVER</strong> = alegrarse de algo que pasa ahora o ya pasó (<em>Hun glæder sig over den gode nyhed</em> = se alegra de la buena noticia)."
+        },
+        "t3": {
+          "heading": "Hygge, uhyggelig — y la janteloven",
+          "body": "<strong>Hygge</strong> es ese ambiente cálido y relajado con velas, mantas y tiempo de sobra — <em>en hyggelig aften</em> (una noche acogedora). Pero ojo: <strong>uhyggelig</strong> NO significa 'poco acogedor' — significa <strong>escalofriante, de miedo</strong>: <em>en uhyggelig film</em> (una película de terror). Dos palabras para conversar sobre la sociedad danesa: <strong>tillid</strong> (confianza — los daneses confían unos en otros: los coches de guagua quedan afuera del café) y <strong>janteloven</strong> (la regla no escrita: no creas que eres mejor que los demás)."
+        }
+      },
+      "examples": {
+        "e1": "¿Cómo estás hoy? — Estoy súper bien, gracias.",
+        "e2": "Tengo muchas ganas del almuerzo navideño del viernes.",
+        "e3": "Ella se alegra de que su hijo haya encontrado trabajo.",
+        "e4": "Lo pasamos rico con velas, mantas y chocolate caliente.",
+        "e5": "Él se sentía solo cuando recién se había mudado a Dinamarca.",
+        "e6": "La película era tan escalofriante que no pude dormir.",
+        "e7": "Los daneses se tienen mucha confianza — los coches de guagua suelen quedar afuera del café.",
+        "e8": "La janteloven dice que uno no debe creerse mejor que los demás."
+      },
+      "flashcards": {
+        "f1": "estar bien / sentirse bien: Jeg har det godt = estoy bien",
+        "f2": "triste: Hun er ked af det = ella está triste",
+        "f3": "tener muchas ganas de algo futuro: Jeg glæder mig til ferien = tengo ganas de las vacaciones",
+        "f4": "alegrarse de algo que ya pasa o pasó",
+        "f5": "sentirse (reflexivo): Han føler sig træt = se siente cansado",
+        "f6": "pasarlo rico y tranquilo, típicamente con velas y buena comida",
+        "f7": "acogedor / agradable: en hyggelig aften = una noche acogedora",
+        "f8": "escalofriante, de miedo — ¡lo CONTRARIO de agradable!: en uhyggelig film",
+        "f9": "la confianza: los daneses confían mucho unos en otros",
+        "f10": "la 'ley de Jante' — la regla no escrita de no creerse mejor que los demás"
+      },
+      "quiz": {
+        "q1": "Algo futuro → 'glæde sig til'; algo que ya pasó → 'glæde sig over'. El cumpleaños es el sábado → til.",
+        "q2": "Alegrarse de algo que ya ocurrió (aprobó el examen) → 'glæde sig over'.",
+        "q3": "¡Falso amigo! 'Uhyggelig' no es 'poco acogedor': significa escalofriante, de miedo.",
+        "q4": "El pronombre reflexivo de han/hun/de es 'sig': Han føler sig ensom = él se siente solo.",
+        "q5": "La janteloven es la regla no escrita: no creas que eres mejor que los demás."
+      }
+    },
+    "b1-struktur": {
+      "title": "Som, der y la pasiva",
+      "theory": {
+        "t1": {
+          "heading": "Som y der",
+          "body": "Las frases relativas se forman con <strong>som</strong> o <strong>der</strong> (que/quien). La regla: <strong>der SOLO puede ser sujeto</strong> de la frase relativa; <strong>som</strong> puede ser sujeto y objeto. Sujeto: <em>Kvinden, <strong>som/der</strong> bor på anden sal, er læge</em> (la mujer que vive en el segundo piso es doctora). Objeto: <em>Bogen, <strong>som</strong> jeg læser, er spændende</em> (el libro que estoy leyendo es entretenido) — aquí 'der' es imposible."
+        },
+        "t2": {
+          "heading": "Dos tipos de pasiva",
+          "body": "El danés tiene dos pasivas. La <strong>pasiva en -s</strong> se usa para lo general, lo repetido y las reglas: <em>Rugbrødet <strong>bages</strong> hver morgen</em> (el pan de centeno se hornea cada mañana), <em>Der <strong>tales</strong> dansk i Danmark</em> (en Dinamarca se habla danés). La <strong>pasiva con blive</strong> se usa para un hecho concreto: <em>Broen <strong>blev bygget</strong> i 1998</em> (el puente fue construido en 1998). Algunas formas en -s son recíprocas, no pasivas: <em>vi <strong>ses</strong>, vi <strong>mødes</strong></em> (nos vemos, nos juntamos)."
+        },
+        "t3": {
+          "heading": "Der er, det er — e infinitivo con o sin 'at'",
+          "body": "<strong>Der er</strong> se usa para decir que algo existe: <em>Der er flere cykler end biler i København</em> (hay más bicis que autos en Copenhague). <strong>Det er</strong> señala o identifica: <em>Det er min cykel</em> (esa es mi bici). El infinitivo normalmente lleva <strong>at</strong>: <em>Det er svært <strong>at</strong> udtale 'rødgrød med fløde'</em> (es difícil pronunciar…) — pero después de los verbos modales va <strong>sin</strong> 'at': <em>Jeg kan <strong>svømme</strong></em> (sé nadar)."
+        }
+      },
+      "examples": {
+        "e1": "La mujer que vive en el segundo piso es doctora.",
+        "e2": "La película que vimos ayer era muy escalofriante.",
+        "e3": "El pan de centeno se hornea cada mañana en la pequeña panadería.",
+        "e4": "En Dinamarca y en las Islas Feroe se habla danés.",
+        "e5": "El puente fue construido en 1998.",
+        "e6": "En Copenhague hay más bicicletas que autos.",
+        "e7": "Es difícil pronunciar 'rødgrød med fløde'.",
+        "e8": "¡Nos vemos el viernes en el cumpleaños!"
+      },
+      "flashcards": {
+        "f1": "que / quien (relativo — puede ser sujeto u objeto): Bogen, som jeg læser",
+        "f2": "que / quien (relativo — SOLO sujeto): Manden, der bor ved siden af",
+        "f3": "la pasiva en -s (para lo general): Rugbrødet bages = el pan se hornea",
+        "f4": "la pasiva con blive (para un hecho concreto): Broen blev bygget = el puente fue construido",
+        "f5": "hay (existencia): Der er mange cykler = hay muchas bicis",
+        "f6": "es / esa es (identificación): Det er min cykel = esa es mi bici",
+        "f7": "juntarse / encontrarse (forma en -s recíproca): Vi mødes klokken ti = nos juntamos a las diez",
+        "f8": "nos vemos (despedida fija)",
+        "f9": "pronunciar: 'Rødgrød' er svært at udtale = es difícil de pronunciar",
+        "f10": "construir: Broen blev bygget i 1998 = el puente fue construido en 1998"
+      },
+      "quiz": {
+        "q1": "Como sujeto de la relativa sirven 'der' y 'som'; aquí la opción correcta es 'der'. 'Hvem' no se usa como relativo.",
+        "q2": "Como objeto SOLO se puede usar 'som' — 'der' solo puede ser sujeto.",
+        "q3": "Algo general y repetido (cada viernes) → pasiva en -s: bages (se hornean).",
+        "q4": "Un hecho concreto y terminado → pasiva con blive en pasado: blev bygget (fue construido).",
+        "q5": "Existencia ('hay') → 'der er': hay más bicis que autos en Copenhague."
+      }
+    }
 }};
