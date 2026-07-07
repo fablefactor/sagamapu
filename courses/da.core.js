@@ -663,5 +663,661 @@ window.PTB_COURSES.da = {
           }
         ]
       },
+      "a2-datid": {
+        "id": "a2-datid",
+        "icon": "🕰️",
+        "level": "A2",
+        "title": "Datid — i går og i sommer",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Regelmæssig datid: -ede og -te",
+            "body": "De fleste danske verber danner datid med en endelse. Gruppe 1 får <strong>-ede</strong>: <em>at lave → lavede</em>, <em>at bo → boede</em>, <em>at arbejde → arbejdede</em>, <em>at spille → spillede</em>. Gruppe 2 får <strong>-te</strong>: <em>at spise → spiste</em>, <em>at købe → købte</em>, <em>at læse → læste</em>, <em>at høre → hørte</em>. Formen er den samme for alle personer: <em>jeg lavede, vi lavede, de lavede</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Uregelmæssige verber",
+            "body": "Mange vigtige verber er uregelmæssige — dem skal man lære udenad: <strong>at være → var</strong>, <strong>at have → havde</strong>, <strong>at gå → gik</strong>, <strong>at se → så</strong>, <strong>at tage → tog</strong>, <strong>at få → fik</strong>, <strong>at drikke → drak</strong>, <strong>at komme → kom</strong>. Fx: <em>I går gik vi en tur, og vi drak kaffe bagefter.</em>"
+          },
+          {
+            "id": "t3",
+            "heading": "Ordstilling og weekenden",
+            "body": "Verbet står altid på <strong>anden plads</strong> — også når sætningen begynder med et tidsudtryk: <em><strong>I går tog</strong> vi til stranden</em> (ikke 'i går vi tog'). Gode tidsudtryk til datid: <strong>i går</strong>, <strong>i sidste uge</strong>, <strong>i sommer</strong>, <strong>i weekenden</strong>. Mange danskere fortæller mandag morgen, hvad de lavede i weekenden — ofte i <strong>sommerhuset</strong>, et lille hus ved kysten, hvor familien slapper af."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "I går arbejdede jeg hjemmefra." },
+          { "id": "e2", "text": "Vi spiste rugbrød til frokost." },
+          { "id": "e3", "text": "I sommer var vi i sommerhus ved Vesterhavet." },
+          { "id": "e4", "text": "Hun gik en lang tur i skoven." },
+          { "id": "e5", "text": "Jeg så en god film i fredags." },
+          { "id": "e6", "text": "De boede i Aarhus i to år." },
+          { "id": "e7", "text": "Hvad lavede du i weekenden? — Jeg slappede af." },
+          { "id": "e8", "text": "Vi drak kaffe og hyggede os hele aftenen." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "lavede", "def": "Datid af 'at lave' — endelsen -ede." },
+          { "id": "f2", "front": "spiste", "def": "Datid af 'at spise' — endelsen -te." },
+          { "id": "f3", "front": "gik", "def": "Datid af 'at gå' — uregelmæssigt." },
+          { "id": "f4", "front": "så (datid)", "def": "Datid af 'at se' — uregelmæssigt." },
+          { "id": "f5", "front": "var", "def": "Datid af 'at være' — uregelmæssigt." },
+          { "id": "f6", "front": "havde", "def": "Datid af 'at have' — uregelmæssigt." },
+          { "id": "f7", "front": "i går", "def": "Dagen før i dag." },
+          { "id": "f8", "front": "i sidste uge", "def": "Ugen før denne uge." },
+          { "id": "f9", "front": "et sommerhus", "def": "Et lille hus ved kysten, hvor mange danskere holder ferie." },
+          { "id": "f10", "front": "i weekenden", "def": "Lørdag og søndag." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "I går ___ vi til Aarhus.",
+            "options": ["kører", "kørte", "kørt", "at køre"],
+            "correct": 1,
+            "explain": "'I går' kræver datid: kørte. 'Kører' er nutid, og 'kørt' er en form, der bruges med 'har'."
+          },
+          {
+            "id": "q2",
+            "q": "Hvad er datid af 'at gå'?",
+            "options": ["gåede", "gik", "går", "gås"],
+            "correct": 1,
+            "explain": "'At gå' er uregelmæssigt: gå → gik. 'Gåede' findes ikke."
+          },
+          {
+            "id": "q3",
+            "q": "Hun ___ en film i aftes.",
+            "options": ["ser", "så", "set", "se"],
+            "correct": 1,
+            "explain": "'I aftes' kræver datid, og 'at se' er uregelmæssigt: se → så."
+          },
+          {
+            "id": "q4",
+            "q": "Vælg sætningen med rigtig ordstilling:",
+            "options": ["I sommer vi var i sommerhus.", "I sommer var vi i sommerhus.", "I sommer vi i sommerhus var.", "Var i sommer vi i sommerhus."],
+            "correct": 1,
+            "explain": "Verbet skal stå på anden plads: I sommer VAR vi i sommerhus."
+          },
+          {
+            "id": "q5",
+            "q": "Hvilket verbum får endelsen -ede i datid?",
+            "options": ["at lave", "at spise", "at købe", "at læse"],
+            "correct": 0,
+            "explain": "At lave → lavede. De tre andre får -te: spiste, købte, læste."
+          }
+        ]
+      },
+      "a2-kob": {
+        "id": "a2-kob",
+        "icon": "🛒",
+        "level": "A2",
+        "title": "Indkøb og penge",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Kroner, kort og MobilePay",
+            "body": "Danmark bruger <strong>danske kroner</strong> (kr.), ikke euro. Man betaler næsten altid med <strong>kort</strong> eller med <strong>MobilePay</strong> — en app, hvor man betaler med telefonen. Kontanter er sjældne; selv på et loppemarked kan man ofte betale med MobilePay. Tre vigtige verber: <strong>at købe</strong>, <strong>at betale</strong> og <strong>at koste</strong>: <em>Hvad koster det? — Det koster 25 kroner.</em>"
+          },
+          {
+            "id": "t2",
+            "heading": "Pant — flasker er penge værd",
+            "body": "Flasker og dåser har <strong>pant</strong>: en lille ekstra pris (mærket A, B eller C — fra 1 til 3 kroner), som man får tilbage. Man afleverer de tomme flasker i en <strong>pantautomat</strong> i supermarkedet og får en bon med penge. Derfor smider danskere aldrig flasker ud — pant er penge!"
+          },
+          {
+            "id": "t3",
+            "heading": "Tilbud og loppemarked",
+            "body": "Et <strong>tilbud</strong> er en vare til en lavere pris end normalt — supermarkederne har nye tilbud hver uge i deres <em>tilbudsavis</em>. Et <strong>loppemarked</strong> er et marked, hvor man køber og sælger brugte ting; de er meget populære om sommeren. Nyttige ord: <strong>dyr</strong> (koster meget), <strong>billig</strong> (koster lidt), <strong>en kvittering</strong> (papiret, man får, når man har betalt)."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Hvad koster de her æbler? — De koster tolv kroner." },
+          { "id": "e2", "text": "Kan jeg betale med MobilePay? — Ja, selvfølgelig." },
+          { "id": "e3", "text": "Rugbrødet er på tilbud i denne uge." },
+          { "id": "e4", "text": "Jeg afleverer flaskerne i pantautomaten." },
+          { "id": "e5", "text": "Hun købte en gammel lampe på loppemarkedet." },
+          { "id": "e6", "text": "Det er for dyrt — har I noget billigere?" },
+          { "id": "e7", "text": "Vil du have en kvittering? — Nej tak." },
+          { "id": "e8", "text": "Vi betaler næsten aldrig med kontanter — kun med kort." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "at købe", "def": "At give penge for en ting." },
+          { "id": "f2", "front": "at betale", "def": "At give penge for noget, man har købt." },
+          { "id": "f3", "front": "at koste", "def": "At have en pris: Hvad koster det?" },
+          { "id": "f4", "front": "en krone", "def": "Danmarks valuta — Danmark bruger ikke euro." },
+          { "id": "f5", "front": "pant", "def": "Ekstra penge for flasker og dåser — man får dem tilbage i pantautomaten." },
+          { "id": "f6", "front": "et tilbud", "def": "En vare til en lavere pris end normalt." },
+          { "id": "f7", "front": "et loppemarked", "def": "Et marked, hvor man køber og sælger brugte ting." },
+          { "id": "f8", "front": "dyr", "def": "Det modsatte af billig — koster mange penge." },
+          { "id": "f9", "front": "billig", "def": "Det modsatte af dyr — koster få penge." },
+          { "id": "f10", "front": "en kvittering", "def": "Papiret, man får, når man har betalt." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvad gør man med tomme flasker og dåser i Danmark?",
+            "options": ["Smider dem i skraldespanden", "Afleverer dem i pantautomaten og får penge tilbage", "Sender dem med posten", "Gemmer dem i kælderen"],
+            "correct": 1,
+            "explain": "Flasker og dåser har pant. Man afleverer dem i pantautomaten i supermarkedet og får pengene tilbage."
+          },
+          {
+            "id": "q2",
+            "q": "Hvad betyder 'på tilbud'?",
+            "options": ["Varen er udsolgt", "Varen er billigere end normalt", "Varen er ny", "Varen er dyrere end normalt"],
+            "correct": 1,
+            "explain": "'På tilbud' betyder, at varen har en lavere pris end normalt."
+          },
+          {
+            "id": "q3",
+            "q": "Hvad ___ de her sko? — 400 kroner.",
+            "options": ["koster", "betaler", "køber", "sælger"],
+            "correct": 0,
+            "explain": "Om prisen spørger man med 'at koste': Hvad koster skoene?"
+          },
+          {
+            "id": "q4",
+            "q": "Hvordan betaler de fleste danskere i dag?",
+            "options": ["Med kontanter", "Med check", "Med kort eller MobilePay", "Med euro"],
+            "correct": 2,
+            "explain": "Kort og MobilePay er de mest almindelige betalingsformer. Kontanter er sjældne, og Danmark bruger kroner, ikke euro."
+          },
+          {
+            "id": "q5",
+            "q": "Jeg vil gerne ___ den her bog. Hvor er kassen?",
+            "options": ["koste", "købe", "sælge", "spise"],
+            "correct": 1,
+            "explain": "Man køber en bog og betaler ved kassen. 'At koste' handler om prisen, og man sælger ikke sin egen bog i butikken."
+          }
+        ]
+      },
+      "a2-rejse": {
+        "id": "a2-rejse",
+        "icon": "🚆",
+        "level": "A2",
+        "title": "Rejser og transport",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Toget og rejsekortet",
+            "body": "Togene i Danmark køres af <strong>DSB</strong>. Mange rejser med <strong>rejsekort</strong>: et blåt kort, som man holder mod en blå stander. Man skal <strong>checke ind</strong>, når rejsen begynder, og <strong>checke ud</strong>, når den slutter — glemmer man at checke ud, betaler man for meget! Man siger <strong>at tage toget/bussen</strong>: <em>Jeg tager toget til Odense.</em>"
+          },
+          {
+            "id": "t2",
+            "heading": "Cyklen — hele året",
+            "body": "Danmark har <strong>cykelstier</strong> næsten overalt, og mange danskere cykler hele året — også i regn og sne. I København er der flere cykler end biler i myldretiden. Man cykler på cykelstien, ikke på fortovet, og man har lys på cyklen, når det er mørkt."
+          },
+          {
+            "id": "t3",
+            "heading": "Jylland, Fyn og Sjælland",
+            "body": "Danmark består af halvøen <strong>Jylland</strong> mod vest, øen <strong>Fyn</strong> i midten (med Odense, H.C. Andersens by) og øen <strong>Sjælland</strong> mod øst, hvor København ligger. <strong>Storebæltsbroen</strong> forbinder Fyn og Sjælland, og <strong>Øresundsbroen</strong> går til Sverige. Til de mindre øer, fx Ærø, tager man en <strong>færge</strong>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Jeg tager toget fra København til Aarhus." },
+          { "id": "e2", "text": "Husk at checke ind, før du stiger på toget." },
+          { "id": "e3", "text": "Hun glemte at checke ud og betalte for meget." },
+          { "id": "e4", "text": "Vi cykler til arbejde hele året — også om vinteren." },
+          { "id": "e5", "text": "Hvornår kører den næste bus til Odense?" },
+          { "id": "e6", "text": "Storebæltsbroen forbinder Fyn og Sjælland." },
+          { "id": "e7", "text": "Vi tager færgen til Ærø i morgen." },
+          { "id": "e8", "text": "Toget er forsinket ti minutter." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "et tog", "def": "Et transportmiddel, der kører på skinner — DSB kører dem i Danmark." },
+          { "id": "f2", "front": "et rejsekort", "def": "Det blå kort, man checker ind og ud med på rejsen." },
+          { "id": "f3", "front": "at checke ind", "def": "Det, man gør med rejsekortet, når rejsen begynder." },
+          { "id": "f4", "front": "at checke ud", "def": "Det, man gør med rejsekortet, når rejsen slutter." },
+          { "id": "f5", "front": "en cykelsti", "def": "En vej kun til cykler — de findes næsten overalt i Danmark." },
+          { "id": "f6", "front": "en færge", "def": "Et skib, der sejler mennesker og biler til øerne." },
+          { "id": "f7", "front": "Jylland", "def": "Den store halvø i den vestlige del af Danmark." },
+          { "id": "f8", "front": "Sjælland", "def": "Øen mod øst, hvor København ligger." },
+          { "id": "f9", "front": "forsinket", "def": "Når toget eller bussen kommer senere end planlagt." },
+          { "id": "f10", "front": "at tage toget", "def": "At rejse med tog: Jeg tager toget til Odense." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvad skal man gøre med rejsekortet, når rejsen slutter?",
+            "options": ["Checke ind", "Checke ud", "Købe et nyt", "Smide det væk"],
+            "correct": 1,
+            "explain": "Man checker ind ved starten og ud ved slutningen. Glemmer man at checke ud, betaler man for meget."
+          },
+          {
+            "id": "q2",
+            "q": "Hvilken ø ligger København på?",
+            "options": ["Fyn", "Jylland", "Sjælland", "Bornholm"],
+            "correct": 2,
+            "explain": "København ligger på Sjælland. Odense ligger på Fyn, og Jylland er halvøen mod vest."
+          },
+          {
+            "id": "q3",
+            "q": "Jeg ___ bussen til arbejde hver dag.",
+            "options": ["tager", "går", "løber", "flyver"],
+            "correct": 0,
+            "explain": "Man siger 'at tage bussen/toget': Jeg tager bussen til arbejde."
+          },
+          {
+            "id": "q4",
+            "q": "Hvad forbinder Storebæltsbroen?",
+            "options": ["Danmark og Sverige", "Fyn og Sjælland", "Jylland og Tyskland", "København og Bornholm"],
+            "correct": 1,
+            "explain": "Storebæltsbroen forbinder Fyn og Sjælland. Broen til Sverige hedder Øresundsbroen."
+          },
+          {
+            "id": "q5",
+            "q": "Hvor skal cyklerne køre i Danmark?",
+            "options": ["På fortovet", "På cykelstien", "Midt på motorvejen", "Inde i butikkerne"],
+            "correct": 1,
+            "explain": "Cykler kører på cykelstien. Fortovet er kun til fodgængere."
+          }
+        ]
+      },
+      "a2-krop": {
+        "id": "a2-krop",
+        "icon": "🩺",
+        "level": "A2",
+        "title": "Krop og sundhed",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Kroppen",
+            "body": "De vigtigste ord for kroppen: <strong>et hoved</strong>, <strong>en mave</strong>, <strong>en ryg</strong>, <strong>en hals</strong>, <strong>en arm</strong>, <strong>et ben</strong>, <strong>en hånd</strong>, <strong>en fod</strong>, <strong>et øje</strong> (flertal: <em>øjne</em>) og <strong>et øre</strong>. Læg mærke til kønnet: det er <em>et</em> hoved, men <em>en</em> mave."
+          },
+          {
+            "id": "t2",
+            "heading": "At have ondt i…",
+            "body": "Når noget gør ondt, siger man <strong>jeg har ondt i + bestemt form</strong>: <em>Jeg har ondt i <strong>hovedet</strong></em>, <em>Jeg har ondt i <strong>ryggen</strong></em>, <em>Jeg har ondt i <strong>halsen</strong></em>. Man kan også sige <strong>det gør ondt i…</strong>: <em>Det gør ondt i ryggen, når jeg løfter.</em> Husk den bestemte form — ikke 'ondt i hoved'."
+          },
+          {
+            "id": "t3",
+            "heading": "Lægen og det gule kort",
+            "body": "I Danmark er lægen <strong>gratis</strong>. Alle har et gult <strong>sundhedskort</strong> med navn og egen læge — det viser man, når man kommer. Man ringer først og <strong>bestiller en tid</strong>. Medicin køber man bagefter på et <strong>apotek</strong>. Er man syg, bliver man hjemme fra arbejde — det er helt normalt at sige: <em>Jeg har feber og bliver hjemme i dag.</em>"
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Jeg har ondt i hovedet i dag." },
+          { "id": "e2", "text": "Det gør ondt i ryggen, når jeg løfter." },
+          { "id": "e3", "text": "Jeg vil gerne bestille en tid hos lægen." },
+          { "id": "e4", "text": "Husk dit gule sundhedskort, når du går til lægen." },
+          { "id": "e5", "text": "Hun har feber og bliver hjemme fra arbejde." },
+          { "id": "e6", "text": "Du kan købe medicinen på apoteket." },
+          { "id": "e7", "text": "Lægen siger, at jeg skal hvile mig." },
+          { "id": "e8", "text": "Jeg har ondt i halsen, og jeg hoster." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "et hoved", "def": "Den øverste del af kroppen — med øjne, ører og mund." },
+          { "id": "f2", "front": "en mave", "def": "Den del af kroppen, hvor maden lander." },
+          { "id": "f3", "front": "en ryg", "def": "Bagsiden af kroppen — fra nakken og ned." },
+          { "id": "f4", "front": "en hals", "def": "Delen mellem hovedet og kroppen — den gør ondt, når man er forkølet." },
+          { "id": "f5", "front": "at have ondt i", "def": "At føle smerte et sted: Jeg har ondt i hovedet." },
+          { "id": "f6", "front": "et sundhedskort", "def": "Det gule kort, man viser hos lægen." },
+          { "id": "f7", "front": "en læge", "def": "Den person, man går til, når man er syg — gratis i Danmark." },
+          { "id": "f8", "front": "et apotek", "def": "Butikken, hvor man køber medicin." },
+          { "id": "f9", "front": "feber", "def": "Når kroppen er for varm, fordi man er syg." },
+          { "id": "f10", "front": "at bestille tid", "def": "At aftale et tidspunkt hos lægen." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Jeg har ondt ___ hovedet.",
+            "options": ["i", "på", "til", "af"],
+            "correct": 0,
+            "explain": "Man siger 'at have ondt i': ondt i hovedet, ondt i ryggen, ondt i halsen."
+          },
+          {
+            "id": "q2",
+            "q": "Hvad er det gule sundhedskort?",
+            "options": ["Et kreditkort", "Kortet, man viser hos lægen", "Et rejsekort", "Et bibliotekskort"],
+            "correct": 1,
+            "explain": "Sundhedskortet er det gule kort med navn og egen læge — man viser det hos lægen."
+          },
+          {
+            "id": "q3",
+            "q": "Hvor køber man medicin?",
+            "options": ["I banken", "På apoteket", "Hos frisøren", "På posthuset"],
+            "correct": 1,
+            "explain": "Medicin køber man på apoteket."
+          },
+          {
+            "id": "q4",
+            "q": "Hvad koster et besøg hos din egen læge i Danmark?",
+            "options": ["100 kroner", "500 kroner", "Det er gratis", "Det koster kun for voksne"],
+            "correct": 2,
+            "explain": "Lægen er gratis i Danmark — sundhedssystemet betales over skatten."
+          },
+          {
+            "id": "q5",
+            "q": "Hvilket ord er en del af kroppen?",
+            "options": ["en ryg", "en dør", "et bord", "en gade"],
+            "correct": 0,
+            "explain": "'En ryg' er bagsiden af kroppen. De andre ord er ting og steder."
+          }
+        ]
+      },
+      "a2-arbejde": {
+        "id": "a2-arbejde",
+        "icon": "💼",
+        "level": "A2",
+        "title": "Arbejde og fyraften",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Professioner",
+            "body": "Man siger <strong>at arbejde som</strong> + profession — uden artikel: <em>Hun arbejder som <strong>lærer</strong></em> (ikke 'som en lærer'). Almindelige professioner: <strong>en lærer</strong>, <strong>en sygeplejerske</strong>, <strong>en tømrer</strong>, <strong>en pædagog</strong>, <strong>en ingeniør</strong>. Spørgsmålet er: <strong>Hvad laver du?</strong> — <em>Jeg er tømrer.</em>"
+          },
+          {
+            "id": "t2",
+            "heading": "Frokostpausen klokken 12",
+            "body": "Klokken 12 spiser næsten alle på en dansk arbejdsplads <strong>frokost</strong> — ofte rugbrød i <strong>kantinen</strong> sammen med kollegerne. Pausen er kort, tit kun 30 minutter, men den er næsten hellig: man venter ikke til klokken 14. Kommer man klokken 12.30, er kantinen ofte allerede tom!"
+          },
+          {
+            "id": "t3",
+            "heading": "Fyraften og balance",
+            "body": "Dansk har et helt ord for det tidspunkt, hvor arbejdet slutter: <strong>fyraften</strong>. Mange går hjem klokken 16 for at hente børn og lave aftensmad — og det er helt accepteret. Mange arbejdspladser har <strong>flekstid</strong>: man vælger selv, om man møder klokken 7 eller 9. Balancen mellem arbejde og familie er meget vigtig i Danmark."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Hun arbejder som sygeplejerske på Rigshospitalet." },
+          { "id": "e2", "text": "Hvad laver du? — Jeg er tømrer." },
+          { "id": "e3", "text": "Klokken tolv holder vi frokostpause i kantinen." },
+          { "id": "e4", "text": "Jeg har fyraften klokken fire i dag." },
+          { "id": "e5", "text": "Vi har flekstid, så jeg møder klokken syv." },
+          { "id": "e6", "text": "Mødet begynder klokken ni og slutter klokken ti." },
+          { "id": "e7", "text": "Hun henter børnene efter arbejde." },
+          { "id": "e8", "text": "God weekend! Vi ses på mandag." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "et arbejde", "def": "Det, man laver for at tjene penge." },
+          { "id": "f2", "front": "fyraften", "def": "Tidspunktet, hvor arbejdsdagen slutter, og man går hjem." },
+          { "id": "f3", "front": "en frokostpause", "def": "Pausen klokken tolv, hvor man spiser frokost." },
+          { "id": "f4", "front": "en kollega", "def": "En person, man arbejder sammen med." },
+          { "id": "f5", "front": "en lærer", "def": "En person, der underviser i skolen." },
+          { "id": "f6", "front": "en sygeplejerske", "def": "En person, der passer syge mennesker på hospitalet." },
+          { "id": "f7", "front": "en kantine", "def": "Stedet på arbejdet, hvor man spiser frokost." },
+          { "id": "f8", "front": "flekstid", "def": "Når man selv kan vælge, hvornår man møder og går hjem." },
+          { "id": "f9", "front": "at tjene penge", "def": "At få penge for sit arbejde." },
+          { "id": "f10", "front": "et møde", "def": "Når kolleger taler sammen om arbejdet på et aftalt tidspunkt." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvad betyder 'fyraften'?",
+            "options": ["En fest om aftenen", "Tidspunktet, hvor arbejdsdagen slutter", "En pause om morgenen", "Aftensmad"],
+            "correct": 1,
+            "explain": "Fyraften er tidspunktet, hvor arbejdet slutter, og man går hjem — dansk har et helt ord for det."
+          },
+          {
+            "id": "q2",
+            "q": "Hun arbejder ___ lærer.",
+            "options": ["som", "for", "til", "med"],
+            "correct": 0,
+            "explain": "Man siger 'at arbejde som' + profession uden artikel: Hun arbejder som lærer."
+          },
+          {
+            "id": "q3",
+            "q": "Hvornår holder de fleste danskere frokostpause?",
+            "options": ["Klokken 10", "Klokken 12", "Klokken 14", "Klokken 16"],
+            "correct": 1,
+            "explain": "Frokostpausen ligger klokken 12 — næsten alle spiser på samme tid."
+          },
+          {
+            "id": "q4",
+            "q": "Hvem passer syge mennesker på hospitalet?",
+            "options": ["En tømrer", "En sygeplejerske", "En pædagog", "En frisør"],
+            "correct": 1,
+            "explain": "En sygeplejerske arbejder på hospitalet. En tømrer bygger, en pædagog passer børn, og en frisør klipper hår."
+          },
+          {
+            "id": "q5",
+            "q": "Hvad betyder 'flekstid'?",
+            "options": ["Man arbejder altid om natten", "Man kan selv vælge, hvornår man møder", "Man holder aldrig pause", "Man arbejder kun om sommeren"],
+            "correct": 1,
+            "explain": "Flekstid betyder, at man selv vælger, hvornår man møder og går hjem — fx klokken 7 eller 9."
+          }
+        ]
+      },
+      "a2-planer": {
+        "id": "a2-planer",
+        "icon": "🗓️",
+        "level": "A2",
+        "title": "Fremtid og planer",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Skal eller vil?",
+            "body": "Om fremtiden bruger man mest <strong>skal</strong> og <strong>vil</strong>. <strong>Skal</strong> bruges om planer og aftaler: <em>Jeg <strong>skal</strong> til fødselsdag på lørdag</em>. <strong>Vil</strong> bruges om ønsker: <em>Jeg <strong>vil</strong> lære dansk</em> — høfligt med 'gerne': <em>Jeg vil <strong>gerne</strong> rejse til Bornholm</em>. Man kan også bruge nutid + et tidsudtryk: <em>Vi rejser i morgen.</em>"
+          },
+          {
+            "id": "t2",
+            "heading": "At glæde sig til",
+            "body": "<strong>At glæde sig til</strong> betyder at være glad for noget, der kommer — et ord, som mange sprog ikke har! Verbet er refleksivt: <em>jeg glæder <strong>mig</strong>, du glæder <strong>dig</strong>, hun glæder <strong>sig</strong></em>. Danskere siger det hele tiden: <em>Jeg glæder mig til ferien!</em>, <em>Vi glæder os til at se dig.</em>"
+          },
+          {
+            "id": "t3",
+            "heading": "På lørdag eller om lørdagen?",
+            "body": "<strong>På lørdag</strong> = den kommende lørdag, én gang: <em>På lørdag skal vi i sommerhus</em>. <strong>Om lørdagen</strong> = hver lørdag, en vane: <em>Om lørdagen spiller han fodbold</em>. Og ferien? De fleste danskere holder <strong>tre ugers sommerferie</strong>, ofte i juli — og man ønsker hinanden <em>god ferie!</em>"
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Jeg skal til fødselsdag på lørdag." },
+          { "id": "e2", "text": "Vi vil gerne rejse til Bornholm til sommer." },
+          { "id": "e3", "text": "Jeg glæder mig til ferien!" },
+          { "id": "e4", "text": "Om lørdagen spiller han fodbold." },
+          { "id": "e5", "text": "På lørdag skal vi i sommerhus." },
+          { "id": "e6", "text": "Hvad skal du i weekenden? — Jeg skal slappe af." },
+          { "id": "e7", "text": "Hun holder tre ugers ferie i juli." },
+          { "id": "e8", "text": "Vi rejser i morgen tidlig." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "Jeg skal…", "def": "Sådan taler man om en plan eller en aftale: Jeg skal til fest på lørdag." },
+          { "id": "f2", "front": "Jeg vil gerne…", "def": "Sådan siger man et ønske på en høflig måde." },
+          { "id": "f3", "front": "at glæde sig til", "def": "At være glad for noget, der kommer: Jeg glæder mig til ferien." },
+          { "id": "f4", "front": "på lørdag", "def": "Den kommende lørdag — én gang." },
+          { "id": "f5", "front": "om lørdagen", "def": "Hver lørdag — en vane." },
+          { "id": "f6", "front": "en ferie", "def": "En periode uden arbejde — mange danskere holder tre ugers sommerferie." },
+          { "id": "f7", "front": "i morgen", "def": "Dagen efter i dag." },
+          { "id": "f8", "front": "i næste uge", "def": "Ugen efter denne uge." },
+          { "id": "f9", "front": "en plan", "def": "Noget, man har besluttet at gøre." },
+          { "id": "f10", "front": "til sommer", "def": "Den kommende sommer." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Jeg ___ til tandlægen på tirsdag — jeg har en aftale.",
+            "options": ["skal", "vil", "bør", "tør"],
+            "correct": 0,
+            "explain": "Om planer og aftaler bruger man 'skal': Jeg skal til tandlægen på tirsdag."
+          },
+          {
+            "id": "q2",
+            "q": "Hvad betyder 'Jeg glæder mig til ferien'?",
+            "options": ["Jeg er træt af ferien", "Jeg er glad for den ferie, der kommer", "Jeg holder aldrig ferie", "Ferien er slut"],
+            "correct": 1,
+            "explain": "'At glæde sig til' betyder at være glad for noget, der kommer."
+          },
+          {
+            "id": "q3",
+            "q": "'Om lørdagen spiller jeg fodbold' betyder…",
+            "options": ["kun den kommende lørdag", "hver lørdag", "aldrig om lørdagen", "sidste lørdag"],
+            "correct": 1,
+            "explain": "'Om lørdagen' er en vane — hver lørdag. Den kommende lørdag hedder 'på lørdag'."
+          },
+          {
+            "id": "q4",
+            "q": "Vi ___ gerne se den nye film.",
+            "options": ["vil", "skal", "har", "er"],
+            "correct": 0,
+            "explain": "Ønsker udtrykkes med 'vil gerne': Vi vil gerne se filmen."
+          },
+          {
+            "id": "q5",
+            "q": "Hvor lang er en typisk dansk sommerferie?",
+            "options": ["Tre dage", "En uge", "Tre uger", "Tre måneder"],
+            "correct": 2,
+            "explain": "De fleste danskere holder tre ugers sommerferie, ofte i juli."
+          }
+        ]
+      },
+      "a2-bedre": {
+        "id": "a2-bedre",
+        "icon": "⚖️",
+        "level": "A2",
+        "title": "Sammenligninger — større og bedst",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "-ere og -est",
+            "body": "Korte tillægsord får <strong>-ere</strong> i komparativ og <strong>-est</strong> i superlativ: <em>hurtig → <strong>hurtigere</strong> → <strong>hurtigst</strong></em>, <em>billig → billigere → billigst</em>. Lange tillægsord og ord på -et/-sk bruger <strong>mere</strong> og <strong>mest</strong>: <em><strong>mere</strong> spændende, <strong>mest</strong> praktisk</em>. Efter komparativ bruger man <strong>end</strong>: <em>hurtigere <strong>end</strong> din</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Uregelmæssige former",
+            "body": "De vigtigste uregelmæssige: <strong>god → bedre → bedst</strong>, <strong>gammel → ældre → ældst</strong>, <strong>ung → yngre → yngst</strong>, <strong>stor → større → størst</strong>, <strong>lille → mindre → mindst</strong>, <strong>mange → flere → flest</strong>. I bestemt form får superlativ -e: <em>den bedst<strong>e</strong> kage, Danmarks størst<strong>e</strong> by</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "Lige så … som — og Janteloven",
+            "body": "Når to ting er ens, siger man <strong>lige så … som</strong>: <em>Han er <strong>lige så</strong> høj <strong>som</strong> sin far</em>. Og en kulturel note: <strong>Janteloven</strong> er en uskreven dansk regel — man skal ikke tro, man er bedre end andre. Derfor praler danskere sjældent; de siger hellere <em>det går meget godt</em> end <em>jeg er den bedste</em>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Min cykel er hurtigere end din." },
+          { "id": "e2", "text": "Rugbrød er sundere end hvidt brød." },
+          { "id": "e3", "text": "Aarhus er stor, men København er større." },
+          { "id": "e4", "text": "Det her er den bedste kage, jeg har smagt." },
+          { "id": "e5", "text": "Min bror er ældre end mig." },
+          { "id": "e6", "text": "Filmen var mere spændende end bogen." },
+          { "id": "e7", "text": "Han er lige så høj som sin far." },
+          { "id": "e8", "text": "I Danmark siger man sjældent, at man er bedst — det er Janteloven." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "hurtigere", "def": "Komparativ af 'hurtig': hurtig → hurtigere → hurtigst." },
+          { "id": "f2", "front": "bedre", "def": "Komparativ af 'god' — uregelmæssig: god → bedre → bedst." },
+          { "id": "f3", "front": "bedst", "def": "Superlativ af 'god' — den allerbedste." },
+          { "id": "f4", "front": "ældre", "def": "Komparativ af 'gammel': gammel → ældre → ældst." },
+          { "id": "f5", "front": "større", "def": "Komparativ af 'stor': stor → større → størst." },
+          { "id": "f6", "front": "mindre", "def": "Komparativ af 'lille': lille → mindre → mindst." },
+          { "id": "f7", "front": "flere", "def": "Komparativ af 'mange': mange → flere → flest." },
+          { "id": "f8", "front": "mere spændende", "def": "Lange tillægsord bruger 'mere' og 'mest' i stedet for -ere/-est." },
+          { "id": "f9", "front": "lige så … som", "def": "Sådan siger man, at to ting er ens: lige så høj som sin far." },
+          { "id": "f10", "front": "Janteloven", "def": "En uskreven dansk regel: man skal ikke tro, man er bedre end andre." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvad er komparativ af 'god'?",
+            "options": ["godere", "bedre", "mere god", "godest"],
+            "correct": 1,
+            "explain": "'God' er uregelmæssig: god → bedre → bedst."
+          },
+          {
+            "id": "q2",
+            "q": "Min søster er ___ end mig.",
+            "options": ["ældre", "gammel", "ældst", "mest gammel"],
+            "correct": 0,
+            "explain": "Før 'end' bruger man komparativ: ældre. 'Ældst' er superlativ, og 'gammel' er grundformen."
+          },
+          {
+            "id": "q3",
+            "q": "København er Danmarks ___ by.",
+            "options": ["større", "størst", "største", "mere stor"],
+            "correct": 2,
+            "explain": "Efter et ejerfald som 'Danmarks' står superlativ i bestemt form med -e: største."
+          },
+          {
+            "id": "q4",
+            "q": "Han er lige så høj ___ sin bror.",
+            "options": ["som", "end", "at", "til"],
+            "correct": 0,
+            "explain": "'Lige så … som' hører sammen: lige så høj som. 'End' bruges kun efter komparativ."
+          },
+          {
+            "id": "q5",
+            "q": "Hvilket tillægsord bruger 'mere/mest' i stedet for -ere/-est?",
+            "options": ["billig", "hurtig", "spændende", "stor"],
+            "correct": 2,
+            "explain": "Lange tillægsord som 'spændende' bruger mere/mest: mere spændende, mest spændende."
+          }
+        ]
+      },
+      "a2-modal": {
+        "id": "a2-modal",
+        "icon": "🧭",
+        "level": "A2",
+        "title": "Modalverber — kan, skal, vil, må, bør",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Modalverbum + infinitiv uden 'at'",
+            "body": "Der er fem vigtige modalverber: <strong>kan</strong> (evne/mulighed), <strong>skal</strong> (pligt/plan), <strong>vil</strong> (ønske), <strong>må</strong> (tilladelse/nødvendighed) og <strong>bør</strong> (anbefaling). Efter et modalverbum står infinitiven <strong>uden 'at'</strong>: <em>Jeg kan <strong>svømme</strong></em> — aldrig 'jeg kan at svømme'."
+          },
+          {
+            "id": "t2",
+            "heading": "Må-fælden",
+            "body": "<strong>Må</strong> betyder to helt forskellige ting! <strong>Må gerne</strong> = tilladelse: <em>Du må gerne låne min cykel</em>. <strong>Må ikke</strong> = forbud: <em>Man må ikke cykle på fortovet</em>. Men <strong>må</strong> alene kan også betyde 'er nødt til': <em>Jeg må løbe nu — toget kører om fem minutter</em>. Konteksten viser, hvad der menes."
+          },
+          {
+            "id": "t3",
+            "heading": "Bør og faste udtryk",
+            "body": "<strong>Bør</strong> bruges om en anbefaling — en god idé, ikke en pligt: <em>Du bør tage en jakke med</em>. To faste udtryk med modalverber: <strong>at kunne lide</strong> = at synes om noget (<em>Jeg kan godt lide kaffe</em>), og det høflige <strong>Må jeg bede om…?</strong> ved bordet (<em>Må jeg bede om saltet?</em>)."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Hun kan tale tre sprog." },
+          { "id": "e2", "text": "Du må gerne låne min cykel." },
+          { "id": "e3", "text": "Man må ikke cykle på fortovet." },
+          { "id": "e4", "text": "Jeg må løbe nu — toget kører om fem minutter." },
+          { "id": "e5", "text": "Du bør tage en jakke med — det bliver koldt." },
+          { "id": "e6", "text": "Må jeg bede om saltet? — Ja, værsgo." },
+          { "id": "e7", "text": "Børnene skal i seng klokken otte." },
+          { "id": "e8", "text": "Jeg kan godt lide dansk musik." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "kan", "def": "Modalverbum om evne eller mulighed: Hun kan svømme." },
+          { "id": "f2", "front": "skal", "def": "Modalverbum om pligt eller plan: Jeg skal på arbejde." },
+          { "id": "f3", "front": "vil", "def": "Modalverbum om ønske: Jeg vil lære dansk." },
+          { "id": "f4", "front": "må gerne", "def": "Tilladelse: Du må gerne låne min cykel." },
+          { "id": "f5", "front": "må ikke", "def": "Forbud: Man må ikke ryge her." },
+          { "id": "f6", "front": "bør", "def": "Anbefaling: Man bør cykle med hjelm." },
+          { "id": "f7", "front": "at kunne lide", "def": "At synes om noget: Jeg kan godt lide kaffe." },
+          { "id": "f8", "front": "Må jeg bede om…?", "def": "En høflig måde at bede om noget ved bordet." },
+          { "id": "f9", "front": "at svømme", "def": "At bevæge sig gennem vandet." },
+          { "id": "f10", "front": "at låne", "def": "At bruge en ting, der ikke er ens egen, i en kort tid." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hvilken sætning er korrekt?",
+            "options": ["Jeg kan at svømme.", "Jeg kan svømme.", "Jeg kan svømmer.", "Jeg kan til at svømme."],
+            "correct": 1,
+            "explain": "Efter et modalverbum står infinitiven uden 'at': Jeg kan svømme."
+          },
+          {
+            "id": "q2",
+            "q": "'Du må gerne parkere her' betyder…",
+            "options": ["Det er forbudt at parkere her", "Du har lov til at parkere her", "Du er nødt til at parkere her", "Du kan ikke parkere her"],
+            "correct": 1,
+            "explain": "'Må gerne' er en tilladelse — du har lov. Forbuddet hedder 'må ikke'."
+          },
+          {
+            "id": "q3",
+            "q": "Man ___ ikke cykle over for rødt lys — det er forbudt.",
+            "options": ["må", "vil", "kan", "tør"],
+            "correct": 0,
+            "explain": "Et forbud udtrykkes med 'må ikke': Man må ikke cykle over for rødt lys."
+          },
+          {
+            "id": "q4",
+            "q": "Du ___ tage en varm jakke med — det er en god idé.",
+            "options": ["bør", "må", "vil", "tør"],
+            "correct": 0,
+            "explain": "En anbefaling udtrykkes med 'bør'. 'Må' handler om tilladelse eller nødvendighed."
+          },
+          {
+            "id": "q5",
+            "q": "'Jeg må løbe nu' betyder…",
+            "options": ["Jeg har lov til at løbe", "Jeg er nødt til at gå nu", "Jeg kan lide at løbe", "Jeg løb i går"],
+            "correct": 1,
+            "explain": "Her betyder 'må' nødvendighed: jeg er nødt til at gå. Det er må-fælden — 'må' kan også betyde tilladelse."
+          }
+        ]
+      },
 //__APPEND_HERE__
 }}};
