@@ -62,7 +62,7 @@ window.PTB_COURSES.da = {
         "Min farmor bor på Østerbro i København.",
         "Hvad koster et rundstykke og et glas mælk?",
         "Klokken er halv ni, og jeg skal på arbejde.",
-        "Vi går en tur langs åen i Århus.",
+        "Vi går en tur langs åen i Aarhus.",
         "Døren er grøn, og huset er rødt.",
         "Tak for mad — det smagte dejligt."
       ],
