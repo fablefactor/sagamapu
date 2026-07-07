@@ -12,6 +12,7 @@
 - `courses/en.support.es.js` — the **Spanish support overlay**: translations keyed by topic id + item id (never by array index). Loaded after `en.core.js`.
 - `strings.js` — UI string table (`STRINGS`) + `t(uiLang,key)` helper (plus `tPlural`/`pluralDays` and the `UI_LANGS`/`uiLangName` registry derived from the `'lang.name'` entry), loaded via `<script src>` after the course files, before the Babel block.
 - `tools/validate.js` — course content validator; run `node tools/validate.js` after any content edit (manual gate, no CI). Checks schema shape, stable-id uniqueness, quiz/placement answer indices, and overlay coverage/id-alignment.
+- `tests/e2e-da.js` — Playwright E2E for the Danish course (onboarding→placement, lessons/decks in es+immersion, en↔da course switching with per-course progress isolation, æøå through `norm()`). Manual gate; the file header documents the setup+run recipe (serves CDN libs from `node_modules`, stubs Supabase, asserts on `#root` innerText).
 - `tools/split-curriculum.js` — the one-time Phase 3 transform that generated the course files from the pre-split monolithic curriculum data (deleted in Phase 3); kept as documentation of the transformation.
 
 **Deployment:** GitHub Pages serves `master` branch root. Develop on a feature branch; push to `master` only when asked to "go live". Never create a PR unless explicitly requested.

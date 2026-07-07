@@ -10,6 +10,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="courses/en.core.js"></script>
   <script src="courses/en.support.es.js"></script>
+  <script src="courses/da.core.js"></script>
+  <script src="courses/da.support.es.js"></script>
   <script src="strings.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -402,7 +404,9 @@ function speak(cid,text,rate=0.9){
 /* ══ Speech Recognition ══════════════════════════════════════ */
 const SR=typeof window!=='undefined'&&(window.SpeechRecognition||window.webkitSpeechRecognition);
 function lev(a,b){ const m=a.length,n=b.length; if(!m)return n;if(!n)return m; const d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]); for(let j=0;j<=n;j++)d[0][j]=j; for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)); return d[m][n]; }
-const norm=s=>s.toLowerCase().replace(/[^a-z0-9'\s]/g,'').replace(/\s+/g,' ').trim();
+/* Unicode-aware: keeps letters in any script (æøå, ñ, accents) so
+   pronunciation scoring works for non-English targets. */
+const norm=s=>s.toLowerCase().replace(/[^\p{L}\p{N}'\s]/gu,'').replace(/\s+/g,' ').trim();
 function scorePron(target,heard){
   const tw=norm(target).split(' ').filter(Boolean), hw=norm(heard).split(' ').filter(Boolean);
   const used=new Array(hw.length).fill(false);
