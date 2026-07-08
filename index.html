@@ -1095,16 +1095,19 @@ function ProgressScreen({course,support,uiLang,xp,completed,streak,onBack}){  co
    The chosen course's placement test then runs inside App (per-course
    placementDone key). Existing users never see this — the storage
    migration enrolls them silently. */
+/* The languages you can pick as your tutoring language. ONLY languages
+   with a UI string table (UI_LANGS) qualify — the whole app chrome must
+   render in the chosen language. Offering a target language that has no
+   UI table (e.g. Danish) would silently leave the app in English. */
 function speakOptions(){
-  const map={};
-  COURSE_IDS.forEach(cid=>{
-    Object.keys(COURSES[cid].support||{}).forEach(sid=>{
-      if(!map[sid]) map[sid]=COURSES[cid].support[sid].name||sid;
-    });
-    if(!map[cid]) map[cid]=courseName(cid,cid);
-  });
-  return Object.keys(map).map(id=>({id,name:map[id]}));
+  return UI_LANGS.map(id=>({id,name:uiLangName(id)}));
 }
+/* A course is coherent for a tutoring language L iff its content is
+   readable: either the course has an overlay in L, or L is the course's
+   own target (immersion — the learner already understands it). Guards
+   onboarding/add-course from silently assigning immersion in a language
+   the learner cannot read. */
+function courseCoherent(cid,lang){ return !!overlayOf(cid,lang)||lang===cid; }
 function Onboarding({onDone}){
   const[step,setStep]=useState(1);
   const[speaks,setSpeaks]=useState(null);
@@ -1120,8 +1123,14 @@ function Onboarding({onDone}){
         <div style={shellCard}>
           <div style={{textAlign:'center',marginBottom:24}}>
             <div style={{fontSize:52,marginBottom:8}}>{step===1?'👋':'🎓'}</div>
-            <h1 style={{margin:0,fontSize:24,fontWeight:800,color:C.teal}}>{t(ui,step===1?'onboard.iSpeak':'onboard.iWantToLearn')}</h1>
-            <div style={{color:C.sub,fontSize:14,marginTop:4}}>{t(ui,step===1?'onboard.iSpeakSub':'onboard.iWantToLearnSub')}</div>
+            {/* Step 1 precedes language choice — show the prompt in every UI
+                language so no one is greeted in a language they don't read. */}
+            <h1 style={{margin:0,fontSize:24,fontWeight:800,color:C.teal}}>
+              {step===1?UI_LANGS.map(l=>t(l,'onboard.iSpeak')).join(' · '):t(ui,'onboard.iWantToLearn')}
+            </h1>
+            <div style={{color:C.sub,fontSize:14,marginTop:4}}>
+              {step===1?UI_LANGS.map(l=>t(l,'onboard.iSpeakSub')).join(' · '):t(ui,'onboard.iWantToLearnSub')}
+            </div>
           </div>
           {step===1?(
             <div style={{display:'grid',gap:8}}>
@@ -1135,7 +1144,7 @@ function Onboarding({onDone}){
           ):(
             <>
               <div style={{display:'grid',gap:8}}>
-                {COURSE_IDS.map(cid=>{
+                {COURSE_IDS.filter(cid=>courseCoherent(cid,speaks)).map(cid=>{
                   const meta=COURSES[cid].meta;
                   const ov=overlayOf(cid,speaks);
                   const immersion=!ov;
@@ -1168,7 +1177,7 @@ function Onboarding({onDone}){
    per-course, nothing is ever lost. */
 function CoursePanel({uiLang,enrolled,course,onSwitch,onAdd}){
   const[adding,setAdding]=useState(false);
-  const available=COURSE_IDS.filter(cid=>!enrolled.some(e=>e.target===cid));
+  const available=COURSE_IDS.filter(cid=>!enrolled.some(e=>e.target===cid)&&courseCoherent(cid,uiLang));
   return(
     <div style={{display:'grid',gap:8}}>
       {enrolled.map(e=>{
@@ -1505,6 +1514,24 @@ function Root({user}){
     const list=[{target,support}]; lsSet('ptb1:courses',list); setEnrolled(list);
     setCourse(target);
   };
+
+  /* One-time heal: earlier builds could silently drop a learner into
+     immersion (support 'none') in a language they don't read. If an
+     overlay exists in the current UI language, switch to it. Runs once
+     per device so it never overrides a later deliberate immersion choice. */
+  useEffect(()=>{
+    if(lsRaw('ptb1:supportHealed','')) return;
+    lsRawSet('ptb1:supportHealed','1');
+    let changed=false;
+    const next=enrolled.map(e=>{
+      if(getSupportPref(e.target)==='none'&&overlayOf(e.target,uiLang)){
+        lsRawSet(ck(e.target,'support'),uiLang); changed=true;
+        return {...e,support:uiLang};
+      }
+      return e;
+    });
+    if(changed){ lsSet('ptb1:courses',next); setEnrolled(next); }
+  },[]);
 
   if(!enrolled.length||!course) return <Onboarding onDone={finishOnboarding}/>;
   return <App key={course} user={user} course={course} uiLang={uiLang} setUiLang={setUiLang} enrolled={enrolled}
