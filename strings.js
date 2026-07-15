@@ -21,6 +21,8 @@ const STRINGS = {
   "common.next": {en: "Next →", es: "Siguiente →"},
   "common.backToHome": {en: "Back to home", es: "Volver al inicio"},
   "common.cancel": {en: "Cancel", es: "Cancelar"},
+  "common.loading": {en: "Loading…", es: "Cargando…"},
+  "cloud.offline": {en: "Cloud sync is unavailable right now. Your progress is saved on this device and will sync when the connection returns.", es: "La sincronización con la nube no está disponible ahora. Tu progreso está guardado en este dispositivo y se sincronizará cuando vuelva la conexión."},
   // ── Home ──
   "home.yourLevel": {en: "Your Level", es: "Tu nivel"},
   "home.practiceModes": {en: "Practice modes", es: "Modos de práctica"},
@@ -43,6 +45,8 @@ const STRINGS = {
   "login.clickToSignIn": {en: "Click it to sign in — no password needed.", es: "Haz clic para entrar — no necesitas contraseña."},
   "login.subtitle": {en: "Sign in to continue your English journey", es: "Inicia sesión para continuar tu camino al inglés"},
   "login.sending": {en: "Sending…", es: "Enviando…"},
+  "login.errUnavailable": {en: "We couldn't reach the service — it may be waking up. Please try again in a moment.", es: "No pudimos conectar con el servicio — puede estar reactivándose. Inténtalo de nuevo en un momento."},
+  "login.errGeneric": {en: "Something went wrong. Please check your email address and try again.", es: "Algo salió mal. Revisa tu correo e inténtalo de nuevo."},
   "login.sendMagicLink": {en: "✉️  Send magic link", es: "✉️  Enviar enlace mágico"},
   // ── Placement test ──
   "placement.title": {en: "Placement Test", es: "Prueba de nivel"},

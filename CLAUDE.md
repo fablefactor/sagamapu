@@ -14,6 +14,7 @@
 - `tools/validate.js` — course content validator; run `node tools/validate.js` after any content edit (manual gate, no CI). Checks schema shape, stable-id uniqueness, quiz/placement answer indices, and overlay coverage/id-alignment.
 - `tests/e2e-da.js` — Playwright E2E for the Danish course (onboarding→placement, lessons/decks in es+immersion, en↔da course switching with per-course progress isolation, æøå through `norm()`). Manual gate; the file header documents the setup+run recipe (serves CDN libs from `node_modules`, stubs Supabase, asserts on `#root` innerText).
 - `tests/e2e-ui-lang.js` — Playwright E2E for tutoring-language coherence (speak list = UI_LANGS only, incoherent-immersion courses hidden, lesson titles/grammar/settings in the UI language, one-time immersion heal). Same setup recipe as `e2e-da.js`.
+- `tests/e2e-db-errors.js` — Playwright E2E for Supabase-suspended handling (hanging/erroring DB stubs → no loading-screen freeze, mounts on local data, friendly offline banner, friendly localized login error). Same setup recipe.
 - `tools/split-curriculum.js` — the one-time Phase 3 transform that generated the course files from the pre-split monolithic curriculum data (deleted in Phase 3); kept as documentation of the transformation.
 
 **Deployment:** GitHub Pages serves `master` branch root. Develop on a feature branch; push to `master` only when asked to "go live". Never create a PR unless explicitly requested.

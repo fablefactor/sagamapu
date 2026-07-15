@@ -240,27 +240,48 @@ function allDue(cid){ return courseBundle(cid).allTopicIds.reduce((s,id)=>s+getD
 function cardsInReview(cid){ const b=courseBundle(cid); let n=0; b.allTopicIds.forEach(tid=>{ b.coreTopics[tid].flashcards.forEach(c=>{ if(getFCS(cid,tid,c.id).box>0)n++; }); }); return n; }
 
 /* ══ Supabase sync ══════════════════════════════════════════ */
+/* All Supabase network calls go through withTimeout so a suspended /
+   unreachable project can never hang the UI (a paused free-tier project
+   may never respond). On timeout or error the helpers resolve to a status
+   flag; callers degrade gracefully to local-only (localStorage) operation. */
+const SB_TIMEOUT=8000;
+function withTimeout(promise,ms){
+  return Promise.race([
+    Promise.resolve(promise),
+    new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),ms)),
+  ]);
+}
+/* Classify a Supabase/network failure so the UI can show a friendly,
+   localized message instead of a raw SDK string. */
+function isCloudDownError(e){
+  const m=((e&&(e.message||e.error_description||e.msg))||'').toLowerCase();
+  return e==null || /timeout|failed to fetch|networkerror|load failed|fetch|503|502|504|unavailable|paused|econn|network/.test(m);
+}
 async function restoreFromSupabase(client,userId){
   try{
-    const{data:row}=await client.from('user_progress').select('data').eq('user_id',userId).maybeSingle();
+    const{data:row}=await withTimeout(client.from('user_progress').select('data').eq('user_id',userId).maybeSingle(),SB_TIMEOUT);
     if(row?.data) Object.entries(row.data).forEach(([k,v])=>{try{localStorage.setItem(k,v);}catch{}});
-  }catch(e){}
+    return true;
+  }catch(e){ return false; }
 }
 async function syncToSupabase(client,userId){
   try{
     const data={};
     Object.keys(localStorage).forEach(k=>{if(k.startsWith('ptb1:'))data[k]=localStorage.getItem(k);});
-    await client.from('user_progress').upsert({user_id:userId,data,updated_at:new Date().toISOString()},{onConflict:'user_id'});
-  }catch(e){}
+    const{error}=await withTimeout(client.from('user_progress').upsert({user_id:userId,data,updated_at:new Date().toISOString()},{onConflict:'user_id'}),SB_TIMEOUT);
+    return !error;
+  }catch(e){ return false; }
 }
 /* Empty the cloud row ("start over as a new user"). Caller must cancel
    any pending debounced sync FIRST, and clear localStorage only AFTER
    this resolves — otherwise a pending sync or the next restore
-   reintroduces the old data. */
+   reintroduces the old data. Returns false if the cloud couldn't be
+   reached (the caller still clears local data). */
 async function wipeSupabase(client,userId){
   try{
-    await client.from('user_progress').upsert({user_id:userId,data:{},updated_at:new Date().toISOString()},{onConflict:'user_id'});
-  }catch(e){}
+    const{error}=await withTimeout(client.from('user_progress').upsert({user_id:userId,data:{},updated_at:new Date().toISOString()},{onConflict:'user_id'}),SB_TIMEOUT);
+    return !error;
+  }catch(e){ return false; }
 }
 
 /*__MIGRATE_START__*/
@@ -512,9 +533,15 @@ function LoginScreen(){
     if(!email.trim())return;
     setLoading(true);setErr(null);
     const redirect=window.location.origin+window.location.pathname;
-    const{error}=await sbClient.auth.signInWithOtp({email:email.trim(),options:{emailRedirectTo:redirect}});
-    setLoading(false);
-    if(error)setErr(error.message);else setSent(true);
+    try{
+      const{error}=await withTimeout(sbClient.auth.signInWithOtp({email:email.trim(),options:{emailRedirectTo:redirect}}),SB_TIMEOUT);
+      setLoading(false);
+      if(error) setErr(isCloudDownError(error)?t(uiLang,'login.errUnavailable'):t(uiLang,'login.errGeneric'));
+      else setSent(true);
+    }catch(e){
+      setLoading(false);
+      setErr(t(uiLang,'login.errUnavailable'));
+    }
   };
 
   if(sent) return(
@@ -1394,12 +1421,18 @@ function App({user,course,uiLang,setUiLang,enrolled,onSwitchCourse,onAddCourse,o
   const[showPlacement,setShowPlacement]=useState(()=>!lsRaw(ck(course,'placementDone'),''));
 
   const syncTimerRef=useRef(null);
+  const[cloudDown,setCloudDown]=useState(false);
+  const runSync=useCallback(async()=>{
+    if(!user||!sbClient)return;
+    const ok=await syncToSupabase(sbClient,user.id);
+    setCloudDown(!ok);
+  },[user]);
   const scheduleSync=useCallback((delay=1500)=>{
     if(!user||!sbClient)return;
     clearTimeout(syncTimerRef.current);
-    if(delay)syncTimerRef.current=setTimeout(()=>syncToSupabase(sbClient,user.id),delay);
-    else syncToSupabase(sbClient,user.id);
-  },[user]);
+    if(delay)syncTimerRef.current=setTimeout(runSync,delay);
+    else runSync();
+  },[user,runSync]);
   const syncNow=useCallback(()=>scheduleSync(0),[scheduleSync]);
 
   useEffect(()=>{ lsSet('ptb1:xp',xp); scheduleSync(); },[xp,scheduleSync]);
@@ -1466,6 +1499,11 @@ function App({user,course,uiLang,setUiLang,enrolled,onSwitchCourse,onAddCourse,o
   return(
     <div style={S.page}>
       <div style={S.shell}>
+        {cloudDown&&(
+          <div role="status" style={{background:C.amberSoft,color:'#7A5200',border:`1px solid #E7C77A`,borderRadius:10,padding:'8px 12px',fontSize:12.5,lineHeight:1.4,marginBottom:12,display:'flex',gap:8,alignItems:'center'}}>
+            <span style={{fontSize:15}}>☁️</span><span>{t(uiLang,'cloud.offline')}</span>
+          </div>
+        )}
         {screen==='home'&&<HomeScreen course={course} level={level} setLevel={setLevel} uiLang={uiLang} xp={xp} completed={completed} dueCount={dueCount} streak={streak} weakCount={weakCount} onNav={setScreen}/>}
         {screen==='lessons'&&<LessonsScreen course={course} support={support} uiLang={uiLang} level={level} completed={completed} onComplete={(id,score)=>{completeTopic(id);addXP(score*10);}} addXP={addXP} onBack={()=>setScreen('home')}/>}
         {screen==='cards'&&<FlashcardsScreen course={course} support={support} uiLang={uiLang} level={level} addXP={addXP} onBack={()=>setScreen('home')}/>}
@@ -1557,10 +1595,13 @@ function AppShell(){
       setPhase('app');
     };
 
-    sbClient.auth.getSession().then(({data:{session}})=>{
+    /* getSession reads the cached session from localStorage, so it normally
+       resolves even when the project is paused; the timeout+catch is a
+       backstop so a hung token-refresh can never freeze us on 'checking'. */
+    withTimeout(sbClient.auth.getSession(),SB_TIMEOUT).then(({data:{session}})=>{
       if(session?.user)enterApp(session.user);
       else setPhase('login');
-    });
+    }).catch(()=>setPhase('login'));
 
     const{data:{subscription}}=sbClient.auth.onAuthStateChange((event,session)=>{
       if(event==='SIGNED_IN'&&session?.user&&!userRef.current){
@@ -1577,7 +1618,7 @@ function AppShell(){
 
   if(phase==='checking') return(
     <div style={{...S.page,alignItems:'center',justifyContent:'center'}}>
-      <div style={{color:C.sub,fontSize:15,padding:40}}>Loading…</div>
+      <div style={{color:C.sub,fontSize:15,padding:40}}>{t(lsRaw('ptb1:uiLang','en'),'common.loading')}</div>
     </div>
   );
   if(phase==='login') return <LoginScreen/>;
