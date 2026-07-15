@@ -4,3 +4,9 @@
 [build]
   publish = "."
   command = ""
+
+# Scheduled function that keeps the Supabase free-tier project awake.
+# See netlify/functions/keepalive.mjs for how the once-a-day, random-night
+# timing works.
+[functions]
+  directory = "netlify/functions"
