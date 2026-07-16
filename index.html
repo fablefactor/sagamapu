@@ -192,7 +192,15 @@ function lsDel(key){ try{ localStorage.removeItem(key); }catch{} }
    per-course presentation preference; xp and streak are global. */
 const ck=(cid,rest)=>`ptb1:${cid}:${rest}`;
 function getEnrolled(){ return lsGet('ptb1:courses',[]); }
-function getSupportPref(cid){ return lsRaw(ck(cid,'support'),'none'); }
+/* ONE tutoring language: the chrome language (uiLang) ALSO drives the
+   content overlay, so lesson titles / grammar / translations always match
+   the interface. A course shows content in the tutoring language when an
+   overlay exists for it; otherwise — or when the learner turns on immersion
+   — it shows the target language only. Per-course immersion is stored as
+   ptb1:<cid>:support === 'none'; any other value (default 'auto') means
+   "follow the tutoring language". */
+function courseImmersion(cid){ return lsRaw(ck(cid,'support'),'auto')==='none'; }
+function courseHasOverlayFor(cid,uiLang){ return !!overlayOf(cid,uiLang); }
 
 /* ══ Streak Tracking ════════════════════════════════════════ */
 const todayStr=()=>new Date().toISOString().slice(0,10);
@@ -1141,7 +1149,9 @@ function Onboarding({onDone}){
   const[ui,setUi]=useState('en');
   const opts=speakOptions();
   const pickSpeak=(id)=>{ setSpeaks(id); if(UI_LANGS.includes(id))setUi(id); setStep(2); };
-  const pickCourse=(cid)=>{ onDone({uiLang:ui,target:cid,support:overlayOf(cid,speaks)?speaks:'none'}); };
+  /* Enroll following the tutoring language (support:'auto'); content shows
+     in the tutoring language when an overlay exists, target-only otherwise. */
+  const pickCourse=(cid)=>{ onDone({uiLang:ui,target:cid,support:'auto'}); };
   const shellCard={...S.card,padding:32,maxWidth:420,width:'100%'};
   const optBtn={...S.optBtn,padding:'14px 16px'};
   return(
@@ -1214,7 +1224,7 @@ function CoursePanel({uiLang,enrolled,course,onSwitch,onAdd}){
         const done=lsGet(ck(cid,'completed'),[]).length;
         const level=lsRaw(ck(cid,'level'),b.meta.levels[0]);
         const active=cid===course;
-        const ov=overlayOf(cid,getSupportPref(cid));
+        const ov=courseImmersion(cid)?null:overlayOf(cid,uiLang);
         const supLabel=ov?ov.name:t(uiLang,'settings.supportNone');
         return(
           <button key={cid} onClick={()=>onSwitch(cid)}
@@ -1234,14 +1244,13 @@ function CoursePanel({uiLang,enrolled,course,onSwitch,onAdd}){
           <div style={{display:'grid',gap:8}}>
             {available.map(cid=>{
               const ov=overlayOf(cid,uiLang);
-              const support=ov?uiLang:'none';
               return(
-                <button key={cid} onClick={()=>{setAdding(false);onAdd(cid,support);}}
+                <button key={cid} onClick={()=>{setAdding(false);onAdd(cid,'auto');}}
                   style={{...S.optBtn,gap:10}}>
                   <span style={{fontSize:22}}>{COURSES[cid].meta.icon||'📘'}</span>
                   <div style={{flex:1}}>
                     <div style={{fontWeight:800,fontSize:15}}>{courseName(cid,uiLang)}</div>
-                    <div style={{fontSize:12.5,color:C.sub}}>{support==='none'?t(uiLang,'onboard.immersion',{lang:courseName(cid,uiLang)}):t(uiLang,'onboard.fullSupport',{lang:ov.name})}</div>
+                    <div style={{fontSize:12.5,color:C.sub}}>{ov?t(uiLang,'onboard.fullSupport',{lang:ov.name}):t(uiLang,'onboard.immersion',{lang:courseName(cid,uiLang)})}</div>
                   </div>
                 </button>
               );
@@ -1302,21 +1311,19 @@ function StartOverPanel({uiLang,enrolled,streak,xp,signedIn,onConfirm,onCancel})
 }
 
 /* ══ Settings ════════════════════════════════════════════════ */
-function SettingsScreen({course,uiLang,setUiLang,support,setSupport,enrolled,streak,xp,user,onSwitchCourse,onAddCourse,onSignOut,onBack,onRerunPlacement,onResetLevel,onResetCourse,onResetAllProgress,onStartOver}){  const b=courseBundle(course);
+function SettingsScreen({course,uiLang,setUiLang,immersion,setImmersion,hasOverlay,enrolled,streak,xp,user,onSwitchCourse,onAddCourse,onSignOut,onBack,onRerunPlacement,onResetLevel,onResetCourse,onResetAllProgress,onStartOver}){  const b=courseBundle(course);
   const[showStartOver,setShowStartOver]=useState(false);
   const secHead=txt=><div style={{fontSize:11,fontWeight:700,letterSpacing:1.2,color:C.sub,textTransform:'uppercase',margin:'4px 0 10px'}}>{txt}</div>;
   const optStyle=active=>({...S.optBtn,background:active?C.tealSoft:C.card,border:`2px solid ${active?C.teal:C.line}`});
-  const supportOpts=[
-    ...Object.keys(b.support).map(sid=>({id:sid,label:b.support[sid].name,sub:t(uiLang,'settings.supportOverlaySub',{name:b.support[sid].name})})),
-    {id:'none',label:t(uiLang,'settings.supportNone'),sub:t(uiLang,'settings.immersionSub')},
-  ];
   return(
     <div>
       <BackBar title={t(uiLang,'settings.title')} onBack={onBack}/>
 
-      {secHead(t(uiLang,'settings.uiLanguage'))}
+      {/* ONE language setting: it drives the whole app AND the lesson/grammar
+          language. The target language stays in the examples & quizzes. */}
+      {secHead(t(uiLang,'settings.tutorLanguage'))}
       <div style={{...S.card,marginBottom:18}}>
-        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(uiLang,'settings.uiLanguageDesc')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(uiLang,'settings.tutorLanguageDesc')}</div>
         <div style={{display:'grid',gap:8}}>
           {UI_LANGS.map(id=>{
             const active=uiLang===id;
@@ -1331,24 +1338,23 @@ function SettingsScreen({course,uiLang,setUiLang,support,setSupport,enrolled,str
       </div>
 
       {secHead(t(uiLang,'settings.courseSection',{name:courseName(course,uiLang)}))}
-      <div style={{...S.card,marginBottom:12}}>
-        <div style={{fontWeight:700,fontSize:15,marginBottom:4}}>{t(uiLang,'settings.supportLanguage')}</div>
-        <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(uiLang,'settings.supportLanguageDesc')}</div>
-        <div style={{display:'grid',gap:8}}>
-          {supportOpts.map(o=>{
-            const active=support===o.id;
-            return(
-              <button key={o.id} onClick={()=>setSupport(o.id)} style={optStyle(active)}>
-                <div style={{flex:1}}>
-                  <div style={{fontWeight:800,fontSize:15,color:active?C.teal:C.ink}}>{o.label}</div>
-                  <div style={{fontSize:12.5,color:C.sub,marginTop:1}}>{o.sub}</div>
-                </div>
-                {active&&<span style={{color:C.teal,fontWeight:800,fontSize:18}}>✓</span>}
-              </button>
-            );
-          })}
+      {/* Immersion: only offer it when there IS tutoring-language help to hide
+          (an overlay exists). If the learner speaks the target, content is
+          already target-only and the toggle would be meaningless. */}
+      {hasOverlay&&(
+        <div style={{...S.card,marginBottom:12}}>
+          <div style={{display:'flex',alignItems:'flex-start',gap:12}}>
+            <div style={{flex:1}}>
+              <div style={{fontWeight:700,fontSize:15,marginBottom:4}}>{t(uiLang,'settings.immersion')}</div>
+              <div style={{fontSize:13,color:C.sub,lineHeight:1.5}}>{t(uiLang,'settings.immersionDesc',{lang:uiLangName(uiLang),target:courseName(course,uiLang)})}</div>
+            </div>
+            <button role="switch" aria-checked={immersion} onClick={()=>setImmersion(!immersion)}
+              style={{flexShrink:0,width:52,height:30,borderRadius:99,border:'none',cursor:'pointer',background:immersion?C.teal:C.line,position:'relative',transition:'background .2s'}}>
+              <span style={{position:'absolute',top:3,left:immersion?25:3,width:24,height:24,borderRadius:'50%',background:'#fff',transition:'left .2s'}}/>
+            </button>
+          </div>
         </div>
-      </div>
+      )}
       <div style={{...S.card,marginBottom:12}}>
         <div style={{fontWeight:700,fontSize:15,marginBottom:4}}>{t(uiLang,'settings.placementTest')}</div>
         <div style={{fontSize:13,color:C.sub,marginBottom:12,lineHeight:1.5}}>{t(uiLang,'settings.placementDesc')}</div>
@@ -1412,7 +1418,10 @@ function App({user,course,uiLang,setUiLang,enrolled,onSwitchCourse,onAddCourse,o
   const b=courseBundle(course);
   const[screen,setScreen]=useState('home');
   const[level,setLevelState]=useState(()=>lsRaw(ck(course,'level'),b.meta.levels[0]));
-  const[support,setSupportState]=useState(()=>getSupportPref(course));
+  const[immersion,setImmersionState]=useState(()=>courseImmersion(course));
+  // Content overlay is DERIVED from the one tutoring language (uiLang) —
+  // never a separate stored setting — so chrome and content can't diverge.
+  const support=immersion?'none':(overlayOf(course,uiLang)?uiLang:'none');
   const[xp,setXp]=useState(()=>lsGet('ptb1:xp',0));
   const[completed,setCompleted]=useState(()=>lsGet(ck(course,'completed'),[]));
   const[dueCount,setDueCount]=useState(()=>allDue(course));
@@ -1445,7 +1454,7 @@ function App({user,course,uiLang,setUiLang,enrolled,onSwitchCourse,onAddCourse,o
   },[syncNow]);
 
   const setLevel=(lv)=>{ setLevelState(lv); lsRawSet(ck(course,'level'),lv); scheduleSync(); };
-  const setSupport=(s)=>{ setSupportState(s); onSetSupport(course,s); scheduleSync(); };
+  const setImmersion=(on)=>{ setImmersionState(on); onSetSupport(course,on?'none':'auto'); scheduleSync(); };
   const changeUiLang=(l)=>{ setUiLang(l); scheduleSync(); };
   const addXP=n=>{ setXp(x=>(x||0)+n); setStreak(touchStreak()); };
   const completeTopic=id=>setCompleted(c=>c.includes(id)?c:[...c,id]);
@@ -1511,7 +1520,7 @@ function App({user,course,uiLang,setUiLang,enrolled,onSwitchCourse,onAddCourse,o
         {screen==='progress'&&<ProgressScreen course={course} support={support} uiLang={uiLang} xp={xp} completed={completed} streak={streak} onBack={()=>setScreen('home')}/>}
         {screen==='weakpoints'&&<WeakPointsScreen course={course} support={support} uiLang={uiLang} onBack={()=>{ setWeakCount(getTopWrongs(course).length); setScreen('home'); }}/>}
         {screen==='courses'&&<CoursesScreen uiLang={uiLang} enrolled={enrolled} course={course} onSwitch={(cid)=>{ if(cid!==course)onSwitchCourse(cid); else setScreen('home'); }} onAdd={onAddCourse} onBack={()=>setScreen('home')}/>}
-        {screen==='settings'&&<SettingsScreen course={course} uiLang={uiLang} setUiLang={changeUiLang} support={support} setSupport={setSupport} enrolled={enrolled} streak={streak} xp={xp} user={user}
+        {screen==='settings'&&<SettingsScreen course={course} uiLang={uiLang} setUiLang={changeUiLang} immersion={immersion} setImmersion={setImmersion} hasOverlay={courseHasOverlayFor(course,uiLang)} enrolled={enrolled} streak={streak} xp={xp} user={user}
           onSwitchCourse={(cid)=>{ if(cid!==course)onSwitchCourse(cid); else setScreen('home'); }} onAddCourse={onAddCourse}
           onSignOut={signOut} onBack={()=>setScreen('home')} onRerunPlacement={rerunPlacement}
           onResetLevel={resetLevel} onResetCourse={resetCourse} onResetAllProgress={resetAllProgress} onStartOver={startOver}/>}
@@ -1552,24 +1561,6 @@ function Root({user}){
     const list=[{target,support}]; lsSet('ptb1:courses',list); setEnrolled(list);
     setCourse(target);
   };
-
-  /* One-time heal: earlier builds could silently drop a learner into
-     immersion (support 'none') in a language they don't read. If an
-     overlay exists in the current UI language, switch to it. Runs once
-     per device so it never overrides a later deliberate immersion choice. */
-  useEffect(()=>{
-    if(lsRaw('ptb1:supportHealed','')) return;
-    lsRawSet('ptb1:supportHealed','1');
-    let changed=false;
-    const next=enrolled.map(e=>{
-      if(getSupportPref(e.target)==='none'&&overlayOf(e.target,uiLang)){
-        lsRawSet(ck(e.target,'support'),uiLang); changed=true;
-        return {...e,support:uiLang};
-      }
-      return e;
-    });
-    if(changed){ lsSet('ptb1:courses',next); setEnrolled(next); }
-  },[]);
 
   if(!enrolled.length||!course) return <Onboarding onDone={finishOnboarding}/>;
   return <App key={course} user={user} course={course} uiLang={uiLang} setUiLang={setUiLang} enrolled={enrolled}

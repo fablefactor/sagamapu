@@ -106,17 +106,23 @@ const seedFor = (uiLang, course, support, level) => ({
     await ctx.close();
   }
 
-  // ---- E: auto-heal — Spanish speaker stranded in da immersion gets healed to es ----
+  // ---- E: single tutoring language — content follows uiLang; deliberate
+  //         immersion (support='none') is respected, chrome stays in uiLang ----
   {
-    const seed = seedFor('es', 'da', 'none', 'A1'); delete seed['ptb1:supportHealed'];
-    const { ctx, page } = await newPage(browser, seed); // broken state present at first mount
-    const ls = await dump(page);
-    S(ls['ptb1:da:support'] === 'es', 'E stranded immersion healed to es', ls['ptb1:da:support']);
-    S(ls['ptb1:supportHealed'] === '1', 'E heal flag set (runs once)');
-    const txt = await innr(page);
-    S(!DANISH_LEAK.test(txt), 'E healed home shows Spanish, no Danish leak');
-    await page.screenshot({ path: SHOT('e-healed') });
+    // 'auto' → follows Spanish: no Danish leak in chrome or titles
+    const { ctx, page } = await newPage(browser, seedFor('es', 'da', 'auto', 'A1'));
+    let txt = await innr(page);
+    S(!DANISH_LEAK.test(txt) && /[¿áéíóñ]/.test(txt), 'E follow: da home Spanish, no Danish leak');
     await ctx.close();
+    // 'none' → deliberate immersion: chrome Spanish, lesson titles Danish (respected, not healed away)
+    const { ctx: c2, page: p2 } = await newPage(browser, seedFor('es', 'da', 'none', 'A1'));
+    S(await p2.evaluate(() => localStorage.getItem('ptb1:da:support')) === 'none', 'E immersion respected (support=none not overwritten)');
+    await p2.locator('button', { hasText: /lecciones/i }).first().click(); await p2.waitForTimeout(500);
+    txt = await innr(p2);
+    S(DANISH_LEAK.test(txt), 'E immersion: lesson titles Danish', (txt.match(DANISH_LEAK) || [''])[0]);
+    S(/Lecciones|Elige un tema/.test(txt), 'E immersion: chrome still Spanish');
+    await p2.screenshot({ path: SHOT('e-immersion') });
+    await c2.close();
   }
 
   console.log('\n==== UI-LANG SUMMARY ====\n' + steps.join('\n'));

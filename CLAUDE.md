@@ -13,7 +13,8 @@
 - `strings.js` — UI string table (`STRINGS`) + `t(uiLang,key)` helper (plus `tPlural`/`pluralDays` and the `UI_LANGS`/`uiLangName` registry derived from the `'lang.name'` entry), loaded via `<script src>` after the course files, before the Babel block.
 - `tools/validate.js` — course content validator; run `node tools/validate.js` after any content edit (manual gate, no CI). Checks schema shape, stable-id uniqueness, quiz/placement answer indices, and overlay coverage/id-alignment.
 - `tests/e2e-da.js` — Playwright E2E for the Danish course (onboarding→placement, lessons/decks in es+immersion, en↔da course switching with per-course progress isolation, æøå through `norm()`). Manual gate; the file header documents the setup+run recipe (serves CDN libs from `node_modules`, stubs Supabase, asserts on `#root` innerText).
-- `tests/e2e-ui-lang.js` — Playwright E2E for tutoring-language coherence (speak list = UI_LANGS only, incoherent-immersion courses hidden, lesson titles/grammar/settings in the UI language, one-time immersion heal). Same setup recipe as `e2e-da.js`.
+- `tests/e2e-ui-lang.js` — Playwright E2E for tutoring-language coherence (speak list = UI_LANGS only, incoherent-immersion courses hidden, lesson titles/grammar/settings in the UI language, deliberate immersion respected). Same setup recipe as `e2e-da.js`.
+- `tests/e2e-one-language.js` — Playwright E2E for the single tutoring-language model (one "Your language" control drives chrome + content together; switching flips both; immersion toggle → target-only content, chrome unchanged). Same setup recipe.
 - `tests/e2e-db-errors.js` — Playwright E2E for Supabase-suspended handling (hanging/erroring DB stubs → no loading-screen freeze, mounts on local data, friendly offline banner, friendly localized login error). Same setup recipe.
 - `tools/split-curriculum.js` — the one-time Phase 3 transform that generated the course files from the pre-split monolithic curriculum data (deleted in Phase 3); kept as documentation of the transformation.
 
@@ -46,11 +47,12 @@ window.PTB_COURSES.en = { "meta": {...}, "core": {...} };
 ```
 Overlays assign `window.PTB_COURSES.en.support.es = {...}` and must load **after** the core. `tools/validate.js` vm-loads the files and validates the payload.
 
-### The Course concept: uiLang + support, not a single `lang` (Phase 4)
-The old single `lang` is gone. Two independent settings, threaded as props (no React context):
+### The Course concept: ONE tutoring language (`uiLang`) drives everything
+There is a single user-facing language setting — the tutoring language (`uiLang`). It drives BOTH the chrome (`t()`) AND the content overlay, so lesson titles / grammar / translations always match the interface; they can never diverge (an earlier build had a separate per-course "support language", which is gone — that split was the source of the "changed the language but not everywhere" bug).
 
-- **`uiLang`** — GLOBAL: the language of the app chrome; drives `t()`. Stored raw under `ptb1:uiLang`. Selectable values come from `UI_LANGS` (the keys of `STRINGS['lang.name']` in `strings.js`).
-- **`support`** — PER-COURSE: an overlay id (`'es'`) or `'none'` (immersion); drives the content resolver. Stored raw under `ptb1:<course>:support` and mirrored into the `ptb1:courses` enrollment list.
+- **`uiLang`** — GLOBAL: the tutoring language. Drives `t()` and is the content overlay id. Stored raw under `ptb1:uiLang`. Selectable values = `UI_LANGS` (keys of `STRINGS['lang.name']`).
+- **`support`** (the resolver's parameter) is now **DERIVED**, not a stored language: `App` computes `support = immersion ? 'none' : (overlayOf(course,uiLang) ? uiLang : 'none')`. So content shows in the tutoring language when an overlay exists, else target-only.
+- **Immersion** is a per-course opt-in toggle (Settings), stored as `ptb1:<course>:support === 'none'`; any other value (default `'auto'`) means "follow the tutoring language". `courseImmersion(cid)` reads it. The Settings immersion toggle only appears when an overlay exists in `uiLang` (`courseHasOverlayFor`) — otherwise content is already target-only and the toggle would be meaningless.
 
 A **course** = a target-language core (`window.PTB_COURSES[cid]`) + N support overlays. Progress belongs to the target language (`ptb1:<cid>:*`); support is a presentation preference; **xp and streak are global**. The active course id lives under `ptb1:course`; `App` is remounted with `key={course}` on switch so all per-course state initializers re-run.
 
@@ -73,7 +75,7 @@ A **course** = a target-language core (`window.PTB_COURSES[cid]`) + N support ov
 
 ### Onboarding, course chip, switcher
 - **First run** (no `ptb1:courses` key) → `Onboarding`: 1. "I speak…" (options = `speakOptions()` = **`UI_LANGS` only** — a tutoring language MUST have a UI string table, else the chrome silently falls back to English; step-1 heading is bilingual since it precedes the choice) → 2. "I want to learn…" (courses filtered by `courseCoherent(cid,speaks)` = has an overlay in your language **or** you speak the target; named via `meta.nameByLang[uiLang]`; a coherent no-overlay course = readable immersion) → that course's placement test (per-course `ptb1:<c>:placementDone`) → home. **Existing users never see onboarding** — `migrateStorage()` creates `ptb1:courses` first.
-- **Tutoring-language coherence rule** (`courseCoherent(cid,lang)`): never offer a (tutoring-language, course) pair that would render lesson titles/grammar in a language the learner can't read. Applies to onboarding step 2 AND the add-course flow (`CoursePanel` `available`). A one-time `ptb1:supportHealed` migration in `Root` repairs users an older build stranded in silent immersion: if a course's `support` is `'none'` but an overlay exists in `uiLang`, it switches to that overlay (runs once, never overrides a later deliberate immersion choice). Immersion remains a deliberate opt-in in Settings.
+- **Tutoring-language coherence rule** (`courseCoherent(cid,lang)`): never offer a (tutoring-language, course) pair that would render lesson titles/grammar in a language the learner can't read. Applies to onboarding step 2 AND the add-course flow (`CoursePanel` `available`). Since content now always follows `uiLang` (see the Course concept above), silent immersion-in-the-wrong-language is structurally impossible, so the old one-time `ptb1:supportHealed` heal was removed. Immersion is a deliberate per-course opt-in in Settings.
 - **Course chip** on the Home header (icon + name + level badge) and the "My courses" list in Settings both open/embed the switcher (`CoursesScreen`/`CoursePanel`): enrolled courses with progress summary + "+ Add a course" (mini-onboarding target pick; shows a disabled informational row when no unenrolled course exists). The switcher is reachable ONLY from Home and Settings — never mid-lesson/deck/quiz. Switching sets `ptb1:course` and remounts `App` — instant, no confirmation.
 
 ### Storage schema, migration, and the three reset tiers (Phase 4)
@@ -135,7 +137,7 @@ A single `Write` call for a very large file can silently fail. Course files are 
 After a context compaction, `Write` may require a fresh `Read` first — read a few lines to satisfy the harness before writing.
 
 ### `uiLang`/`support`/`course` are passed as props, not a context
-Every screen component receives `course`, `uiLang`, and (where it renders content) `support` as explicit props. There is no React context. If you add a new screen, thread them through manually. `Root` owns `uiLang`/`course`/enrollment; `App` (remounted per course) owns `level`/`support`/`xp`/`completed`/screen state.
+Every screen component receives `course`, `uiLang`, and (where it renders content) `support` as explicit props — but `support` is derived in `App` from `uiLang` + the per-course `immersion` state, not stored/threaded as an independent language. There is no React context. If you add a new screen, thread them through manually. `Root` owns `uiLang`/`course`/enrollment; `App` (remounted per course) owns `level`/`immersion`/`xp`/`completed`/screen state.
 
 ### Web Speech API
 `SpeechRecognition` and `SpeechSynthesis` are browser-only APIs. The app gracefully hides pronunciation features when unavailable, but don't try to test or mock them in Node.

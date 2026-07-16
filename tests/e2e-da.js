@@ -90,8 +90,9 @@ const BOTH = {
     const ls = await dump(page);
     step(ls['ptb1:course'] === 'da', 'S1 active course = da', ls['ptb1:course']);
     step(ls['ptb1:uiLang'] === 'es', 'S1 uiLang = es');
-    step(ls['ptb1:da:support'] === 'es', 'S1 da support = es', ls['ptb1:da:support']);
-    step(/\{"target":"da","support":"es"\}/.test(ls['ptb1:courses'] || ''), 'S1 enrolled in da', ls['ptb1:courses']);
+    // Single tutoring language: enrollment follows uiLang ('auto'), not a stored language id
+    step(ls['ptb1:da:support'] !== 'none', 'S1 da follows tutoring language (not immersion)', ls['ptb1:da:support']);
+    step(/"target":"da"/.test(ls['ptb1:courses'] || ''), 'S1 enrolled in da', ls['ptb1:courses']);
     step(/Vejen til B1/.test(await innr(page)), 'S1 home shows da branding (meta.title)');
     await page.screenshot({ path: SHOT('s1-home') });
     await ctx.close();
