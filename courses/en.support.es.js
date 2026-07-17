@@ -1066,7 +1066,7 @@ window.PTB_COURSES.en.support.es = {
         "f10": "Tres años seguidos"
       },
       "quiz": {
-        "q1": "'Have you ever been to…?' es la expresión estándar para experiencias de vida. 'Been to' = visitó y regresó. 'Gone to' implica que la persona aún está allí ('She has gone to Scotland' = está allí ahora), así que no sirve para preguntas de experiencia. 'Went' y 'go' no son participios pasados.",
+        "q1": "'Have you ever been to…?' es la expresión estándar para experiencias de vida. 'Been to' = visitó y regresó. Después de 'have' se necesita el participio pasado: 'went' es pasado simple, y 'go' y 'be' son infinitivos sin conjugar — ninguno puede ir después de 'have'.",
         "q2": "'Absolutely exhausted' es el adjetivo extremo. Nunca digas 'absolutely tired' ni 'very exhausted'.",
         "q3": "Presente perfecto = have/has + participio pasado. 'I have never tried' es correcto.",
         "q4": "'Terrified' es la forma extrema/no graduable de 'scared'. 'Absolutely terrified' = extremadamente asustado.",

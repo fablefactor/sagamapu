@@ -2368,7 +2368,7 @@ window.PTB_COURSES.en = {
         "quiz": [
           {
             "id": "q1",
-            "q": "'I work ___ a nurse.'",
+            "q": "'I work ___ a nurse.' (that is my job)",
             "options": [
               "like",
               "for",
@@ -2736,7 +2736,7 @@ window.PTB_COURSES.en = {
             "id": "q3",
             "q": "'Have you finished the report ___?'",
             "options": [
-              "already",
+              "ago",
               "just",
               "yet",
               "since"
@@ -3262,7 +3262,7 @@ window.PTB_COURSES.en = {
             "q": "'Everyone was dancing and the music ___.' (background)",
             "options": [
               "plays",
-              "played",
+              "playing",
               "was playing",
               "had played"
             ],
@@ -3567,7 +3567,7 @@ window.PTB_COURSES.en = {
             "id": "q1",
             "q": "Direct: 'I am tired.' → Reported: 'She said she ___ tired.'",
             "options": [
-              "is",
+              "are",
               "was",
               "were",
               "has been"
@@ -3579,7 +3579,7 @@ window.PTB_COURSES.en = {
             "id": "q2",
             "q": "Direct: 'I will call you.' → Reported: 'He said he ___ call me.'",
             "options": [
-              "will",
+              "willed",
               "would",
               "shall",
               "can"
@@ -3591,7 +3591,7 @@ window.PTB_COURSES.en = {
             "id": "q3",
             "q": "Reported question: 'Where do you live?' → 'She asked where I ___.'",
             "options": [
-              "live",
+              "living",
               "lived",
               "do live",
               "did live"
@@ -3912,10 +3912,10 @@ window.PTB_COURSES.en = {
               "been",
               "went",
               "go",
-              "gone"
+              "be"
             ],
             "correct": 0,
-            "explain": "'Have you ever been to…?' is the standard idiom for life experiences. 'Been to' = visited and returned. 'Gone to' implies the person is still there ('She has gone to Scotland' = she's there now), so it doesn't work for experience questions. 'Went' and 'go' are not past participles."
+            "explain": "'Have you ever been to…?' is the standard idiom for life experiences. 'Been to' = visited and returned. After 'have' you need the past participle: 'went' is the past simple, and 'go' and 'be' are bare infinitives — none of them can follow 'have'."
           },
           {
             "id": "q2",
@@ -4043,7 +4043,7 @@ window.PTB_COURSES.en = {
       },
       {
         "id": "p7",
-        "q": "I ___ drink coffee — I prefer tea.",
+        "q": "I ___ drink coffee — I only drink tea.",
         "opts": [
           "always",
           "never",
@@ -4091,7 +4091,7 @@ window.PTB_COURSES.en = {
       },
       {
         "id": "p11",
-        "q": "She works ___ a nurse at the hospital.",
+        "q": "She works ___ a nurse at the hospital. (that is her job)",
         "opts": [
           "like",
           "for",
@@ -4141,7 +4141,7 @@ window.PTB_COURSES.en = {
         "id": "p15",
         "q": "Direct: 'I am happy.' → Reported: 'She said she ___ happy.'",
         "opts": [
-          "is",
+          "are",
           "was",
           "were",
           "has been"

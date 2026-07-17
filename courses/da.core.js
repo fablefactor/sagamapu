@@ -51,7 +51,7 @@ window.PTB_COURSES.da = {
       { "id": "p15", "q": "Han siger, at han ___ tid i dag.", "opts": ["ikke har", "har ikke", "ikke have", "ikke haft"], "ans": 0, "level": "B1" },
       { "id": "p16", "q": "Det er den mand, ___ bor ved siden af os.", "opts": ["der", "hvem", "hvad", "hvordan"], "ans": 0, "level": "B1" },
       { "id": "p17", "q": "Hvis jeg havde tid, ___ jeg lære mere dansk.", "opts": ["vil", "ville", "skal", "kan"], "ans": 1, "level": "B1" },
-      { "id": "p18", "q": "Rugbrødet ___ hver morgen i bageriet.", "opts": ["bager", "bages", "bagt", "at bage"], "ans": 1, "level": "B1" },
+      { "id": "p18", "q": "Rugbrødet ___ af bageren hver morgen.", "opts": ["bager", "bages", "bagt", "at bage"], "ans": 1, "level": "B1" },
       { "id": "p19", "q": "Hun spurgte, ___ jeg kunne komme til festen.", "opts": ["om", "at", "hvis", "når"], "ans": 0, "level": "B1" },
       { "id": "p20", "q": "___ det regnede, tog vi alligevel til stranden.", "opts": ["Selvom", "Fordi", "At", "Om"], "ans": 0, "level": "B1" }
     ],
@@ -1297,21 +1297,21 @@ window.PTB_COURSES.da = {
           },
           {
             "id": "q3",
-            "q": "Man ___ ikke cykle over for rødt lys — det er forbudt.",
+            "q": "Hvad siger færdselsloven? Man ___ ikke cykle over for rødt lys.",
             "options": ["må", "vil", "kan", "tør"],
             "correct": 0,
             "explain": "Et forbud udtrykkes med 'må ikke': Man må ikke cykle over for rødt lys."
           },
           {
             "id": "q4",
-            "q": "Du ___ tage en varm jakke med — det er en god idé.",
+            "q": "Du ___ tage en varm jakke med — det er en god idé, men du bestemmer selv.",
             "options": ["bør", "må", "vil", "tør"],
             "correct": 0,
             "explain": "En anbefaling udtrykkes med 'bør'. 'Må' handler om tilladelse eller nødvendighed."
           },
           {
             "id": "q5",
-            "q": "'Jeg må løbe nu' betyder…",
+            "q": "'Jeg må løbe nu — toget kører om fem minutter' betyder…",
             "options": ["Jeg har lov til at løbe", "Jeg er nødt til at gå nu", "Jeg kan lide at løbe", "Jeg løb i går"],
             "correct": 1,
             "explain": "Her betyder 'må' nødvendighed: jeg er nødt til at gå. Det er må-fælden — 'må' kan også betyde tilladelse."
@@ -1372,7 +1372,7 @@ window.PTB_COURSES.da = {
           },
           {
             "id": "q2",
-            "q": "Jeg har boet i Aarhus ___ 2019.",
+            "q": "Jeg har boet i Aarhus ___ 2019, og jeg bor her stadig.",
             "options": ["siden", "i", "for", "om"],
             "correct": 0,
             "explain": "'Siden' + tidspunkt (siden 2019); 'i' + varighed (i fem år)."
@@ -1619,7 +1619,7 @@ window.PTB_COURSES.da = {
           {
             "id": "q2",
             "q": "Jeg ___, at toget kommer klokken ti, men jeg er ikke sikker.",
-            "options": ["tror", "synes", "mener", "smager"],
+            "options": ["tror", "synes", "ved", "smager"],
             "correct": 0,
             "explain": "Noget sandsynligt, som man ikke ved sikkert → 'tror'."
           },
@@ -1953,7 +1953,7 @@ window.PTB_COURSES.da = {
           },
           {
             "id": "q3",
-            "q": "Kagerne ___ hver fredag i kantinen.",
+            "q": "Kagerne ___ af kokken hver fredag i kantinen.",
             "options": ["bages", "bager", "er bage", "at bages"],
             "correct": 0,
             "explain": "Noget generelt og gentaget → s-passiv: Kagerne bages hver fredag."
