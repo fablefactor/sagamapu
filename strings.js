@@ -22,6 +22,14 @@ const STRINGS = {
   "common.backToHome": {en: "Back to home", es: "Volver al inicio"},
   "common.cancel": {en: "Cancel", es: "Cancelar"},
   "common.loading": {en: "Loading…", es: "Cargando…"},
+  // ── Update prompt + About ──
+  "update.title": {en: "New version available", es: "Nueva versión disponible"},
+  "update.subtitle": {en: "You have v{from} — v{to} is ready. What's new:", es: "Tienes la v{from} — la v{to} está lista. Novedades:"},
+  "update.now": {en: "Update now", es: "Actualizar ahora"},
+  "update.later": {en: "Later", es: "Más tarde"},
+  "settings.about": {en: "About", es: "Acerca de"},
+  "settings.version": {en: "App version", es: "Versión de la app"},
+  "settings.changelog": {en: "What's changed", es: "Cambios"},
   "cloud.offline": {en: "Cloud sync is unavailable right now. Your progress is saved on this device and will sync when the connection returns.", es: "La sincronización con la nube no está disponible ahora. Tu progreso está guardado en este dispositivo y se sincronizará cuando vuelva la conexión."},
   // ── Home ──
   "home.yourLevel": {en: "Your Level", es: "Tu nivel"},
