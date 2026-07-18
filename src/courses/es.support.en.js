@@ -15,8 +15,7 @@
    vosotros, coger, el zumo, el ordenador. This overlay is British English.
 
    Overlays for all 23 topics are present — authoring complete. */
-window.PTB_COURSES.es.support = window.PTB_COURSES.es.support || {};
-window.PTB_COURSES.es.support.en = {
+export default {
   "name": "English",
   "topics": {
     "a1-saludos": {

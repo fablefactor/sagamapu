@@ -14,7 +14,7 @@
    native names. Add a language here + translate the table = new UI lang.
    ══════════════════════════════════════════════════════ */
 
-const STRINGS = {
+export const STRINGS = {
   // ── UI languages (keys = selectable uiLang ids, values = native names) ──
   "lang.name": {en: "English", es: "Español"},
   // ── Common ──
@@ -187,7 +187,7 @@ const STRINGS = {
   "startover.working": {en: "Deleting…", es: "Borrando…"},
 };
 
-function t(lang, key, params) {
+export function t(lang, key, params) {
   const entry = STRINGS[key];
   if (!entry) { console.warn('[i18n] Missing string key: ' + key); return key; }
   let s = entry[lang];
@@ -199,16 +199,16 @@ function t(lang, key, params) {
 }
 
 /* Per-language plural rules: n → form suffix ('one' | 'other'). */
-const PLURAL_RULES = {
+export const PLURAL_RULES = {
   en: n => (n === 1 ? 'one' : 'other'),
   es: n => (n === 1 ? 'one' : 'other'),
 };
-function tPlural(lang, n, key) {
+export function tPlural(lang, n, key) {
   const rule = PLURAL_RULES[lang] || PLURAL_RULES.en;
   return t(lang, key + '.' + rule(n));
 }
-function pluralDays(lang, n) { return tPlural(lang, n, 'streak.day'); }
+export function pluralDays(lang, n) { return tPlural(lang, n, 'streak.day'); }
 
 /* Available UI languages, derived from the 'lang.name' registry entry. */
-const UI_LANGS = Object.keys(STRINGS['lang.name']);
-function uiLangName(id) { return STRINGS['lang.name'][id] || id; }
+export const UI_LANGS = Object.keys(STRINGS['lang.name']);
+export function uiLangName(id) { return STRINGS['lang.name'][id] || id; }
