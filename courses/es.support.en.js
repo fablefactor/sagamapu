@@ -785,5 +785,79 @@ window.PTB_COURSES.es.support.en = {
         "q5": "'Me alegro de que' takes the subjunctive: estéis. 'Estáis' is indicative; 'sois' also mixes up ser and estar."
       }
     },
+    "b1-porpara": {
+      "title": "Por and para",
+      "theory": {
+        "t1": {"heading": "Para: destination and purpose", "body": "<strong>Para</strong> looks forward: <strong>purpose</strong> (<em>estudio para aprobar</em> — I study in order to pass), <strong>recipient</strong> (<em>este regalo es para ti</em>), <strong>direction</strong> (<em>salgo para Madrid</em>) and <strong>deadline</strong> (<em>es para el viernes</em> — it's due Friday). Trick: if you can say 'in order to' or 'destined for', it's almost always <em>para</em>."},
+        "t2": {"heading": "Por: cause, means and route", "body": "<strong>Por</strong> looks backwards or around: <strong>cause</strong> (<em>se suspendió por la lluvia</em> — cancelled because of the rain), <strong>means</strong> (<em>por correo</em> — by post), <strong>route</strong> (<em>pasear por el casco antiguo</em> — to stroll through the old town), <strong>exchange</strong> (<em>por veinte euros</em>) and <strong>part of the day</strong> (<em>por la mañana</em>). Trick: 'because of' or 'through' → <em>por</em>."},
+        "t3": {"heading": "Tricky pairs", "body": "Compare: <em>Lo hice <strong>por</strong> ti</em> (because of you, with you in mind) versus <em>Lo hice <strong>para</strong> ti</em> (the result is for you). <em>Voy <strong>por</strong> el parque</em> (through it) versus <em>voy <strong>para</strong> el parque</em> (towards it). Fixed expressions with <em>por</em>: <em>por favor, por fin, por supuesto, por cierto</em> (by the way). With <em>para</em>: <em>para siempre</em> (forever), <em>para nada</em> (not at all)."}
+      },
+      "examples": {
+        "e1": "I'm studying Spanish (in order) to work in Valencia.",
+        "e2": "The AVE to Seville was delayed because of a breakdown.",
+        "e3": "This turrón is for my mother-in-law: I'm taking it to her at Christmas.",
+        "e4": "I love strolling through the old town at sunset.",
+        "e5": "Can you send it to me on WhatsApp?",
+        "e6": "I swapped my bike for a guitar: good deal.",
+        "e7": "The report has to be ready by Monday.",
+        "e8": "In the morning I work and in the afternoon I go to the gym."
+      },
+      "flashcards": {
+        "f1": "para — purpose: I study (in order) to pass",
+        "f2": "por — cause: it was cancelled because of the rain",
+        "f3": "por — means: I'll phone you",
+        "f4": "para — recipient: this coffee is for you",
+        "f5": "para — deadline: it's due Friday",
+        "f6": "por — route: to stroll along the beach",
+        "f7": "por — exchange/price: I bought it for ten euros",
+        "f8": "by the way — fixed expression",
+        "f9": "at last, finally — fixed expression",
+        "f10": "forever — fixed expression"
+      },
+      "quiz": {
+        "q1": "Purpose or goal: para. 'Por' would give a cause instead.",
+        "q2": "Cause: por (because of the fog). 'Para' would express purpose, which makes no sense here.",
+        "q3": "Means of communication: por (por correo, por teléfono, por WhatsApp).",
+        "q4": "Recipient: para. 'Por mi abuela' would mean because of her.",
+        "q5": "'Por ti' = because of you, motivated by you. 'Para ti' would make you the recipient of the result."
+      }
+    },
+    "b1-pronombres": {
+      "title": "Pronouns: lo, la, le, se lo…",
+      "theory": {
+        "t1": {"heading": "Direct: lo, la, los, las", "body": "The direct object is replaced by <strong>lo, la, los, las</strong> according to gender and number: <em>¿Has visto el partido? — Sí, <strong>lo</strong> he visto</em> (I've seen it). <em>¿Compraste las entradas? — Sí, <strong>las</strong> compré</em>. The pronoun goes <strong>before</strong> the conjugated verb: <em>Lo veo</em>, never <em>veo lo</em>."},
+        "t2": {"heading": "Indirect: le, les (and the famous se)", "body": "The indirect object (to whom?) uses <strong>le, les</strong>: <em><strong>Le</strong> di el libro a Marta</em> — I gave the book to Marta. When indirect + direct appear together, <em>le/les</em> becomes <strong>se</strong>: <em>¿Le diste el libro? — Sí, <strong>se lo</strong> di</em> (never 'le lo'). The order is always: <strong>se + lo/la/los/las + verb</strong>."},
+        "t3": {"heading": "Where does the pronoun go?", "body": "With a conjugated verb, <strong>before</strong>: <em>Te llamo mañana</em>. With an infinitive or gerund it can attach <strong>to the end</strong>: <em>Voy a llamar<strong>te</strong></em> or <em><strong>Te</strong> voy a llamar</em> — both correct. With affirmative commands, always attached: <em>¡Dí<strong>melo</strong>!</em> (tell me it!). Spain note: many speakers use <em>le</em> instead of <em>lo</em> for male people (<em>a Juan <strong>le</strong> vi ayer</em>) — the famous <strong>leísmo</strong>, accepted for singular male persons."}
+      },
+      "examples": {
+        "e1": "Have you seen my umbrella? — No, I haven't seen it.",
+        "e2": "Who's got the keys? — I've got them.",
+        "e3": "I've bought my mother a present.",
+        "e4": "Did you give Pablo the tickets? — Yes, I gave them to him yesterday.",
+        "e5": "Don't lend me that book: I've already read it.",
+        "e6": "I'm going to tell you something, but don't tell anyone.",
+        "e7": "The bread? Buy it at the bakery on the corner.",
+        "e8": "I send my cousins photos via the family group chat."
+      },
+      "flashcards": {
+        "f1": "lo — masculine singular direct object: I read it",
+        "f2": "las — feminine plural direct object: I've got them",
+        "f3": "le — indirect object: I gave her the book",
+        "f4": "it becomes se: se lo di (never 'le lo')",
+        "f5": "lo veo — the pronoun goes before the conjugated verb",
+        "f6": "attached after the infinitive (llamarte) or before the conjugated verb (te voy a llamar)",
+        "f7": "always attached after affirmative commands: ¡dímelo!",
+        "f8": "leísmo — using 'le' for a male person: typical of Spain",
+        "f9": "fixed order: se + direct pronoun + verb (se lo di)",
+        "f10": "no se lo digas — with negative commands the pronouns go before"
+      },
+      "quiz": {
+        "q1": "'El último (libro)' is masculine singular: lo. 'La' would be feminine and 'le' is for indirect objects.",
+        "q2": "Indirect + direct: 'le' turns into 'se' and comes first: se las. 'Le las' doesn't exist.",
+        "q3": "'A mis padres' is a plural indirect object: les.",
+        "q4": "Negative command: pronoun before the verb (no lo saques).",
+        "q5": "With an infinitive the pronoun attaches to the end: comprarlo. 'El regalo' is a masculine direct object."
+      }
+    },
 //__APPEND_HERE__
 }};

@@ -1489,5 +1489,169 @@ window.PTB_COURSES.es = {
           }
         ]
       },
+      "b1-porpara": {
+        "id": "b1-porpara",
+        "icon": "⚖️",
+        "level": "B1",
+        "title": "Por y para",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Para: destino y finalidad",
+            "body": "<strong>Para</strong> mira hacia delante: <strong>finalidad</strong> (<em>estudio <strong>para</strong> aprobar</em>), <strong>destinatario</strong> (<em>este regalo es <strong>para</strong> ti</em>), <strong>dirección</strong> (<em>salgo <strong>para</strong> Madrid</em>) y <strong>plazo</strong> (<em>el trabajo es <strong>para</strong> el viernes</em>). Truco: si puedes decir 'con el objetivo de' o 'con destino a', casi siempre es <em>para</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Por: causa, medio y recorrido",
+            "body": "<strong>Por</strong> mira hacia atrás o alrededor: <strong>causa</strong> (<em>se suspendió <strong>por</strong> la lluvia</em>), <strong>medio</strong> (<em>te lo mando <strong>por</strong> correo</em>), <strong>recorrido</strong> (<em>pasear <strong>por</strong> el casco antiguo</em>), <strong>intercambio</strong> (<em>lo compré <strong>por</strong> veinte euros</em>) y <strong>parte del día</strong> (<em><strong>por</strong> la mañana</em>). Truco: si puedes decir 'a causa de' o 'a través de', casi siempre es <em>por</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "Parejas que engañan",
+            "body": "Compara: <em>Lo hice <strong>por</strong> ti</em> (a causa de ti, pensando en ti) frente a <em>Lo hice <strong>para</strong> ti</em> (el resultado es para ti). <em>Voy <strong>por</strong> el parque</em> (atravesándolo) frente a <em>voy <strong>para</strong> el parque</em> (en esa dirección). Expresiones fijas con <em>por</em>: <em>por favor, por fin, por supuesto, por cierto</em>. Con <em>para</em>: <em>para siempre, para nada, para variar</em>."
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "Estudio español para trabajar en Valencia."},
+          {"id": "e2", "text": "El AVE a Sevilla se retrasó por una avería."},
+          {"id": "e3", "text": "Este turrón es para mi suegra: se lo llevo en Navidad."},
+          {"id": "e4", "text": "Me encanta pasear por el casco antiguo al atardecer."},
+          {"id": "e5", "text": "¿Me lo puedes mandar por WhatsApp?"},
+          {"id": "e6", "text": "Cambié mi bici por una guitarra: buen negocio."},
+          {"id": "e7", "text": "El informe tiene que estar listo para el lunes."},
+          {"id": "e8", "text": "Por la mañana trabajo y por la tarde voy al gimnasio."}
+        ],
+        "flashcards": [
+          {"id": "f1", "front": "¿'Por' o 'para' la finalidad (el objetivo)?", "def": "para — estudio para aprobar"},
+          {"id": "f2", "front": "¿'Por' o 'para' la causa?", "def": "por — se canceló por la lluvia"},
+          {"id": "f3", "front": "¿'Por' o 'para' el medio (correo, teléfono)?", "def": "por — te llamo por teléfono"},
+          {"id": "f4", "front": "¿'Por' o 'para' el destinatario?", "def": "para — este café es para ti"},
+          {"id": "f5", "front": "¿'Por' o 'para' el plazo (fecha límite)?", "def": "para — es para el viernes"},
+          {"id": "f6", "front": "¿'Por' o 'para' el recorrido?", "def": "por — pasear por la playa"},
+          {"id": "f7", "front": "¿'Por' o 'para' el intercambio (precio)?", "def": "por — lo compré por diez euros"},
+          {"id": "f8", "front": "por cierto", "def": "expresión fija: introduce un tema nuevo"},
+          {"id": "f9", "front": "por fin", "def": "expresión fija: después de mucho esperar"},
+          {"id": "f10", "front": "para siempre", "def": "expresión fija: sin fin, definitivamente"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Estudio todas las noches ___ aprobar el examen. (mi objetivo)",
+            "options": ["por", "para", "de", "en"],
+            "correct": 1,
+            "explain": "Finalidad u objetivo: para. 'Por' indicaría causa, no objetivo."
+          },
+          {
+            "id": "q2",
+            "q": "El vuelo se canceló ___ la niebla. (la causa)",
+            "options": ["para", "por", "a", "con"],
+            "correct": 1,
+            "explain": "Causa: por (a causa de la niebla). 'Para' expresaría finalidad, que no tiene sentido aquí."
+          },
+          {
+            "id": "q3",
+            "q": "Te mando las fotos ___ correo electrónico. (el medio)",
+            "options": ["para", "en", "por", "a"],
+            "correct": 2,
+            "explain": "Medio de comunicación: por (por correo, por teléfono, por WhatsApp)."
+          },
+          {
+            "id": "q4",
+            "q": "Estas flores son ___ mi abuela: es su cumpleaños. (la destinataria)",
+            "options": ["por", "de", "con", "para"],
+            "correct": 3,
+            "explain": "Destinatario: para. 'Por mi abuela' significaría a causa de ella."
+          },
+          {
+            "id": "q5",
+            "q": "'Lo hice por ti' significa que…",
+            "options": ["el resultado es un regalo para ti", "lo hice a causa de ti, pensando en ti", "lo hice en tu lugar, sin avisarte", "lo hice para siempre"],
+            "correct": 1,
+            "explain": "'Por ti' = a causa de ti, motivado por ti. 'Para ti' sería el destinatario del resultado."
+          }
+        ]
+      },
+      "b1-pronombres": {
+        "id": "b1-pronombres",
+        "icon": "🎯",
+        "level": "B1",
+        "title": "Los pronombres: lo, la, le, se lo…",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Directo: lo, la, los, las",
+            "body": "El objeto directo se sustituye por <strong>lo, la, los, las</strong> según género y número: <em>¿Has visto <strong>el partido</strong>? — Sí, <strong>lo</strong> he visto.</em> <em>¿Compraste <strong>las entradas</strong>? — Sí, <strong>las</strong> compré.</em> El pronombre va <strong>delante</strong> del verbo conjugado: <em>Lo veo</em>, no <em>veo lo</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Indirecto: le, les (y el famoso se)",
+            "body": "El objeto indirecto (¿a quién?) usa <strong>le, les</strong>: <em><strong>Le</strong> di el libro a Marta</em>. Cuando van juntos indirecto + directo, <em>le/les</em> se convierte en <strong>se</strong>: <em>¿Le diste el libro? — Sí, <strong>se lo</strong> di</em> (nunca 'le lo'). El orden es siempre: <strong>se + lo/la/los/las + verbo</strong>."
+          },
+          {
+            "id": "t3",
+            "heading": "¿Dónde va el pronombre?",
+            "body": "Con verbo conjugado, <strong>delante</strong>: <em>Te llamo mañana</em>. Con infinitivo o gerundio, puede ir <strong>pegado detrás</strong>: <em>Voy a llamar<strong>te</strong></em> o <em><strong>Te</strong> voy a llamar</em> — las dos son correctas. Con imperativo afirmativo, siempre detrás: <em>¡Dí<strong>melo</strong>!</em> Nota de España: muchos hablantes dicen <em>le</em> por <em>lo</em> para personas masculinas (<em>a Juan <strong>le</strong> vi ayer</em>) — el famoso <strong>leísmo</strong>, aceptado para persona masculina singular."
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "¿Has visto mi paraguas? — No, no lo he visto."},
+          {"id": "e2", "text": "¿Quién tiene las llaves? — Las tengo yo."},
+          {"id": "e3", "text": "Le he comprado un regalo a mi madre."},
+          {"id": "e4", "text": "¿Le diste las entradas a Pablo? — Sí, se las di ayer."},
+          {"id": "e5", "text": "Ese libro no me lo prestes: ya lo he leído."},
+          {"id": "e6", "text": "Voy a contarte una cosa, pero no se la digas a nadie."},
+          {"id": "e7", "text": "¿El pan? Cómpralo en la panadería de la esquina."},
+          {"id": "e8", "text": "A mis primos les mando fotos por el grupo de la familia."}
+        ],
+        "flashcards": [
+          {"id": "f1", "front": "¿Pronombre para 'el libro'? (objeto directo)", "def": "lo — masculino singular: lo leo"},
+          {"id": "f2", "front": "¿Pronombre para 'las llaves'? (objeto directo)", "def": "las — femenino plural: las tengo"},
+          {"id": "f3", "front": "¿Pronombre para 'a Marta'? (objeto indirecto)", "def": "le — le di el libro"},
+          {"id": "f4", "front": "¿Qué pasa con 'le' antes de 'lo'?", "def": "se convierte en se: se lo di (nunca 'le lo')"},
+          {"id": "f5", "front": "¿'Veo lo' o 'lo veo'?", "def": "lo veo — el pronombre va delante del verbo conjugado"},
+          {"id": "f6", "front": "¿Dónde va el pronombre con infinitivo?", "def": "detrás y pegado (voy a llamarte) o delante del verbo conjugado (te voy a llamar)"},
+          {"id": "f7", "front": "¿Dónde va el pronombre con imperativo afirmativo?", "def": "siempre detrás y pegado: ¡dímelo!, ¡cómpralo!"},
+          {"id": "f8", "front": "el leísmo", "def": "usar 'le' por 'lo' para persona masculina: 'a Juan le vi' — típico de España"},
+          {"id": "f9", "front": "se lo / se la / se los / se las", "def": "orden fijo: se + directo + verbo (se lo di)"},
+          {"id": "f10", "front": "¿'No se lo digas' o 'no dígaselo'?", "def": "no se lo digas — con imperativo negativo el pronombre va delante"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "¿Has leído el último de Almudena Grandes? — Sí, ___ he leído.",
+            "options": ["la", "lo", "le", "los"],
+            "correct": 1,
+            "explain": "'El último (libro)' es masculino singular: lo. 'La' sería femenino y 'le' es para el objeto indirecto."
+          },
+          {
+            "id": "q2",
+            "q": "¿Le diste las entradas a Pablo? — Sí, ___ di ayer.",
+            "options": ["le las", "se las", "las le", "se los"],
+            "correct": 1,
+            "explain": "Indirecto + directo: 'le' se convierte en 'se' y va primero: se las. 'Le las' no existe."
+          },
+          {
+            "id": "q3",
+            "q": "___ (a mis padres) he dicho que llegaré tarde.",
+            "options": ["Los", "Le", "Les", "Se"],
+            "correct": 2,
+            "explain": "'A mis padres' es objeto indirecto plural: les. 'Le' es singular y 'los' sería directo."
+          },
+          {
+            "id": "q4",
+            "q": "El pastel está en el horno. ¡No ___ todavía!",
+            "options": ["lo saques", "saques lo", "lo sacas", "sáqueslo"],
+            "correct": 0,
+            "explain": "Imperativo negativo: pronombre delante (no lo saques). 'Saques lo' y 'sáqueslo' son imposibles; 'lo sacas' no es imperativo."
+          },
+          {
+            "id": "q5",
+            "q": "Voy a comprar el regalo esta tarde. = Voy a ___ esta tarde.",
+            "options": ["comprarlo", "lo comprar", "comprarle", "comprarla"],
+            "correct": 0,
+            "explain": "Con infinitivo, el pronombre va pegado detrás: comprarlo. 'Lo comprar' es imposible; 'el regalo' es directo masculino (lo, no le/la)."
+          }
+        ]
+      },
 //__APPEND_HERE__
 }}};
