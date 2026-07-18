@@ -13,8 +13,9 @@
      one short line per language, newest first.
    ══════════════════════════════════════════════════════════════════ */
 window.PTB_VERSION = {
-  "version": 9,
+  "version": 10,
   "changelog": [
+    {"v": 10, "date": "2026-07-18", "en": "New Spanish course (A1–B1, Spain) with English support", "es": "Nuevo curso de español (A1–B1, de España) con apoyo en inglés"},
     {"v": 9, "date": "2026-07-17", "en": "Update prompt on start, app version and this change list", "es": "Aviso de actualización al iniciar, versión de la app y esta lista de cambios"},
     {"v": 8, "date": "2026-07-17", "en": "Fixed quiz questions where more than one answer could be correct", "es": "Corregidas preguntas con más de una respuesta posible"},
     {"v": 7, "date": "2026-07-16", "en": "One language setting now drives the whole app, including lessons", "es": "Un solo idioma controla toda la app, incluidas las lecciones"},
