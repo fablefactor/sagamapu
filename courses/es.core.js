@@ -52,7 +52,7 @@ window.PTB_COURSES.es = {
       { "id": "p11", "q": "A mí ___ gustan las tapas.", "opts": ["me", "yo", "le", "se"], "ans": 0, "level": "A2" },
       { "id": "p12", "q": "Mañana ___ a visitar el Museo del Prado.", "opts": ["fuimos", "íbamos", "hemos ido", "vamos"], "ans": 3, "level": "A2" },
       { "id": "p13", "q": "Estás en Madrid con dos amigos: \"¿___ queréis otra caña?\"", "opts": ["Ustedes", "Tú", "Vosotros", "Nosotros"], "ans": 2, "level": "A2" },
-      { "id": "p14", "q": "Hablas con el director del banco, un señor mayor que no conoces. ¿Qué forma usas?", "opts": ["tú", "vosotros", "usted", "ustedes"], "ans": 2, "level": "A2" },
+      { "id": "p14", "q": "Hablas con el director del banco, un señor mayor que no conoces. ¿Qué forma usas?", "opts": ["tú", "vosotros", "usted", "ustedes"], "ans": 2, "level": "A1" },
       { "id": "p15", "q": "Quiero que ___ a la fiesta el sábado.", "opts": ["vienes", "vengas", "venir", "vendrás"], "ans": 1, "level": "B1" },
       { "id": "p16", "q": "Este regalo es ___ ti — ¡feliz cumpleaños!", "opts": ["por", "de", "para", "con"], "ans": 2, "level": "B1" },
       { "id": "p17", "q": "¿Has visto mis llaves? — No, no ___ he visto.", "opts": ["los", "les", "las", "la"], "ans": 2, "level": "B1" },
@@ -84,7 +84,7 @@ window.PTB_COURSES.es = {
       "B1": [
         "No creo que el ayuntamiento cierre la piscina en agosto.",
         "Si pudiera, viajaría en el AVE hasta A Coruña.",
-        "El ferrocarril atraviesa la sierra por un desfiladero.",
+        "El ferrocarril atraviesa la sierra por un valle estrecho.",
         "Cuando llegues a Logroño, llámame enseguida.",
         "La cigüeña hizo su nido en el campanario de la iglesia.",
         "Dijeron que la huelga terminaría el jueves por la tarde.",
@@ -162,9 +162,9 @@ window.PTB_COURSES.es = {
           {
             "id": "q4",
             "q": "En España, dos amigas se saludan normalmente con…",
-            "options": ["un apretón de manos", "una reverencia", "tres besos", "dos besos, uno en cada mejilla"],
+            "options": ["se dan la mano sin más", "no se dicen nada", "tres besos", "dos besos, uno en cada mejilla"],
             "correct": 3,
-            "explain": "El saludo típico informal en España son dos besos, uno en cada mejilla. El apretón de manos es para situaciones formales."
+            "explain": "El saludo típico informal en España son dos besos, uno en cada mejilla. Darse la mano sin más es para situaciones formales."
           },
           {
             "id": "q5",
@@ -210,11 +210,11 @@ window.PTB_COURSES.es = {
         "flashcards": [
           { "id": "f1", "front": "el ordenador", "def": "La máquina para trabajar y navegar por internet; palabra masculina." },
           { "id": "f2", "front": "la casa", "def": "El lugar donde vives; palabra femenina." },
-          { "id": "f3", "front": "el día", "def": "Veinticuatro horas; es masculina aunque termina en -a." },
+          { "id": "f3", "front": "el día", "def": "Veinticuatro horas; es una palabra masculina aunque termina en -a." },
           { "id": "f4", "front": "la mano", "def": "La parte del cuerpo con cinco dedos; es femenina aunque termina en -o." },
-          { "id": "f5", "front": "el mapa", "def": "El dibujo de un país o una ciudad; es masculina aunque termina en -a." },
+          { "id": "f5", "front": "el mapa", "def": "El dibujo de un país o una ciudad; es una palabra masculina aunque termina en -a." },
           { "id": "f6", "front": "la foto", "def": "La imagen que haces con el móvil; es femenina porque viene de 'fotografía'." },
-          { "id": "f7", "front": "el problema", "def": "Algo difícil de resolver; es masculina aunque termina en -a." },
+          { "id": "f7", "front": "el problema", "def": "Algo difícil de resolver; es una palabra masculina aunque termina en -a." },
           { "id": "f8", "front": "la ciudad", "def": "Un lugar grande donde vive mucha gente; las palabras en -dad son femeninas." },
           { "id": "f9", "front": "la estación", "def": "El lugar donde coges el tren; las palabras en -ción son femeninas." },
           { "id": "f10", "front": "un / una", "def": "Los artículos indeterminados: un libro, una mesa." }
@@ -225,7 +225,7 @@ window.PTB_COURSES.es = {
             "q": "___ problema",
             "options": ["la", "los", "el", "una"],
             "correct": 2,
-            "explain": "'Problema' es masculina aunque termina en -a: el problema. 'La problema' es un error muy típico; 'los' es plural y 'una problema' mezcla géneros."
+            "explain": "'Problema' es una palabra masculina aunque termina en -a: el problema. 'La problema' es un error muy típico; 'los' es plural y 'una problema' mezcla géneros."
           },
           {
             "id": "q2",

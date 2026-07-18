@@ -198,7 +198,7 @@ window.PTB_COURSES.es.support.en = {
       "quiz": {
         "q1": "Origin takes 'ser': es de Granada — she's from Granada. 'Estar' is for where something is right now, not where someone is from.",
         "q2": "Location takes 'estar': está al lado de la estación — it's next to the station. 'Es' would be identity or characteristic, not location.",
-        "q3": "'Cansada' (tired) is a temporary state (today, because I slept badly), so it takes 'estar': estoy cansada. 'Soy cansada' is the classic learner error.",
+        "q3": "'Cansada' (tired) is a temporary state (today, because I haven't slept much), so it takes 'estar': estoy cansada. 'Soy cansada' is the classic learner error.",
         "q4": "Professions take 'ser': es enfermera — she's a nurse. 'Está enfermera' is a typical mistake — 'estar' is for places and states.",
         "q5": "Location takes 'estar', and with 'vosotros' the form is 'estáis'. 'Sois' belongs to 'ser', and 'estás' is the tú form."
       }
