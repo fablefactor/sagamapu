@@ -669,5 +669,661 @@ window.PTB_COURSES.es = {
           }
         ]
       },
+      "a2-gustar": {
+        "id": "a2-gustar",
+        "icon": "❤️",
+        "level": "A2",
+        "title": "Gustar y sus amigos",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "El verbo al revés",
+            "body": "<strong>Gustar</strong> funciona 'al revés': la cosa que te gusta es el <strong>sujeto</strong>. Si el sujeto es singular: <em>me gust<strong>a</strong> el café</em>; si es plural: <em>me gust<strong>an</strong> las tapas</em>. Delante va el pronombre: <strong>me, te, le, nos, os, les</strong>: <em>¿Te gusta el flamenco? Nos gusta Madrid. ¿Os gustan los churros?</em> Con un verbo también se usa el singular: <em>Me gusta <strong>bailar</strong></em>."
+          },
+          {
+            "id": "t2",
+            "heading": "A mí me gusta…",
+            "body": "Para dar énfasis o marcar un contraste se añade <strong>a + persona</strong>: <em><strong>A mí</strong> me gusta el café solo, pero <strong>a mi hermana</strong> le gusta con leche</em>. Con 'le' y 'les' es casi obligatorio aclarar la persona: <em><strong>A Juan</strong> le gusta el cine. <strong>A mis padres</strong> les gusta pasear</em>. Para reaccionar: <strong>a mí también</strong> (igual que tú), <strong>a mí no</strong> (diferente), <strong>a mí tampoco</strong> (igual, en negativo)."
+          },
+          {
+            "id": "t3",
+            "heading": "Encantar, doler, apetecer",
+            "body": "Varios verbos funcionan como gustar. <strong>Encantar</strong> = gustar muchísimo: <em>Me encanta el gazpacho</em>. ¡Ojo! Nunca lleva 'mucho': se dice <em>me encanta</em>, no <em>me encanta mucho</em>. <strong>Doler</strong>, para el dolor: <em>Me duele la cabeza; me duelen los pies</em>. Y un verbo muy español: <strong>apetecer</strong> = tener ganas de algo: <em>¿Te apetece una caña en la terraza?</em>"
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Me gusta el flamenco, pero no me gustan los toros." },
+          { "id": "e2", "text": "¿Te gusta el gazpacho? — Sí, me encanta." },
+          { "id": "e3", "text": "A mi madre le encantan las películas antiguas." },
+          { "id": "e4", "text": "Nos gusta pasear por el Retiro los domingos." },
+          { "id": "e5", "text": "¿Os gusta la tortilla con cebolla o sin cebolla?" },
+          { "id": "e6", "text": "Me duelen los pies de andar todo el día por Sevilla." },
+          { "id": "e7", "text": "A mí me gusta el café solo; a mi hermana le gusta con leche." },
+          { "id": "e8", "text": "¿Te apetece una caña en la terraza? — ¡Vale, me apetece muchísimo!" }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "gustar", "def": "El verbo 'al revés': la cosa es el sujeto. Me gusta el café." },
+          { "id": "f2", "front": "me gustan", "def": "La forma con sujeto plural: me gustan las tapas." },
+          { "id": "f3", "front": "encantar", "def": "Gustar muchísimo. Nunca lleva 'mucho': me encanta." },
+          { "id": "f4", "front": "doler", "def": "El verbo del dolor: me duele la cabeza." },
+          { "id": "f5", "front": "me duelen los pies", "def": "Dolor con sujeto plural: los pies." },
+          { "id": "f6", "front": "a mí me gusta", "def": "Con 'a mí' das énfasis o marcas un contraste." },
+          { "id": "f7", "front": "le gusta", "def": "A él, a ella o a usted le gusta." },
+          { "id": "f8", "front": "os gusta", "def": "A vosotros os gusta." },
+          { "id": "f9", "front": "apetecer", "def": "Tener ganas de algo ahora: ¿Te apetece un café?" },
+          { "id": "f10", "front": "a mí también / a mí tampoco", "def": "Para reaccionar: igual que tú, en positivo o en negativo." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Me ___ las tapas.",
+            "options": ["gusta", "gustan", "gusto", "gustas"],
+            "correct": 1,
+            "explain": "El sujeto es 'las tapas' (plural), así que el verbo va en plural: me gustan. 'Me gusta las tapas' es un error clásico; 'gusto' y 'gustas' concuerdan con yo/tú, no con las tapas."
+          },
+          {
+            "id": "q2",
+            "q": "A mi hermano ___ gusta el fútbol.",
+            "options": ["me", "le", "se", "lo"],
+            "correct": 1,
+            "explain": "'A mi hermano' pide el pronombre 'le': a mi hermano le gusta. 'Me' sería para mí, no para mi hermano, y 'se' y 'lo' no funcionan con gustar."
+          },
+          {
+            "id": "q3",
+            "q": "___ duele la cabeza, ¿verdad? (a ti)",
+            "options": ["Te", "Tú", "Se", "Ti"],
+            "correct": 0,
+            "explain": "'Doler' funciona como 'gustar': a ti te duele la cabeza. 'Tú' es pronombre sujeto y aquí el sujeto es 'la cabeza'; 'ti' necesita 'a' delante."
+          },
+          {
+            "id": "q4",
+            "q": "Me ___ los pies después de andar todo el día.",
+            "options": ["duele", "dolemos", "duelen", "dueles"],
+            "correct": 2,
+            "explain": "El sujeto es 'los pies' (plural): me duelen. 'Me duele los pies' es el error típico; 'dolemos' y 'dueles' concuerdan con personas, no con los pies."
+          },
+          {
+            "id": "q5",
+            "q": "¿Te gusta el cine? — Sí, me ___: voy todas las semanas.",
+            "options": ["encantan", "encanta mucho", "encanta", "gustan"],
+            "correct": 2,
+            "explain": "'Encantar' ya significa 'gustar muchísimo', así que nunca lleva 'mucho'. Y el sujeto es 'el cine' (singular): me encanta. 'Encantan' y 'gustan' son plurales."
+          }
+        ]
+      },
+      "a2-preterito": {
+        "id": "a2-preterito",
+        "icon": "🏖️",
+        "level": "A2",
+        "title": "El indefinido: contar el finde",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Las formas regulares",
+            "body": "El <strong>pretérito indefinido</strong> cuenta acciones <strong>terminadas</strong> en un momento concreto: <em>ayer, anoche, el sábado pasado, el año pasado</em>. Verbos en -ar, modelo <strong>hablar</strong>: <em>habl<strong>é</strong>, habl<strong>aste</strong>, habl<strong>ó</strong>, habl<strong>amos</strong>, habl<strong>asteis</strong>, habl<strong>aron</strong></em>. Verbos en -er/-ir, modelo <strong>comer</strong>: <em>com<strong>í</strong>, com<strong>iste</strong>, com<strong>ió</strong>, com<strong>imos</strong>, com<strong>isteis</strong>, com<strong>ieron</strong></em>. Una palabra útil: <strong>el finde</strong> = el fin de semana, coloquial."
+          },
+          {
+            "id": "t2",
+            "heading": "Los grandes irregulares",
+            "body": "Cuatro verbos irregulares aparecen constantemente. <strong>Ser</strong> e <strong>ir</strong> comparten las mismas formas: <em><strong>fui, fuiste, fue</strong>, fuimos, fuisteis, fueron</em> — el contexto dice cuál es: <em>Fui camarero</em> (ser) / <em>Fui a Sevilla</em> (ir). <strong>Hacer</strong>: <em><strong>hice</strong>, hiciste, <strong>hizo</strong>…</em> <strong>Estar</strong>: <em><strong>estuve</strong>, estuviste, estuvo…</em> <strong>Tener</strong>: <em><strong>tuve</strong>, tuviste, tuvo…</em> Y un detalle: estas formas irregulares no llevan tilde."
+          },
+          {
+            "id": "t3",
+            "heading": "Contar el finde",
+            "body": "El lunes, la pregunta clásica es: <strong>¿Qué tal el finde?</strong> Para contar tu historia, ordena las acciones: <strong>primero</strong>, <strong>luego</strong>, <strong>después</strong>, <strong>por la noche</strong>, <strong>al final</strong>: <em>El sábado primero fui al mercado, luego comí con mis padres y por la noche quedé con amigos</em>. Cada verbo en indefinido es un paso más de la historia — una acción terminada detrás de otra."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "¿Qué tal el finde? — ¡Genial! Fuimos a la playa de Valencia." },
+          { "id": "e2", "text": "Ayer comí paella con mis padres y luego dormí la siesta." },
+          { "id": "e3", "text": "El sábado hice una ruta de tapas por el centro de Sevilla." },
+          { "id": "e4", "text": "Anoche estuvimos en un concierto hasta las dos." },
+          { "id": "e5", "text": "El verano pasado tuve un trabajo en un bar de la playa." },
+          { "id": "e6", "text": "Primero visitamos el museo y después paseamos por el Retiro." },
+          { "id": "e7", "text": "¿Fuisteis al cine el viernes? — No, nos quedamos en casa." },
+          { "id": "e8", "text": "El domingo por la noche no hice nada: descansé." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "ayer", "def": "El día antes de hoy; palabra señal del indefinido." },
+          { "id": "f2", "front": "el finde", "def": "Forma coloquial de 'el fin de semana'." },
+          { "id": "f3", "front": "fui", "def": "La forma 'yo' de ser Y de ir: fui camarero / fui a Cádiz." },
+          { "id": "f4", "front": "fue", "def": "La forma 'él/ella' de ser y de ir en indefinido." },
+          { "id": "f5", "front": "hice", "def": "La forma 'yo' de hacer en indefinido." },
+          { "id": "f6", "front": "estuve", "def": "La forma 'yo' de estar en indefinido." },
+          { "id": "f7", "front": "tuve", "def": "La forma 'yo' de tener en indefinido." },
+          { "id": "f8", "front": "anoche", "def": "Ayer por la noche." },
+          { "id": "f9", "front": "el año pasado", "def": "El año anterior a este." },
+          { "id": "f10", "front": "¿Qué tal el finde?", "def": "La pregunta clásica del lunes." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Ayer por la tarde ___ al Prado y vi tres exposiciones.",
+            "options": ["voy", "fui", "iba", "va"],
+            "correct": 1,
+            "explain": "Son dos acciones terminadas y ordenadas de ayer: fui y vi. 'Voy' es presente, 'iba' describiría el fondo de la historia, no una acción completa, y 'va' es otra persona."
+          },
+          {
+            "id": "q2",
+            "q": "El sábado Marta ___ una tortilla, la llevó a la fiesta y triunfó.",
+            "options": ["hice", "hacía", "hizo", "hace"],
+            "correct": 2,
+            "explain": "Tres acciones terminadas, una detrás de otra: hizo, llevó, triunfó. 'Hice' es para yo, 'hacía' sería descripción de fondo, no un paso de la historia, y 'hace' es presente."
+          },
+          {
+            "id": "q3",
+            "q": "El verano pasado ___ (nosotros) dos semanas en Galicia.",
+            "options": ["estamos", "estábamos", "estuvisteis", "estuvimos"],
+            "correct": 3,
+            "explain": "Un periodo cerrado y completo ('dos semanas' del verano pasado) va en indefinido: estuvimos. 'Estábamos' no funciona con una duración cerrada; 'estuvisteis' es para vosotros."
+          },
+          {
+            "id": "q4",
+            "q": "—¿Qué ___ el finde pasado? —Fui a Toledo el sábado y el domingo descansé.",
+            "options": ["hacías", "hiciste", "haces", "hizo"],
+            "correct": 1,
+            "explain": "La respuesta cuenta acciones terminadas (fui, descansé), así que la pregunta va en indefinido: ¿qué hiciste? 'Hacías' pregunta por el fondo, no por los hechos del finde; 'hizo' es para él/ella o usted."
+          },
+          {
+            "id": "q5",
+            "q": "'Fuimos' puede ser de dos verbos diferentes. ¿Cuáles?",
+            "options": ["ser y estar", "ir y venir", "ser e ir", "hacer y ser"],
+            "correct": 2,
+            "explain": "Ser e ir comparten todas sus formas en indefinido: fuimos camareros (ser) / fuimos a Granada (ir). El contexto dice cuál es."
+          }
+        ]
+      },
+      "a2-imperfecto": {
+        "id": "a2-imperfecto",
+        "icon": "🧸",
+        "level": "A2",
+        "title": "El imperfecto: de pequeño…",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Las formas",
+            "body": "El <strong>imperfecto</strong> es el tiempo más regular del español. Verbos en -ar: <em>jug<strong>aba</strong>, jug<strong>abas</strong>, jug<strong>aba</strong>, jug<strong>ábamos</strong>, jug<strong>abais</strong>, jug<strong>aban</strong></em>. Verbos en -er/-ir: <em>com<strong>ía</strong>, viv<strong>ía</strong>, ten<strong>ías</strong>, hac<strong>íamos</strong>…</em> Solo hay <strong>tres irregulares</strong>: <strong>ser</strong> (<em>era, eras, era…</em>), <strong>ir</strong> (<em>iba, ibas, iba…</em>) y <strong>ver</strong> (<em>veía, veías…</em>). Y muy útil: <strong>había</strong> = el imperfecto de 'hay'."
+          },
+          {
+            "id": "t2",
+            "heading": "Para qué sirve",
+            "body": "El imperfecto describe <strong>cómo eran las cosas</strong>: costumbres del pasado (<em><strong>De pequeño</strong> jugaba en la calle <strong>todos los días</strong></em>), descripciones (<em>La casa <strong>era</strong> enorme y <strong>tenía</strong> un patio</em>), la edad y la hora en el pasado (<em><strong>Tenía</strong> ocho años; <strong>eran</strong> las diez</em>). Para las costumbres también existe <strong>solía + infinitivo</strong>: <em>Solíamos veranear en el pueblo</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "¿Imperfecto o indefinido?",
+            "body": "Piensa en una película: el <strong>imperfecto</strong> es el <strong>decorado</strong> — el fondo, la descripción, la costumbre; el <strong>indefinido</strong> es la <strong>acción</strong> — lo que pasa. <em><strong>Mientras</strong> cenábamos (fondo), <strong>de repente</strong> llamaron a la puerta (acción)</em>. Señales de imperfecto: <em>mientras, todos los días, siempre, de pequeño, antes</em>. Señales de indefinido: <em>de repente, un día, ayer, primero… luego…</em>, y los periodos cerrados: <em>Viví allí <strong>diez años</strong></em>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "De pequeño vivía en Valencia y jugaba en la playa todos los días." },
+          { "id": "e2", "text": "Mi abuela hacía un cocido riquísimo los domingos." },
+          { "id": "e3", "text": "Cuando tenía ocho años, quería ser futbolista." },
+          { "id": "e4", "text": "Antes solíamos veranear en el pueblo de mis abuelos." },
+          { "id": "e5", "text": "La casa de mis tíos era enorme y tenía un patio con naranjos." },
+          { "id": "e6", "text": "Mientras cenábamos, empezó a llover." },
+          { "id": "e7", "text": "Íbamos al colegio andando; no había autobús." },
+          { "id": "e8", "text": "De pequeña veía dibujos animados todos los sábados por la mañana." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "de pequeño / de pequeña", "def": "Cuando era niño o niña." },
+          { "id": "f2", "front": "jugaba", "def": "Imperfecto de jugar: costumbre o descripción del pasado." },
+          { "id": "f3", "front": "solía + infinitivo", "def": "Una costumbre del pasado: solía madrugar." },
+          { "id": "f4", "front": "era", "def": "El imperfecto de ser; solo hay tres verbos irregulares." },
+          { "id": "f5", "front": "iba", "def": "El imperfecto de ir." },
+          { "id": "f6", "front": "veía", "def": "El imperfecto de ver, el tercer irregular." },
+          { "id": "f7", "front": "había", "def": "El imperfecto de 'hay': no había autobús." },
+          { "id": "f8", "front": "mientras", "def": "Al mismo tiempo; señal típica de imperfecto." },
+          { "id": "f9", "front": "de repente", "def": "En un momento, sin aviso; señal de indefinido." },
+          { "id": "f10", "front": "todos los días", "def": "Señal de costumbre: imperfecto." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "De pequeño ___ al parchís con mi abuelo todos los domingos.",
+            "options": ["jugué", "jugaba", "juego", "jugábamos"],
+            "correct": 1,
+            "explain": "Es una costumbre del pasado ('de pequeño… todos los domingos'): jugaba. 'Jugué' sería una acción de un día concreto, y 'jugábamos' es para nosotros."
+          },
+          {
+            "id": "q2",
+            "q": "___ (yo) la siesta cuando, de repente, sonó el teléfono.",
+            "options": ["Dormí", "Duermo", "Dormía", "Dormías"],
+            "correct": 2,
+            "explain": "'Dormía' es el fondo de la escena y 'sonó' ('de repente') es la acción que la interrumpe. 'Dormí la siesta cuando de repente sonó…' no funciona: el indefinido no describe una acción en curso."
+          },
+          {
+            "id": "q3",
+            "q": "___ en Sevilla toda mi infancia; luego nos mudamos a Madrid.",
+            "options": ["Vivía", "Viví", "Vivo", "Vivís"],
+            "correct": 1,
+            "explain": "'Toda mi infancia' es un periodo cerrado y completo, y 'luego' ordena la historia: viví. ¡Ojo! 'De pequeño vivía en Sevilla' (descripción abierta) también existe — pero con el periodo cerrado y el 'luego', aquí solo funciona el indefinido."
+          },
+          {
+            "id": "q4",
+            "q": "Cuando ___ quince años, mi familia se mudó a Zaragoza.",
+            "options": ["tuve", "tengo", "teníamos", "tenía"],
+            "correct": 3,
+            "explain": "La edad en el pasado va en imperfecto: cuando tenía quince años. 'Cuando tuve quince años' no se dice (sería 'cuando cumplí quince años'); 'teníamos' es para nosotros."
+          },
+          {
+            "id": "q5",
+            "q": "Antes ___ (yo) ir a la playa en tren, pero ahora voy en coche.",
+            "options": ["solí", "solía", "suelo", "solían"],
+            "correct": 1,
+            "explain": "'Solía + infinitivo' expresa una costumbre del pasado: antes solía ir. 'Suelo' es presente y choca con 'antes… pero ahora'; 'solí' no se usa: soler no tiene indefinido en este sentido."
+          }
+        ]
+      },
+      "a2-rutina": {
+        "id": "a2-rutina",
+        "icon": "⏰",
+        "level": "A2",
+        "title": "La rutina y los reflexivos",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Los verbos reflexivos",
+            "body": "Muchos verbos de la rutina son <strong>reflexivos</strong>: la acción vuelve a ti mismo. Modelo <strong>levantarse</strong>: <em><strong>me</strong> levanto, <strong>te</strong> levantas, <strong>se</strong> levanta, <strong>nos</strong> levantamos, <strong>os</strong> levantáis, <strong>se</strong> levantan</em>. El pronombre va <strong>delante</strong> del verbo conjugado, pero con un infinitivo se pega detrás: <em>Voy a levantar<strong>me</strong></em>. ¡Ojo! Sin pronombre cambia el sentido: <em>me levanto</em> (de la cama) no es lo mismo que <em>levanto la mano</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Mi rutina, paso a paso",
+            "body": "Los verbos clave del día: <strong>despertarse</strong> (e→ie: <em>me despierto</em>), <strong>levantarse</strong>, <strong>ducharse</strong>, <strong>vestirse</strong> (e→i: <em>me visto</em>), <strong>desayunar</strong>, <strong>salir de casa</strong>, <strong>volver a casa</strong>, <strong>acostarse</strong> (o→ue: <em>me acuesto</em>). Para las costumbres del presente: <strong>soler + infinitivo</strong>: <em>Suelo levantarme a las siete</em>. Y un verbo muy útil: <strong>madrugar</strong> = levantarse muy temprano."
+          },
+          {
+            "id": "t3",
+            "heading": "El horario español y la siesta",
+            "body": "El horario de España sorprende: se come sobre las <strong>dos</strong>, se cena sobre las <strong>nueve y media</strong> y la tele importante empieza a las once. ¿Y la <strong>siesta</strong>? Es más <strong>mito</strong> que realidad: la mayoría de la gente que trabaja <strong>no</strong> duerme la siesta a diario; se duerme sobre todo el fin de semana, en vacaciones y en verano, cuando hace mucho calor. Eso sí: la palabra es española y el invento, buenísimo."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Me levanto a las siete y media y me ducho antes de desayunar." },
+          { "id": "e2", "text": "Mi hermana se acuesta tardísimo: nunca antes de las doce." },
+          { "id": "e3", "text": "¿A qué hora te despiertas los domingos? — Tarde, sobre las once." },
+          { "id": "e4", "text": "Primero me visto y luego desayuno un café con tostada." },
+          { "id": "e5", "text": "Suelo salir de casa a las ocho y coger el metro." },
+          { "id": "e6", "text": "¿Os acostáis tarde en verano? — Sí, es que en España se cena a las diez." },
+          { "id": "e7", "text": "Mañana madrugo: voy a levantarme a las seis." },
+          { "id": "e8", "text": "La siesta diaria es casi un mito: se duerme sobre todo en verano y el finde." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "levantarse", "def": "Salir de la cama por la mañana: me levanto a las siete." },
+          { "id": "f2", "front": "ducharse", "def": "Lavarse en la ducha: me ducho por la mañana." },
+          { "id": "f3", "front": "acostarse", "def": "Irse a la cama (o→ue): me acuesto a las once." },
+          { "id": "f4", "front": "despertarse", "def": "Abrir los ojos (e→ie): me despierto antes de levantarme." },
+          { "id": "f5", "front": "vestirse", "def": "Ponerse la ropa (e→i): me visto en cinco minutos." },
+          { "id": "f6", "front": "desayunar", "def": "Tomar la primera comida del día." },
+          { "id": "f7", "front": "soler + infinitivo", "def": "Una costumbre del presente: suelo madrugar." },
+          { "id": "f8", "front": "madrugar", "def": "Levantarse muy temprano." },
+          { "id": "f9", "front": "la siesta", "def": "Dormir un rato después de comer; hoy, más del finde que diaria." },
+          { "id": "f10", "front": "os levantáis", "def": "La forma de vosotros: ¿a qué hora os levantáis?" }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "(Yo) ___ a las siete todos los días.",
+            "options": ["me levanto", "se levanta", "levanto", "me levantas"],
+            "correct": 0,
+            "explain": "Levantarse es reflexivo: yo me levanto. 'Levanto' sin pronombre es el error clásico (eso es levantar algo, como la mano); 'se levanta' es para él o ella."
+          },
+          {
+            "id": "q2",
+            "q": "Mis padres ___ temprano porque entran a trabajar a las ocho.",
+            "options": ["se levanta", "se levantan", "nos levantamos", "levantan"],
+            "correct": 1,
+            "explain": "'Mis padres' es plural: se levantan. 'Se levanta' es singular, 'nos levantamos' es para nosotros y 'levantan' pierde el pronombre reflexivo."
+          },
+          {
+            "id": "q3",
+            "q": "¿A qué hora ___ (vosotros) los domingos?",
+            "options": ["os acostáis", "se acuestan", "te acuestas", "os acostáis tarde"],
+            "correct": 0,
+            "explain": "Con vosotros, el pronombre es 'os': ¿a qué hora os acostáis? 'Se acuestan' es para ellos o ustedes y 'te acuestas' es para tú."
+          },
+          {
+            "id": "q4",
+            "q": "Esta noche voy a ___ pronto: mañana madrugo.",
+            "options": ["acostarme", "me acostar", "acostarse", "me acuesto"],
+            "correct": 0,
+            "explain": "Con 'voy a' + infinitivo, el pronombre se pega detrás y concuerda con yo: voy a acostarme. 'Me acostar' tiene el orden mal, 'acostarse' es otra persona y 'me acuesto' no es infinitivo."
+          },
+          {
+            "id": "q5",
+            "q": "En la España de hoy, la siesta diaria…",
+            "options": ["es obligatoria en las empresas", "es más mito que realidad: pocos la duermen a diario", "dura toda la tarde para todo el mundo", "solo se duerme en invierno"],
+            "correct": 1,
+            "explain": "La mayoría de la gente que trabaja no duerme la siesta a diario: se duerme sobre todo el fin de semana, en vacaciones y en verano."
+          }
+        ]
+      },
+      "a2-compras": {
+        "id": "a2-compras",
+        "icon": "🛍️",
+        "level": "A2",
+        "title": "Compras, mercados y rebajas",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "En el mercado",
+            "body": "Cada ciudad española tiene su <strong>mercado</strong> de toda la vida, con <strong>puestos</strong> de fruta, pescado y carne: la Boquería en Barcelona, el Mercado Central de Valencia… Al llegar a un puesto, pregunta <strong>¿Quién es el último?</strong> — así se pide la vez en la cola. Para pedir: <em>¿Me pone un kilo de tomates?</em> Y para saber el precio: <strong>¿Cuánto cuesta?</strong> (una cosa) / <strong>¿Cuánto cuestan?</strong> (varias) / <strong>¿Cuánto es?</strong> (el total)."
+          },
+          {
+            "id": "t2",
+            "heading": "Pagar: efectivo, tarjeta y la vuelta",
+            "body": "Al pagar te preguntan: <em>¿En <strong>efectivo</strong> o con <strong>tarjeta</strong>?</em> El efectivo son billetes y monedas; hoy casi todo se puede pagar con tarjeta o con el <strong>móvil</strong>. Si pagas de más, te devuelven <strong>la vuelta</strong>: <em>Aquí tiene la vuelta: tres euros</em>. Y dos veces al año llegan <strong>las rebajas</strong> — en <strong>enero</strong> y en <strong>julio</strong> — cuando las tiendas bajan los precios y media España sale de compras."
+          },
+          {
+            "id": "t3",
+            "heading": "La ropa: probarse y quedar bien",
+            "body": "En una tienda de ropa: <strong>probarse</strong> algo (<em>¿Puedo probarme estos vaqueros?</em>), preguntar por <strong>la talla</strong> (<em>¿Tiene una talla más?</em>) y buscar <strong>los probadores</strong>. El verbo <strong>quedar</strong> funciona como gustar: la ropa es el sujeto: <em>Esa chaqueta te <strong>queda</strong> genial; esos vaqueros te <strong>quedan</strong> pequeños</em>. Si te convence: <em><strong>Me lo llevo</strong></em> (= lo compro)."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "¿Quién es el último? — Yo. Pues voy detrás de usted." },
+          { "id": "e2", "text": "¿Me pone un kilo de tomates y dos aguacates, por favor?" },
+          { "id": "e3", "text": "¿Cuánto es todo? — Son doce euros con cuarenta." },
+          { "id": "e4", "text": "¿En efectivo o con tarjeta? — Con tarjeta. ¿Puedo pagar con el móvil?" },
+          { "id": "e5", "text": "Aquí tiene la vuelta: tres euros y veinte céntimos." },
+          { "id": "e6", "text": "En enero empiezan las rebajas y todo está mucho más barato." },
+          { "id": "e7", "text": "¿Puedo probarme estos vaqueros? — Claro, los probadores están al fondo." },
+          { "id": "e8", "text": "Esa chaqueta te queda genial. — ¿Sí? Pues me la llevo." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "el mercado", "def": "El edificio con puestos de fruta, pescado y carne." },
+          { "id": "f2", "front": "¿Quién es el último?", "def": "Así se pide la vez en una cola española." },
+          { "id": "f3", "front": "¿Cuánto cuesta?", "def": "La pregunta del precio; con plural: ¿cuánto cuestan?" },
+          { "id": "f4", "front": "la vuelta", "def": "El dinero que te devuelven cuando pagas de más." },
+          { "id": "f5", "front": "en efectivo", "def": "Pagar con billetes y monedas." },
+          { "id": "f6", "front": "con tarjeta", "def": "Pagar sin efectivo, con el banco." },
+          { "id": "f7", "front": "las rebajas", "def": "Cuando las tiendas bajan los precios: enero y julio." },
+          { "id": "f8", "front": "probarse", "def": "Ponerse la ropa antes de comprarla: ¿puedo probármelo?" },
+          { "id": "f9", "front": "la talla", "def": "La medida de la ropa: ¿tiene una talla más?" },
+          { "id": "f10", "front": "quedar bien / mal", "def": "Funciona como gustar: esa camisa te queda bien." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "¿Cuánto ___ estas naranjas?",
+            "options": ["cuesta", "cuestan", "cuestas", "costamos"],
+            "correct": 1,
+            "explain": "El sujeto es 'estas naranjas' (plural): cuestan. 'Cuesta' es para una sola cosa; 'cuestas' y 'costamos' concuerdan con personas."
+          },
+          {
+            "id": "q2",
+            "q": "Pago con billetes y monedas, es decir, pago…",
+            "options": ["con tarjeta", "en efectivo", "con el móvil", "a plazos"],
+            "correct": 1,
+            "explain": "Los billetes y las monedas son el efectivo. La tarjeta y el móvil son pagos electrónicos."
+          },
+          {
+            "id": "q3",
+            "q": "Llegas a la cola del puesto del mercado. Para pedir la vez, preguntas:",
+            "options": ["¿Cuánto cuesta?", "¿Dónde está la caja?", "¿Quién es el último?", "¿Tiene tarjeta?"],
+            "correct": 2,
+            "explain": "'¿Quién es el último?' es la fórmula clásica para saber tu posición en la cola. Las otras preguntas no piden la vez."
+          },
+          {
+            "id": "q4",
+            "q": "Esa camisa te ___ muy bien: cómprala.",
+            "options": ["queda", "quedas", "quedan", "quedo"],
+            "correct": 0,
+            "explain": "'Quedar' funciona como gustar: el sujeto es 'esa camisa' (singular): te queda bien. 'Quedas' es el error típico por imitar el 'te'; 'quedan' sería para un sujeto plural."
+          },
+          {
+            "id": "q5",
+            "q": "Las rebajas en España son, sobre todo, en…",
+            "options": ["marzo y septiembre", "solo en diciembre", "abril y octubre", "enero y julio"],
+            "correct": 3,
+            "explain": "Las dos grandes temporadas de rebajas son enero (después de Reyes) y julio, al empezar el verano."
+          }
+        ]
+      },
+      "a2-serestar2": {
+        "id": "a2-serestar2",
+        "icon": "🎭",
+        "level": "A2",
+        "title": "Ser y estar II: estoy comiendo",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Repaso y un uso nuevo: los eventos",
+            "body": "Repaso rápido: <strong>ser</strong> para identidad, origen, profesión y características; <strong>estar</strong> para el lugar y los estados. Pero ¡ojo con los <strong>eventos</strong>! Un concierto, una fiesta o una boda van con <strong>ser</strong>: <em>La fiesta <strong>es</strong> en casa de Marta; el concierto <strong>es</strong> en la Plaza Mayor</em> — decimos dónde <strong>ocurre</strong>, no dónde está una cosa. Compara: <em>El teatro <strong>está</strong> en el centro</em> (lugar del edificio) / <em>La obra <strong>es</strong> en el teatro</em> (evento). Y con <strong>de</strong>: <em>estar de vacaciones, estar de rebajas</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Estar + gerundio: ahora mismo",
+            "body": "Para una acción que ocurre <strong>en este momento</strong>: <strong>estar + gerundio</strong>. El gerundio: -ar → <strong>-ando</strong> (<em>hablando</em>), -er/-ir → <strong>-iendo</strong> (<em>comiendo, viviendo</em>). Irregulares importantes: <em>leer → le<strong>y</strong>endo, dormir → d<strong>u</strong>rmiendo, pedir → p<strong>i</strong>diendo</em>. Compara: <em>Como a las dos</em> (costumbre) / <em><strong>Estoy comiendo</strong>, te llamo luego</em> (ahora mismo). La pregunta estrella: <strong>¿Qué estás haciendo?</strong>"
+          },
+          {
+            "id": "t3",
+            "heading": "Palabras que cambian de significado",
+            "body": "Algunos adjetivos cambian de significado con ser o estar. <strong>Listo</strong>: <em>ser listo</em> = inteligente / <em>estar listo</em> = preparado. <strong>Rico</strong>: <em>ser rico</em> = tener mucho dinero / <em>estar rico</em> = tener buen sabor. <strong>Aburrido</strong>: <em>ser aburrido</em> = no ser interesante / <em>estar aburrido</em> = sentir aburrimiento ahora. <strong>Malo</strong>: <em>ser malo</em> = de mala calidad o mala persona / <em>estar malo</em> = estar enfermo (o, una comida, en mal estado)."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "¿Qué estás haciendo? — Estoy viendo una serie." },
+          { "id": "e2", "text": "Ana no puede ponerse ahora: está hablando por teléfono." },
+          { "id": "e3", "text": "La fiesta es en casa de Marta, pero Marta todavía está en el supermercado." },
+          { "id": "e4", "text": "Este gazpacho está riquísimo. — Y eso que el cocinero no es rico: cocina con cuatro cosas." },
+          { "id": "e5", "text": "Mi sobrina es muy lista: con cuatro años ya lee." },
+          { "id": "e6", "text": "¿Estáis listos? El taxi está esperando abajo." },
+          { "id": "e7", "text": "La película es aburridísima; por eso estoy aburrido." },
+          { "id": "e8", "text": "Estamos de vacaciones en Menorca hasta el domingo." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "estar + gerundio", "def": "Una acción en este momento: estoy comiendo." },
+          { "id": "f2", "front": "el gerundio", "def": "-ar → -ando; -er/-ir → -iendo: hablando, comiendo." },
+          { "id": "f3", "front": "leyendo", "def": "El gerundio irregular de leer." },
+          { "id": "f4", "front": "durmiendo", "def": "El gerundio irregular de dormir (o→u)." },
+          { "id": "f5", "front": "ser listo", "def": "Ser inteligente." },
+          { "id": "f6", "front": "estar listo", "def": "Estar preparado: ¿estás listo? Nos vamos." },
+          { "id": "f7", "front": "ser rico", "def": "Tener mucho dinero." },
+          { "id": "f8", "front": "estar rico", "def": "Tener buen sabor: ¡qué rica está la paella!" },
+          { "id": "f9", "front": "estar aburrido", "def": "Sentir aburrimiento ahora; 'ser aburrido' = no ser interesante." },
+          { "id": "f10", "front": "la fiesta es en…", "def": "Los eventos van con 'ser': el concierto es en la plaza." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "No puedo salir ahora: ___ estudiando para un examen.",
+            "options": ["estoy", "soy", "está", "estás"],
+            "correct": 0,
+            "explain": "El gerundio va con 'estar', y 'no puedo' marca la persona yo: estoy estudiando. 'Soy estudiando' es el error clásico; 'está' y 'estás' son otras personas."
+          },
+          {
+            "id": "q2",
+            "q": "El concierto ___ en la Plaza Mayor este sábado. (un evento)",
+            "options": ["está", "es", "estás", "son"],
+            "correct": 1,
+            "explain": "Los eventos van con 'ser': decimos dónde ocurre el concierto. 'Está' es la trampa — sería para el lugar de una cosa (el quiosco está en la plaza), no de un evento."
+          },
+          {
+            "id": "q3",
+            "q": "¡Prueba la tortilla! ___ riquísima hoy.",
+            "options": ["Es", "Eres", "Está", "Estás"],
+            "correct": 2,
+            "explain": "Hablamos del sabor de hoy ('prueba', 'hoy'): está riquísima. 'Ser rico' significa tener dinero; 'eres' y 'estás' son para tú, no para la tortilla."
+          },
+          {
+            "id": "q4",
+            "q": "Ya podemos irnos. ¿___ listos todos?",
+            "options": ["Sois", "Estáis", "Estás", "Es"],
+            "correct": 1,
+            "explain": "'Ya podemos irnos' pregunta si estáis preparados: estar listo. 'Sois listos' significaría que sois inteligentes; 'estás' es singular y aquí hablamos de todos."
+          },
+          {
+            "id": "q5",
+            "q": "Mario no se puede poner: está ___ la siesta.",
+            "options": ["durmiendo", "dormiendo", "duerme", "dormido"],
+            "correct": 0,
+            "explain": "El gerundio de dormir cambia o→u: durmiendo. 'Dormiendo' es el error típico; 'duerme' no es gerundio, y 'dormido' es un estado y no puede llevar 'la siesta' detrás."
+          }
+        ]
+      },
+      "a2-planes": {
+        "id": "a2-planes",
+        "icon": "🗓️",
+        "level": "A2",
+        "title": "Planes: voy a…, quedar y el puente",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Ir a + infinitivo",
+            "body": "Para hablar de <strong>planes</strong>, el español usa <strong>ir a + infinitivo</strong>: <em><strong>Voy a</strong> viajar, <strong>vas a</strong> comer, <strong>vamos a</strong> salir, <strong>vais a</strong> venir…</em> No olvides la <strong>a</strong>: <em>voy <strong>a</strong> salir</em>, nunca 'voy salir'. Palabras señal del futuro: <em>mañana, luego, esta noche, <strong>este finde</strong>, <strong>la semana que viene</strong>, el mes que viene</em>. Con reflexivos, el pronombre se pega al infinitivo: <em>Voy a acostar<strong>me</strong> pronto</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Quedar: el deporte nacional",
+            "body": "<strong>Quedar</strong> = ponerse de acuerdo para verse, y en España se queda muchísimo: en una plaza, en una terraza, en la puerta del cine. <em>¿<strong>Quedamos</strong> el jueves? ¿A qué hora <strong>quedamos</strong>? <strong>He quedado</strong> con Ana a las diez</em> — 'he quedado' significa que la cita <strong>ya está cerrada</strong>. ¡No lo confundas con <em>quedarse</em> (= no salir): <em>Hoy <strong>me quedo</strong> en casa</em>!"
+          },
+          {
+            "id": "t3",
+            "heading": "Festivos y puentes",
+            "body": "Un <strong>festivo</strong> es un día oficial sin trabajo. Cuando el festivo cae en jueves o martes, mucha gente se toma libre el día de en medio y une el festivo con el fin de semana: eso es <strong>el puente</strong>, y tomárselo se dice <strong>hacer puente</strong>. Los puentes famosos (el puente de mayo, el de diciembre) llenan las carreteras y las playas de España. La pregunta típica: <em>¿Qué vas a hacer <strong>en el puente</strong>?</em>"
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "Mañana voy a comer con mis abuelos." },
+          { "id": "e2", "text": "Este finde vamos a hacer una excursión a la sierra." },
+          { "id": "e3", "text": "¿Qué vas a hacer en el puente de mayo? — Voy a ir a Cádiz." },
+          { "id": "e4", "text": "He quedado con Ana a las diez en la Puerta del Sol." },
+          { "id": "e5", "text": "¿Quedamos el jueves? — Vale. ¿A qué hora te viene bien?" },
+          { "id": "e6", "text": "El lunes es festivo, así que vamos a hacer puente." },
+          { "id": "e7", "text": "Esta noche no voy a salir: voy a acostarme pronto." },
+          { "id": "e8", "text": "¿Vais a venir a la cena del sábado? — Sí, y vamos a llevar el postre." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "ir a + infinitivo", "def": "Para los planes: voy a viajar, vamos a salir." },
+          { "id": "f2", "front": "la semana que viene", "def": "La semana siguiente a esta." },
+          { "id": "f3", "front": "quedar", "def": "Ponerse de acuerdo para verse: ¿quedamos el jueves?" },
+          { "id": "f4", "front": "he quedado a las diez", "def": "La cita ya está cerrada: nos vemos a esa hora." },
+          { "id": "f5", "front": "quedarse en casa", "def": "No salir: hoy me quedo en casa. ¡No es lo mismo que quedar!" },
+          { "id": "f6", "front": "el festivo", "def": "Un día oficial sin trabajo." },
+          { "id": "f7", "front": "el puente", "def": "Un festivo unido al fin de semana: varios días libres." },
+          { "id": "f8", "front": "hacer puente", "def": "Tomarse libre el día entre el festivo y el finde." },
+          { "id": "f9", "front": "¿a qué hora quedamos?", "def": "La pregunta para poner la hora de la cita." },
+          { "id": "f10", "front": "esta noche", "def": "La noche de hoy: esta noche voy a salir." }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Mañana ___ (yo) a visitar a mi abuela.",
+            "options": ["voy", "fui", "iba", "vas"],
+            "correct": 0,
+            "explain": "Es un plan de mañana: voy a visitar. 'Fui' e 'iba' son pasados y chocan con 'mañana'; 'vas' es para tú."
+          },
+          {
+            "id": "q2",
+            "q": "¿Qué ___ a hacer vosotros en el puente?",
+            "options": ["vais", "van", "vamos", "va"],
+            "correct": 0,
+            "explain": "Con vosotros: vais a hacer. 'Van' es para ellos o ustedes, 'vamos' para nosotros y 'va' para él o ella."
+          },
+          {
+            "id": "q3",
+            "q": "'He quedado con Marta a las ocho' significa que…",
+            "options": ["vamos a vernos a las ocho", "me quedo en casa a las ocho", "Marta trabaja hasta las ocho", "he perdido la cita de las ocho"],
+            "correct": 0,
+            "explain": "Quedar con alguien = tener una cita cerrada para verse. 'Quedarse en casa' (no salir) es otro verbo: no los confundas."
+          },
+          {
+            "id": "q4",
+            "q": "El jueves es festivo y muchos tampoco trabajan el viernes: hacen…",
+            "options": ["cola", "puente", "rebajas", "sobremesa"],
+            "correct": 1,
+            "explain": "Unir el festivo con el fin de semana tomándose el día de en medio es 'hacer puente'. La cola es para esperar y las rebajas son de las tiendas."
+          },
+          {
+            "id": "q5",
+            "q": "Esta noche no ___ salir: estoy cansadísimo.",
+            "options": ["voy a", "voy", "va a", "fui a"],
+            "correct": 0,
+            "explain": "El plan se construye con ir a + infinitivo: no voy a salir. 'Voy salir', sin la 'a', es el error clásico; 'va a' es otra persona y 'fui a' es pasado."
+          }
+        ]
+      },
+      "a2-registro": {
+        "id": "a2-registro",
+        "icon": "🤝",
+        "level": "A2",
+        "title": "Tú, usted y vosotros",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Tú por defecto",
+            "body": "En España, el trato normal es <strong>tú</strong>: en tiendas, en bares, en el trabajo, entre desconocidos jóvenes… tutear no es de mala educación, es lo habitual. <strong>Usted</strong> se reserva para el <strong>respeto</strong>: personas mayores, situaciones muy formales, atención oficial. Con usted, el verbo va en <strong>tercera persona</strong>: <em>¿Cómo <strong>está</strong> (usted)? ¿<strong>Tiene</strong> hora?</em> En caso de duda con una persona mayor, empieza de usted: ya te dirán <em>'puedes tutearme'</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "Vosotros y ustedes",
+            "body": "El plural informal de España es <strong>vosotros / vosotras</strong>, y se usa constantemente: <em>¿<strong>Venís</strong> al cine? ¿Dónde están <strong>vuestras</strong> cosas?</em> <strong>Ustedes</strong> es el plural <strong>formal</strong> (con verbo en tercera persona: <em>¿Ustedes <strong>vienen</strong>?</em>). ¡Dato importante! En <strong>Canarias</strong> y en toda <strong>Hispanoamérica</strong> no se usa vosotros: allí 'ustedes' es el único plural, formal e informal."
+          },
+          {
+            "id": "t3",
+            "heading": "Oye, oiga y perdona",
+            "body": "Para llamar la atención de alguien: <strong>oye</strong> (de tú) y <strong>oiga</strong> (de usted): <em>Oye, ¿me pasas el pan? / Oiga, perdone, ¿esta es la cola?</em> Igual con <strong>perdona / perdone</strong> para empezar una pregunta. En el bar, un <em>'¡oye, perdona!'</em> al camarero es completamente normal, no es grosero. Y el verbo del trato: <strong>tutear</strong> = hablar de tú: <em>Puedes tutearme</em>."
+          }
+        ],
+        "examples": [
+          { "id": "e1", "text": "En España, en las tiendas casi todo el mundo te habla de tú." },
+          { "id": "e2", "text": "Oiga, perdone, ¿esta es la cola del autobús?" },
+          { "id": "e3", "text": "Oye, ¿me pasas el pan?" },
+          { "id": "e4", "text": "¿Vosotros venís al cine esta tarde?" },
+          { "id": "e5", "text": "Buenos días, ¿qué le pongo? — ¿Me pone un café con leche?" },
+          { "id": "e6", "text": "Chicos, ¿dónde están vuestras mochilas?" },
+          { "id": "e7", "text": "El médico trata a mi abuelo de usted: ¿Cómo se encuentra hoy?" },
+          { "id": "e8", "text": "En Canarias y en América se usa 'ustedes' en lugar de 'vosotros'." }
+        ],
+        "flashcards": [
+          { "id": "f1", "front": "tú", "def": "El trato normal en España: informal, para casi todo el mundo." },
+          { "id": "f2", "front": "usted", "def": "El trato de respeto; el verbo va en tercera persona." },
+          { "id": "f3", "front": "vosotros / vosotras", "def": "El plural informal, muy usado en España." },
+          { "id": "f4", "front": "ustedes", "def": "El plural formal en España; en América y Canarias, el único plural." },
+          { "id": "f5", "front": "oye", "def": "Para llamar la atención a alguien de tú." },
+          { "id": "f6", "front": "oiga", "def": "Para llamar la atención a alguien de usted." },
+          { "id": "f7", "front": "perdona / perdone", "def": "Para disculparte o empezar una pregunta: de tú / de usted." },
+          { "id": "f8", "front": "tutear", "def": "Hablar a alguien de tú: puedes tutearme." },
+          { "id": "f9", "front": "vuestro / vuestra", "def": "De vosotros: vuestra casa, vuestros libros." },
+          { "id": "f10", "front": "¿me pones…?", "def": "En el bar, de tú: ¿me pones una caña?" }
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Hablas de usted con una señora mayor: 'Perdone, ¿___ hora?'",
+            "options": ["tienes", "tiene", "tenéis", "tengo"],
+            "correct": 1,
+            "explain": "Con usted, el verbo va en tercera persona: ¿tiene hora? 'Tienes' sería de tú, 'tenéis' de vosotros y 'tengo' es para yo."
+          },
+          {
+            "id": "q2",
+            "q": "En España preguntas a tus dos mejores amigos: '¿___ hambre?'",
+            "options": ["Tiene", "Tienes", "Tenéis", "Tienen"],
+            "correct": 2,
+            "explain": "Dos amigos, trato informal, en España: vosotros → tenéis. 'Tienen' sería ustedes (el plural formal en España); 'tienes' es para uno solo."
+          },
+          {
+            "id": "q3",
+            "q": "Para llamar la atención a un desconocido mayor, de usted, dices:",
+            "options": ["¡Eh, tú!", "Oye, tío…", "Hola, ¿qué pasa?", "Oiga, perdone…"],
+            "correct": 3,
+            "explain": "De usted se dice 'oiga, perdone'. 'Oye' y '¡eh, tú!' son de tú (y '¡eh, tú!' además suena brusco); 'hola, ¿qué pasa?' es un saludo entre amigos."
+          },
+          {
+            "id": "q4",
+            "q": "En una tienda normal de España, lo más habitual es que el dependiente te hable…",
+            "options": ["de tú", "de usted", "de vosotros", "en inglés"],
+            "correct": 0,
+            "explain": "En España el tuteo es lo normal en tiendas y bares; el usted se reserva para el respeto y las situaciones muy formales. 'Vosotros' es plural y tú eres una sola persona."
+          },
+          {
+            "id": "q5",
+            "q": "La pregunta '¿De dónde sois?' va dirigida a…",
+            "options": ["una persona, de manera formal", "varias personas, de manera informal", "una persona, de manera informal", "varias personas, de manera formal"],
+            "correct": 1,
+            "explain": "'Sois' es la forma de vosotros: plural e informal. A una persona sería '¿de dónde eres?' (tú) o '¿de dónde es?' (usted); al plural formal, '¿de dónde son ustedes?'."
+          }
+        ]
+      },
 //__APPEND_HERE__
 }}};

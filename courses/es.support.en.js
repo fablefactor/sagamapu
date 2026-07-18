@@ -343,5 +343,373 @@ window.PTB_COURSES.es.support.en = {
         "q5": "'Ida y vuelta' = there and back — a return ticket. 'Solo ida' is a single."
       }
     },
+    "a2-gustar": {
+      "title": "Gustar and friends",
+      "theory": {
+        "t1": {
+          "heading": "The back-to-front verb",
+          "body": "<strong>Gustar</strong> (to like) works 'back to front': the thing you like is the <strong>subject</strong>. If the subject is singular: <em>me gust<strong>a</strong> el café</em> (I like coffee); if it's plural: <em>me gust<strong>an</strong> las tapas</em> (I like tapas — literally 'tapas please me'). In front goes the pronoun: <strong>me, te, le, nos, os, les</strong>: <em>¿Te gusta el flamenco?</em> (do you like flamenco?), <em>Nos gusta Madrid</em> (we like Madrid), <em>¿Os gustan los churros?</em> With a verb, use the singular too: <em>Me gusta <strong>bailar</strong></em> (I like dancing)."
+        },
+        "t2": {
+          "heading": "A mí me gusta…",
+          "body": "To add emphasis or mark a contrast, add <strong>a + person</strong>: <em><strong>A mí</strong> me gusta el café solo, pero <strong>a mi hermana</strong> le gusta con leche</em> (I like my coffee black, but my sister likes it with milk). With 'le' and 'les' you nearly always need to say who you mean: <em><strong>A Juan</strong> le gusta el cine</em> (Juan likes the cinema), <em><strong>A mis padres</strong> les gusta pasear</em> (my parents like going for walks). To react to someone: <strong>a mí también</strong> (me too), <strong>a mí no</strong> (I don't), <strong>a mí tampoco</strong> (me neither)."
+        },
+        "t3": {
+          "heading": "Encantar, doler, apetecer",
+          "body": "Several verbs work just like gustar. <strong>Encantar</strong> = to really love something: <em>Me encanta el gazpacho</em>. Careful — it never takes 'mucho': say <em>me encanta</em>, never <em>me encanta mucho</em>. <strong>Doler</strong>, for pain: <em>Me duele la cabeza</em> (my head hurts), <em>me duelen los pies</em> (my feet hurt). And a very Spanish verb: <strong>apetecer</strong> = to fancy something: <em>¿Te apetece una caña en la terraza?</em> (do you fancy a small beer on the terrace?)."
+        }
+      },
+      "examples": {
+        "e1": "I like flamenco, but I don't like bullfighting.",
+        "e2": "Do you like gazpacho? — Yes, I love it.",
+        "e3": "My mother loves old films.",
+        "e4": "We like strolling around the Retiro park on Sundays.",
+        "e5": "Do you (all) like tortilla with onion or without?",
+        "e6": "My feet hurt from walking around Seville all day.",
+        "e7": "I like my coffee black; my sister likes it with milk.",
+        "e8": "Do you fancy a small beer on the terrace? — Sure, I really do!"
+      },
+      "flashcards": {
+        "f1": "to like (the 'back-to-front' verb: the thing is the subject)",
+        "f2": "I like (them) — the form with a plural subject",
+        "f3": "to love something (never takes 'mucho')",
+        "f4": "to hurt (works like gustar: me duele la cabeza)",
+        "f5": "my feet hurt (plural subject: los pies)",
+        "f6": "I like… (with 'a mí' for emphasis or contrast)",
+        "f7": "he/she likes (or you do, formal) — le gusta",
+        "f8": "you (all) like — the vosotros form",
+        "f9": "to fancy something right now (¿te apetece…?)",
+        "f10": "me too / me neither (reacting to what someone said)"
+      },
+      "quiz": {
+        "q1": "The subject is 'las tapas' (plural), so the verb is plural: me gustan. 'Me gusta las tapas' is the classic learner error; 'gusto' and 'gustas' agree with I/you, not with the tapas.",
+        "q2": "'A mi hermano' calls for the pronoun 'le': a mi hermano le gusta. 'Me' would mean me, not my brother, and 'se' and 'lo' don't work with gustar.",
+        "q3": "'Doler' works like 'gustar': a ti te duele la cabeza. 'Tú' is a subject pronoun and here the subject is 'la cabeza'; 'ti' needs 'a' in front of it.",
+        "q4": "The subject is 'los pies' (plural): me duelen. 'Me duele los pies' is the typical mistake; 'dolemos' and 'dueles' agree with people, not with your feet.",
+        "q5": "'Encantar' already means 'to like a lot', so it never takes 'mucho'. And the subject is 'el cine' (singular): me encanta. 'Encantan' and 'gustan' are plural forms."
+      }
+    },
+    "a2-preterito": {
+      "title": "The preterite: talking about your weekend",
+      "theory": {
+        "t1": {
+          "heading": "The regular forms",
+          "body": "The <strong>pretérito indefinido</strong> (simple past) tells of <strong>completed</strong> actions at a specific moment: <em>ayer</em> (yesterday), <em>anoche</em> (last night), <em>el sábado pasado</em> (last Saturday), <em>el año pasado</em> (last year). Verbs in -ar, model <strong>hablar</strong>: <em>habl<strong>é</strong>, habl<strong>aste</strong>, habl<strong>ó</strong>, habl<strong>amos</strong>, habl<strong>asteis</strong>, habl<strong>aron</strong></em>. Verbs in -er/-ir, model <strong>comer</strong>: <em>com<strong>í</strong>, com<strong>iste</strong>, com<strong>ió</strong>, com<strong>imos</strong>, com<strong>isteis</strong>, com<strong>ieron</strong></em>. A handy word: <strong>el finde</strong> = the weekend, colloquial."
+        },
+        "t2": {
+          "heading": "The big irregulars",
+          "body": "Four irregular verbs come up constantly. <strong>Ser</strong> (to be) and <strong>ir</strong> (to go) share the same forms: <em><strong>fui, fuiste, fue</strong>, fuimos, fuisteis, fueron</em> — context tells you which is which: <em>Fui camarero</em> (I was a waiter — ser) / <em>Fui a Sevilla</em> (I went to Seville — ir). <strong>Hacer</strong> (to do/make): <em><strong>hice</strong>, hiciste, <strong>hizo</strong>…</em> <strong>Estar</strong>: <em><strong>estuve</strong>, estuviste, estuvo…</em> <strong>Tener</strong> (to have): <em><strong>tuve</strong>, tuviste, tuvo…</em> One detail: these irregular forms carry no written accent."
+        },
+        "t3": {
+          "heading": "Telling the story of your weekend",
+          "body": "On Monday, the classic question is: <strong>¿Qué tal el finde?</strong> (how was your weekend?). To tell your story, put the actions in order: <strong>primero</strong> (first), <strong>luego</strong> (then), <strong>después</strong> (afterwards), <strong>por la noche</strong> (in the evening), <strong>al final</strong> (in the end): <em>El sábado primero fui al mercado, luego comí con mis padres y por la noche quedé con amigos</em>. Each preterite verb is one more step of the story — one finished action after another."
+        }
+      },
+      "examples": {
+        "e1": "How was your weekend? — Great! We went to the beach in Valencia.",
+        "e2": "Yesterday I had paella with my parents and then took a siesta.",
+        "e3": "On Saturday I did a tapas crawl around the centre of Seville.",
+        "e4": "Last night we were at a concert until two in the morning.",
+        "e5": "Last summer I had a job in a beach bar.",
+        "e6": "First we visited the museum and afterwards we strolled around the Retiro.",
+        "e7": "Did you (all) go to the cinema on Friday? — No, we stayed at home.",
+        "e8": "On Sunday evening I didn't do anything: I rested."
+      },
+      "flashcards": {
+        "f1": "yesterday — a signal word for the preterite",
+        "f2": "the weekend (colloquial)",
+        "f3": "I was / I went — the yo form of both ser AND ir",
+        "f4": "he/she was / went — the él/ella form of ser and ir",
+        "f5": "I did / I made — the yo form of hacer",
+        "f6": "I was (somewhere) — the yo form of estar in the preterite",
+        "f7": "I had — the yo form of tener in the preterite",
+        "f8": "last night",
+        "f9": "last year",
+        "f10": "How was your weekend? — the classic Monday question"
+      },
+      "quiz": {
+        "q1": "Two finished, ordered actions from yesterday: fui and vi (I went and I saw). 'Voy' is present, 'iba' would describe the background of a story, not a completed action, and 'va' is the wrong person.",
+        "q2": "Three finished actions, one after another: hizo, llevó, triunfó (she made it, took it, it was a hit). 'Hice' is the I-form, 'hacía' would be background description, not a step in the story, and 'hace' is present.",
+        "q3": "A closed, completed period ('two weeks' last summer) takes the preterite: estuvimos. 'Estábamos' doesn't work with a closed duration; 'estuvisteis' is the vosotros form.",
+        "q4": "The answer lists finished actions (fui, descansé), so the question is in the preterite: ¿qué hiciste? (what did you do?). 'Hacías' asks about background, not the weekend's events; 'hizo' is for he/she or usted.",
+        "q5": "Ser and ir share all their preterite forms: fuimos camareros (we were waiters — ser) / fuimos a Granada (we went to Granada — ir). Context tells you which one it is."
+      }
+    },
+    "a2-imperfecto": {
+      "title": "The imperfect: when I was little…",
+      "theory": {
+        "t1": {
+          "heading": "The forms",
+          "body": "The <strong>imperfect</strong> is the most regular tense in Spanish. Verbs in -ar: <em>jug<strong>aba</strong>, jug<strong>abas</strong>, jug<strong>aba</strong>, jug<strong>ábamos</strong>, jug<strong>abais</strong>, jug<strong>aban</strong></em>. Verbs in -er/-ir: <em>com<strong>ía</strong>, viv<strong>ía</strong>, ten<strong>ías</strong>, hac<strong>íamos</strong>…</em> There are only <strong>three irregulars</strong>: <strong>ser</strong> (<em>era, eras, era…</em>), <strong>ir</strong> (<em>iba, ibas, iba…</em>) and <strong>ver</strong> (<em>veía, veías…</em>). And very useful: <strong>había</strong> = the imperfect of 'hay' (there was / there were)."
+        },
+        "t2": {
+          "heading": "What it's for",
+          "body": "The imperfect describes <strong>how things used to be</strong>: past habits (<em><strong>De pequeño</strong> jugaba en la calle <strong>todos los días</strong></em> — when I was little I played in the street every day), descriptions (<em>La casa <strong>era</strong> enorme y <strong>tenía</strong> un patio</em> — the house was huge and had a courtyard), and age and time in the past (<em><strong>Tenía</strong> ocho años</em> — I was eight; <em><strong>eran</strong> las diez</em> — it was ten o'clock). For habits there's also <strong>solía + infinitive</strong> (used to): <em>Solíamos veranear en el pueblo</em> — we used to spend our summers in the village."
+        },
+        "t3": {
+          "heading": "Imperfect or preterite?",
+          "body": "Think of a film: the <strong>imperfect</strong> is the <strong>scenery</strong> — the background, the description, the habit; the <strong>preterite</strong> is the <strong>action</strong> — what happens. <em><strong>Mientras</strong> cenábamos (background), <strong>de repente</strong> llamaron a la puerta (action)</em> — while we were having dinner, suddenly there was a knock at the door. Imperfect signals: <em>mientras</em> (while), <em>todos los días</em> (every day), <em>siempre</em> (always), <em>de pequeño</em> (as a child), <em>antes</em> (before). Preterite signals: <em>de repente</em> (suddenly), <em>un día</em> (one day), <em>ayer</em>, <em>primero… luego…</em>, and closed periods: <em>Viví allí <strong>diez años</strong></em> (I lived there for ten years)."
+        }
+      },
+      "examples": {
+        "e1": "When I was little I lived in Valencia and played on the beach every day.",
+        "e2": "My grandmother used to make a delicious cocido stew on Sundays.",
+        "e3": "When I was eight, I wanted to be a footballer.",
+        "e4": "We used to spend our summers in my grandparents' village.",
+        "e5": "My aunt and uncle's house was huge and had a courtyard with orange trees.",
+        "e6": "While we were having dinner, it started to rain.",
+        "e7": "We used to walk to school; there was no bus.",
+        "e8": "As a little girl I watched cartoons every Saturday morning."
+      },
+      "flashcards": {
+        "f1": "when I was little (as a child)",
+        "f2": "I used to play — imperfect of jugar: a past habit or description",
+        "f3": "used to (do something) — a past habit: solía madrugar",
+        "f4": "was/were — the imperfect of ser; only three verbs are irregular",
+        "f5": "used to go / was going — the imperfect of ir",
+        "f6": "used to see / watch — the imperfect of ver, the third irregular",
+        "f7": "there was / there were — the imperfect of 'hay'",
+        "f8": "while — at the same time; a typical imperfect signal",
+        "f9": "suddenly — without warning; a preterite signal",
+        "f10": "every day — a habit signal: imperfect"
+      },
+      "quiz": {
+        "q1": "It's a past habit ('de pequeño… todos los domingos' — when I was little, every Sunday): jugaba. 'Jugué' would be one specific day's action, and 'jugábamos' is the we-form.",
+        "q2": "'Dormía' is the background of the scene and 'sonó' ('de repente') is the action that interrupts it. 'Dormí la siesta cuando de repente sonó…' doesn't work: the preterite doesn't describe an action in progress.",
+        "q3": "'Toda mi infancia' (my whole childhood) is a closed, completed period, and 'luego' orders the story: viví. Note: 'De pequeño vivía en Sevilla' (an open description) also exists — but with the closed period and the 'luego', only the preterite works here.",
+        "q4": "Age in the past takes the imperfect: cuando tenía quince años (when I was fifteen). 'Cuando tuve quince años' isn't said (that would be 'cuando cumplí quince años' — when I turned fifteen); 'teníamos' is the we-form.",
+        "q5": "'Solía + infinitive' expresses a past habit: antes solía ir (I used to go). 'Suelo' is present and clashes with 'antes… pero ahora'; 'solí' isn't used: soler has no preterite in this sense."
+      }
+    },
+    "a2-rutina": {
+      "title": "Daily routine and reflexive verbs",
+      "theory": {
+        "t1": {
+          "heading": "Reflexive verbs",
+          "body": "Many routine verbs are <strong>reflexive</strong>: the action comes back to yourself. Model <strong>levantarse</strong> (to get up): <em><strong>me</strong> levanto, <strong>te</strong> levantas, <strong>se</strong> levanta, <strong>nos</strong> levantamos, <strong>os</strong> levantáis, <strong>se</strong> levantan</em>. The pronoun goes <strong>before</strong> the conjugated verb, but with an infinitive it attaches to the end: <em>Voy a levantar<strong>me</strong></em> (I'm going to get up). Careful — without the pronoun the meaning changes: <em>me levanto</em> (I get up) is not the same as <em>levanto la mano</em> (I raise my hand)."
+        },
+        "t2": {
+          "heading": "My routine, step by step",
+          "body": "The key verbs of the day: <strong>despertarse</strong> (to wake up, e→ie: <em>me despierto</em>), <strong>levantarse</strong> (to get up), <strong>ducharse</strong> (to shower), <strong>vestirse</strong> (to get dressed, e→i: <em>me visto</em>), <strong>desayunar</strong> (to have breakfast), <strong>salir de casa</strong> (to leave the house), <strong>volver a casa</strong> (to come home), <strong>acostarse</strong> (to go to bed, o→ue: <em>me acuesto</em>). For present habits: <strong>soler + infinitive</strong>: <em>Suelo levantarme a las siete</em> (I usually get up at seven). And a very useful verb: <strong>madrugar</strong> = to get up very early."
+        },
+        "t3": {
+          "heading": "The Spanish timetable and the siesta",
+          "body": "Spain's timetable surprises people: lunch is around <strong>two</strong>, dinner around <strong>half past nine</strong>, and prime-time TV starts at eleven. And the <strong>siesta</strong>? It's more <strong>myth</strong> than reality: most working Spaniards do <strong>not</strong> nap daily; the siesta lives on mainly at weekends, on holiday and in summer, when the heat is fierce. That said: the word is Spanish and the invention is a fine one."
+        }
+      },
+      "examples": {
+        "e1": "I get up at half past seven and shower before breakfast.",
+        "e2": "My sister goes to bed incredibly late: never before midnight.",
+        "e3": "What time do you wake up on Sundays? — Late, around eleven.",
+        "e4": "First I get dressed and then I have a coffee and toast for breakfast.",
+        "e5": "I usually leave the house at eight and catch the metro.",
+        "e6": "Do you (all) go to bed late in summer? — Yes, well, in Spain dinner is at ten.",
+        "e7": "Tomorrow I'm up early: I'm going to get up at six.",
+        "e8": "The daily siesta is almost a myth: people mostly nap in summer and at weekends."
+      },
+      "flashcards": {
+        "f1": "to get up (me levanto — I get up)",
+        "f2": "to have a shower",
+        "f3": "to go to bed (o→ue: me acuesto)",
+        "f4": "to wake up (e→ie: me despierto)",
+        "f5": "to get dressed (e→i: me visto)",
+        "f6": "to have breakfast",
+        "f7": "to usually do something (suelo madrugar — I usually get up early)",
+        "f8": "to get up very early",
+        "f9": "the after-lunch nap — nowadays more a weekend thing than daily",
+        "f10": "you (all) get up — the vosotros form"
+      },
+      "quiz": {
+        "q1": "Levantarse is reflexive: yo me levanto. 'Levanto' without the pronoun is the classic error (that's lifting something, like your hand); 'se levanta' is the he/she form.",
+        "q2": "'Mis padres' is plural: se levantan. 'Se levanta' is singular, 'nos levantamos' is the we-form, and 'levantan' has lost the reflexive pronoun.",
+        "q3": "With vosotros the pronoun is 'os': ¿a qué hora os acostáis? 'Se acuestan' is for they/ustedes and 'te acuestas' is for tú.",
+        "q4": "With 'voy a' + infinitive, the pronoun attaches to the end and agrees with yo: voy a acostarme. 'Me acostar' has the order wrong, 'acostarse' is the wrong person and 'me acuesto' isn't an infinitive.",
+        "q5": "Most working Spaniards don't nap every day: the siesta is mainly for weekends, holidays and summer."
+      }
+    },
+    "a2-compras": {
+      "title": "Shopping, markets and the sales",
+      "theory": {
+        "t1": {
+          "heading": "At the market",
+          "body": "Every Spanish city has its traditional <strong>mercado</strong>, with <strong>puestos</strong> (stalls) selling fruit, fish and meat: La Boquería in Barcelona, the Mercado Central in Valencia… When you reach a stall, ask <strong>¿Quién es el último?</strong> (who's last?) — that's how you take your turn in the queue. To order: <em>¿Me pone un kilo de tomates?</em> (could I have a kilo of tomatoes?). And to ask the price: <strong>¿Cuánto cuesta?</strong> (one thing) / <strong>¿Cuánto cuestan?</strong> (several) / <strong>¿Cuánto es?</strong> (the total)."
+        },
+        "t2": {
+          "heading": "Paying: cash, card and your change",
+          "body": "When you pay, they ask: <em>¿En <strong>efectivo</strong> o con <strong>tarjeta</strong>?</em> (cash or card?). Efectivo means notes and coins; these days you can pay for almost anything by card or with your <strong>móvil</strong> (mobile). If you overpay, they give you <strong>la vuelta</strong> (your change): <em>Aquí tiene la vuelta: tres euros</em>. And twice a year come <strong>las rebajas</strong> (the sales) — in <strong>January</strong> and <strong>July</strong> — when the shops drop their prices and half of Spain goes shopping."
+        },
+        "t3": {
+          "heading": "Clothes: trying things on, and quedar bien",
+          "body": "In a clothes shop: <strong>probarse</strong> something (to try it on — <em>¿Puedo probarme estos vaqueros?</em> can I try these jeans on?), ask about <strong>la talla</strong> (the size — <em>¿Tiene una talla más?</em>) and look for <strong>los probadores</strong> (the fitting rooms). The verb <strong>quedar</strong> works like gustar — the clothes are the subject: <em>Esa chaqueta te <strong>queda</strong> genial</em> (that jacket looks great on you); <em>esos vaqueros te <strong>quedan</strong> pequeños</em> (those jeans are too small for you). If you're convinced: <em><strong>Me lo llevo</strong></em> (I'll take it)."
+        }
+      },
+      "examples": {
+        "e1": "Who's last in the queue? — Me. Right, I'm after you then.",
+        "e2": "Could I have a kilo of tomatoes and two avocados, please?",
+        "e3": "How much is that altogether? — That's twelve euros forty.",
+        "e4": "Cash or card? — Card. Can I pay with my phone?",
+        "e5": "Here's your change: three euros twenty.",
+        "e6": "The sales start in January and everything is much cheaper.",
+        "e7": "Can I try these jeans on? — Of course, the fitting rooms are at the back.",
+        "e8": "That jacket looks great on you. — Really? I'll take it, then."
+      },
+      "flashcards": {
+        "f1": "the (covered) market — stalls of fruit, fish and meat",
+        "f2": "Who's last? — how you take your turn in a Spanish queue",
+        "f3": "How much does it cost? (plural: ¿cuánto cuestan?)",
+        "f4": "the change (the money you get back)",
+        "f5": "in cash",
+        "f6": "by card",
+        "f7": "the sales — January and July",
+        "f8": "to try on (clothes)",
+        "f9": "the (clothes) size",
+        "f10": "to suit / fit well or badly — works like gustar"
+      },
+      "quiz": {
+        "q1": "The subject is 'estas naranjas' (plural): cuestan. 'Cuesta' is for a single thing; 'cuestas' and 'costamos' agree with people.",
+        "q2": "Notes and coins are cash: en efectivo. Card and mobile are electronic payments.",
+        "q3": "'¿Quién es el último?' is the classic formula for finding your place in the queue. The other questions don't take a turn.",
+        "q4": "'Quedar' works like gustar: the subject is 'esa camisa' (singular): te queda bien. 'Quedas' is the typical error from copying the 'te'; 'quedan' would need a plural subject.",
+        "q5": "The two big sales seasons are January (after Epiphany) and July, at the start of summer."
+      }
+    },
+    "a2-serestar2": {
+      "title": "Ser and estar II: estoy comiendo",
+      "theory": {
+        "t1": {
+          "heading": "Recap, plus something new: events",
+          "body": "Quick recap: <strong>ser</strong> for identity, origin, profession and characteristics; <strong>estar</strong> for location and states. But watch out for <strong>events</strong>! A concert, a party or a wedding takes <strong>ser</strong>: <em>La fiesta <strong>es</strong> en casa de Marta</em> (the party is at Marta's); <em>el concierto <strong>es</strong> en la Plaza Mayor</em> — you're saying where it <strong>takes place</strong>, not where a thing sits. Compare: <em>El teatro <strong>está</strong> en el centro</em> (the building's location) / <em>La obra <strong>es</strong> en el teatro</em> (the play — an event). And with <strong>de</strong>: <em>estar de vacaciones</em> (to be on holiday), <em>estar de rebajas</em> (to have a sale on)."
+        },
+        "t2": {
+          "heading": "Estar + gerund: right now",
+          "body": "For an action happening <strong>right now</strong>: <strong>estar + gerund</strong>. The gerund: -ar → <strong>-ando</strong> (<em>hablando</em>), -er/-ir → <strong>-iendo</strong> (<em>comiendo, viviendo</em>). Important irregulars: <em>leer → le<strong>y</strong>endo</em> (reading), <em>dormir → d<strong>u</strong>rmiendo</em> (sleeping), <em>pedir → p<strong>i</strong>diendo</em> (ordering). Compare: <em>Como a las dos</em> (I eat at two — a habit) / <em><strong>Estoy comiendo</strong>, te llamo luego</em> (I'm eating right now, I'll call you later). The star question: <strong>¿Qué estás haciendo?</strong> (what are you doing?)."
+        },
+        "t3": {
+          "heading": "Words that change meaning",
+          "body": "Some adjectives change meaning with ser or estar. <strong>Listo</strong>: <em>ser listo</em> = to be clever / <em>estar listo</em> = to be ready. <strong>Rico</strong>: <em>ser rico</em> = to be rich / <em>estar rico</em> = to be tasty. <strong>Aburrido</strong>: <em>ser aburrido</em> = to be boring / <em>estar aburrido</em> = to be bored. <strong>Malo</strong>: <em>ser malo</em> = to be bad (poor quality, or a bad person) / <em>estar malo</em> = to be ill (or, of food, to have gone off)."
+        }
+      },
+      "examples": {
+        "e1": "What are you doing? — I'm watching a series.",
+        "e2": "Ana can't come to the phone right now: she's talking on the phone.",
+        "e3": "The party is at Marta's house, but Marta is still at the supermarket.",
+        "e4": "This gazpacho is delicious. — And the cook isn't rich, mind: he cooks with next to nothing.",
+        "e5": "My niece is very clever: she's four and already reads.",
+        "e6": "Are you (all) ready? The taxi is waiting downstairs.",
+        "e7": "The film is dead boring; that's why I'm bored.",
+        "e8": "We're on holiday in Menorca until Sunday."
+      },
+      "flashcards": {
+        "f1": "an action happening right now: I'm eating",
+        "f2": "the gerund: -ar → -ando; -er/-ir → -iendo",
+        "f3": "reading — the irregular gerund of leer",
+        "f4": "sleeping — the irregular gerund of dormir (o→u)",
+        "f5": "to be clever",
+        "f6": "to be ready (are you ready? we're off)",
+        "f7": "to be rich (money)",
+        "f8": "to be tasty (how delicious the paella is!)",
+        "f9": "to be bored right now ('ser aburrido' = to be boring)",
+        "f10": "the party is at… — events take 'ser'"
+      },
+      "quiz": {
+        "q1": "The gerund goes with 'estar', and 'no puedo' marks the yo form: estoy estudiando. 'Soy estudiando' is the classic error; 'está' and 'estás' are the wrong person.",
+        "q2": "Events take 'ser': you're saying where the concert takes place. 'Está' is the trap — that would be for the location of a thing (el quiosco está en la plaza), not an event.",
+        "q3": "We're talking about today's taste ('prueba', 'hoy'): está riquísima. 'Ser rico' means to have money; 'eres' and 'estás' are for tú, not for the tortilla.",
+        "q4": "'Ya podemos irnos' asks whether you're all ready: estar listo. 'Sois listos' would mean you're all clever; 'estás' is singular and we're talking about everyone.",
+        "q5": "The gerund of dormir changes o→u: durmiendo. 'Dormiendo' is the typical error; 'duerme' isn't a gerund, and 'dormido' is a state and can't take 'la siesta' after it."
+      }
+    },
+    "a2-planes": {
+      "title": "Plans: voy a…, quedar and the long weekend",
+      "theory": {
+        "t1": {
+          "heading": "Ir a + infinitive",
+          "body": "To talk about <strong>plans</strong>, Spanish uses <strong>ir a + infinitive</strong>: <em><strong>Voy a</strong> viajar</em> (I'm going to travel), <em><strong>vas a</strong> comer, <strong>vamos a</strong> salir, <strong>vais a</strong> venir…</em> Don't drop the <strong>a</strong>: <em>voy <strong>a</strong> salir</em>, never 'voy salir'. Future signal words: <em>mañana</em> (tomorrow), <em>luego</em> (later), <em>esta noche</em> (tonight), <em><strong>este finde</strong></em> (this weekend), <em><strong>la semana que viene</strong></em> (next week). With reflexives, the pronoun attaches to the infinitive: <em>Voy a acostar<strong>me</strong> pronto</em> (I'm going to bed early)."
+        },
+        "t2": {
+          "heading": "Quedar: the national sport",
+          "body": "<strong>Quedar</strong> = to arrange to meet, and in Spain people do it constantly: in a square, on a terrace, outside the cinema. <em>¿<strong>Quedamos</strong> el jueves?</em> (shall we meet on Thursday?), <em>¿A qué hora <strong>quedamos</strong>?</em> (what time shall we meet?), <em><strong>He quedado</strong> con Ana a las diez</em> (I've arranged to meet Ana at ten) — 'he quedado' means the plan is <strong>already fixed</strong>. Don't confuse it with <em>quedarse</em> (= to stay in): <em>Hoy <strong>me quedo</strong> en casa</em> (today I'm staying home)!"
+        },
+        "t3": {
+          "heading": "Public holidays and puentes",
+          "body": "A <strong>festivo</strong> is an official day off work. When the holiday falls on a Thursday or Tuesday, many people take the day in between off and join the holiday to the weekend: that's <strong>el puente</strong> (literally 'the bridge'), and taking one is <strong>hacer puente</strong>. The famous puentes (the May bank-holiday weekend, the December one) fill Spain's roads and beaches. The typical question: <em>¿Qué vas a hacer <strong>en el puente</strong>?</em> (what are you doing over the long weekend?)."
+        }
+      },
+      "examples": {
+        "e1": "Tomorrow I'm going to have lunch with my grandparents.",
+        "e2": "This weekend we're going on a trip to the mountains.",
+        "e3": "What are you doing over the May long weekend? — I'm going to Cádiz.",
+        "e4": "I've arranged to meet Ana at ten at the Puerta del Sol.",
+        "e5": "Shall we meet on Thursday? — Sure. What time suits you?",
+        "e6": "Monday is a public holiday, so we're making it a long weekend.",
+        "e7": "I'm not going out tonight: I'm going to bed early.",
+        "e8": "Are you (all) coming to Saturday's dinner? — Yes, and we're bringing dessert."
+      },
+      "flashcards": {
+        "f1": "going to (do something) — for plans: voy a viajar",
+        "f2": "next week",
+        "f3": "to arrange to meet (shall we meet on Thursday?)",
+        "f4": "I've arranged to meet at ten — the plan is fixed",
+        "f5": "to stay at home (not the same as quedar!)",
+        "f6": "a public holiday",
+        "f7": "the long weekend — a holiday joined to the weekend",
+        "f8": "to take the bridging day off and make a long weekend",
+        "f9": "what time shall we meet?",
+        "f10": "tonight"
+      },
+      "quiz": {
+        "q1": "It's a plan for tomorrow: voy a visitar. 'Fui' and 'iba' are past tenses and clash with 'mañana'; 'vas' is the tú form.",
+        "q2": "With vosotros: vais a hacer. 'Van' is for they/ustedes, 'vamos' for we, and 'va' for he/she.",
+        "q3": "Quedar con alguien = to have a fixed arrangement to meet. 'Quedarse en casa' (to stay in) is a different verb: don't mix them up.",
+        "q4": "Joining the holiday to the weekend by taking the day in between off is 'hacer puente'. A 'cola' is a queue and 'rebajas' are the sales.",
+        "q5": "Plans are built with ir a + infinitive: no voy a salir. 'Voy salir', without the 'a', is the classic error; 'va a' is the wrong person and 'fui a' is past."
+      }
+    },
+    "a2-registro": {
+      "title": "Tú, usted and vosotros",
+      "theory": {
+        "t1": {
+          "heading": "Tú by default",
+          "body": "In Spain, the normal way to address people is <strong>tú</strong>: in shops, in bars, at work, between young strangers… using tú (tutear) isn't rude — it's standard. <strong>Usted</strong> is reserved for <strong>respect</strong>: elderly people, very formal situations, official business. With usted, the verb goes in the <strong>third person</strong>: <em>¿Cómo <strong>está</strong> (usted)?</em> (how are you?), <em>¿<strong>Tiene</strong> hora?</em> (have you got the time?). When in doubt with an older person, start with usted — they'll soon say <em>'puedes tutearme'</em> (you can call me tú)."
+        },
+        "t2": {
+          "heading": "Vosotros and ustedes",
+          "body": "Spain's informal plural is <strong>vosotros / vosotras</strong>, and it's used constantly: <em>¿<strong>Venís</strong> al cine?</em> (are you all coming to the cinema?), <em>¿Dónde están <strong>vuestras</strong> cosas?</em> (where are your things?). <strong>Ustedes</strong> is the <strong>formal</strong> plural (with the verb in the third person: <em>¿Ustedes <strong>vienen</strong>?</em>). Important fact: in the <strong>Canary Islands</strong> and throughout <strong>Latin America</strong>, vosotros isn't used — there, 'ustedes' is the only plural, both formal and informal."
+        },
+        "t3": {
+          "heading": "Oye, oiga and perdona",
+          "body": "To get someone's attention: <strong>oye</strong> (with tú) and <strong>oiga</strong> (with usted): <em>Oye, ¿me pasas el pan?</em> (hey, can you pass the bread?) / <em>Oiga, perdone, ¿esta es la cola?</em> (excuse me, is this the queue?). The same goes for <strong>perdona / perdone</strong> to open a question. In a bar, calling <em>'¡oye, perdona!'</em> to the waiter is completely normal — not rude at all. And the verb for it all: <strong>tutear</strong> = to address someone as tú: <em>Puedes tutearme</em>."
+        }
+      },
+      "examples": {
+        "e1": "In Spain, in shops, almost everyone addresses you as tú.",
+        "e2": "Excuse me (formal), is this the queue for the bus?",
+        "e3": "Hey, can you pass the bread?",
+        "e4": "Are you (all) coming to the cinema this afternoon?",
+        "e5": "Good morning, what can I get you (formal)? — Could I have a white coffee?",
+        "e6": "Kids, where are your backpacks?",
+        "e7": "The doctor addresses my grandfather as usted: how are you feeling today?",
+        "e8": "In the Canaries and in Latin America, 'ustedes' is used instead of 'vosotros'."
+      },
+      "flashcards": {
+        "f1": "you (informal singular) — the default in Spain",
+        "f2": "you (formal singular) — takes a third-person verb",
+        "f3": "you (informal plural) — used constantly in Spain",
+        "f4": "you (formal plural in Spain; the only plural in Latin America)",
+        "f5": "hey — to get the attention of someone you call tú",
+        "f6": "excuse me — to get the attention of someone you call usted",
+        "f7": "excuse me / sorry — the tú and usted versions",
+        "f8": "to address someone as tú",
+        "f9": "your (belonging to vosotros): vuestra casa",
+        "f10": "could I have…? — in the bar, with tú: ¿me pones una caña?"
+      },
+      "quiz": {
+        "q1": "With usted, the verb goes in the third person: ¿tiene hora? 'Tienes' would be tú, 'tenéis' vosotros, and 'tengo' is the I-form.",
+        "q2": "Two friends, informal, in Spain: vosotros → tenéis. 'Tienen' would be ustedes (the formal plural in Spain); 'tienes' is for one person only.",
+        "q3": "With usted you say 'oiga, perdone'. 'Oye' and '¡eh, tú!' are tú forms (and '¡eh, tú!' sounds brusque too); 'hola, ¿qué pasa?' is a greeting between friends.",
+        "q4": "In Spain, tú is the norm in shops and bars; usted is kept for respect and very formal situations. 'Vosotros' is plural and you're one person.",
+        "q5": "'Sois' is the vosotros form: plural and informal. To one person it would be '¿de dónde eres?' (tú) or '¿de dónde es?' (usted); to a formal group, '¿de dónde son ustedes?'."
+      }
+    },
 //__APPEND_HERE__
 }};
