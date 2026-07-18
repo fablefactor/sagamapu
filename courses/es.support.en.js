@@ -711,5 +711,79 @@ window.PTB_COURSES.es.support.en = {
         "q5": "'Sois' is the vosotros form: plural and informal. To one person it would be '¿de dónde eres?' (tú) or '¿de dónde es?' (usted); to a formal group, '¿de dónde son ustedes?'."
       }
     },
+    "b1-pasados": {
+      "title": "Telling the past: preterite or imperfect?",
+      "theory": {
+        "t1": {"heading": "Two pasts, two jobs", "body": "The <strong>preterite</strong> moves the story forward: completed actions, one after another. <em>Llegué, cené y me acosté</em> — I arrived, had dinner and went to bed. The <strong>imperfect</strong> paints the background: descriptions, habits, actions in progress. <em>Era de noche, llovía…</em> — it was night, it was raining. In a typical Spanish story, the imperfect sets the scene and the preterite tells you what happened."},
+        "t2": {"heading": "Signals in the text", "body": "Preterite markers: <em>ayer, el año pasado, de repente, una vez, en 2010</em> — a closed, finished action. Imperfect markers: <em>mientras, todos los días, siempre, de pequeño, antes</em> — habit or ongoing process. The classic combination is an imperfect interrupted by a preterite: <em>Dormía tranquilamente cuando sonó el teléfono</em> — I was sleeping peacefully when the phone rang."},
+        "t3": {"heading": "Verbs that change meaning", "body": "Some verbs change meaning depending on the past tense. <em>Conocí a Marta</em> = I met her (first time); <em>conocía Madrid</em> = I already knew it. <em>No quiso venir</em> = he refused; <em>no quería venir</em> = he didn't feel like it. <em>Supe la noticia</em> = I found out; <em>sabía la verdad</em> = I already knew it."}
+      },
+      "examples": {
+        "e1": "It was an August afternoon and it was terribly hot in Seville.",
+        "e2": "Suddenly, the power went out in the whole neighbourhood.",
+        "e3": "While we were waiting for the bus, it started to snow.",
+        "e4": "We used to spend summers in Benidorm; that year we went to Menorca.",
+        "e5": "I met my best friend at secondary school, in year 8.",
+        "e6": "He refused to try the octopus: it really disgusted him.",
+        "e7": "When I lived in Granada, I used to walk up to the Alhambra almost every Sunday.",
+        "e8": "We got to the station, bought the tickets and caught the last AVE."
+      },
+      "flashcards": {
+        "f1": "the preterite — completed actions in a chain",
+        "f2": "the imperfect — background scenes and habits",
+        "f3": "suddenly — usually with the preterite",
+        "f4": "while — usually with the imperfect",
+        "f5": "I met (someone, for the first time)",
+        "f6": "I already knew (a place)",
+        "f7": "he/she refused",
+        "f8": "he/she didn't feel like it",
+        "f9": "I found out",
+        "f10": "once, on one occasion — a preterite marker"
+      },
+      "quiz": {
+        "q1": "Three completed actions in a chain (came home, had dinner, went to bed) take the preterite: volví. 'Volvía' would describe the background, not the chain of events.",
+        "q2": "'Mientras' marks an ongoing background action: imperfect (paseábamos). The preterite doesn't fit an interrupted action.",
+        "q3": "'Conocer' in the preterite = meeting for the first time. In the imperfect (conocía) it would mean you already knew her.",
+        "q4": "'Cada noche' signals a repeated habit in the past: imperfect (contaba). 'Contó' would be a single occasion.",
+        "q5": "'Todavía' (still) shows an action in progress interrupted by the alarm: imperfect (dormían)."
+      }
+    },
+    "b1-subjuntivo": {
+      "title": "The present subjunctive: first steps",
+      "theory": {
+        "t1": {"heading": "The form: the opposite vowel", "body": "The present subjunctive uses the <strong>opposite vowel</strong>: <em>-ar</em> verbs take <strong>-e</strong> (hable, hables, hable, hablemos, habléis, hablen), <em>-er/-ir</em> verbs take <strong>-a</strong> (coma…; viva…). Irregulars come from the <em>yo</em> form: tengo → <strong>tenga</strong>, hago → <strong>haga</strong>, digo → <strong>diga</strong>. A few are fully irregular: ser → <strong>sea</strong>, ir → <strong>vaya</strong>, estar → <strong>esté</strong>, saber → <strong>sepa</strong>, haber → <strong>haya</strong>."},
+        "t2": {"heading": "Wishes and influence: quiero que…", "body": "When one subject wants to influence <strong>another</strong>, the second verb goes in the subjunctive: <em>Quiero que <strong>vengas</strong></em> — I want you to come; <em>Es importante que los niños <strong>coman</strong> verdura</em>. But if the subject is the <strong>same</strong>, use the infinitive: <em>Quiero <strong>comprar</strong> un piso</em> (I want, I buy) versus <em>Quiero que mi hermano <strong>compre</strong> un piso</em>."},
+        "t3": {"heading": "Emotions, judgements and ojalá", "body": "Emotions and value judgements also take the subjunctive: <em>Me alegro de que <strong>estéis</strong> aquí</em> — I'm glad you're here; <em>Es una pena que no <strong>puedas</strong> venir</em>. And <strong>ojalá</strong> (from Arabic, 'God willing') always takes the subjunctive: <em>Ojalá <strong>haga</strong> buen tiempo</em> — let's hope the weather's good."}
+      },
+      "examples": {
+        "e1": "I want you to come to the New Year's Eve dinner.",
+        "e2": "I hope you pass your driving test.",
+        "e3": "It's important that you (all) drink plenty of water in this heat.",
+        "e4": "My parents want me to study in Salamanca.",
+        "e5": "I'm glad you're feeling better.",
+        "e6": "It's a shame the museum closes on Mondays.",
+        "e7": "Let's hope it's sunny this long weekend.",
+        "e8": "How odd that there's no queue at the market today."
+      },
+      "flashcards": {
+        "f1": "the subjunctive — quiero que vengas (I want you to come)",
+        "f2": "hable — -ar verbs switch to e",
+        "f3": "coma — -er/-ir verbs switch to a",
+        "f4": "tenga — built from the yo-form 'tengo'",
+        "f5": "vaya — fully irregular",
+        "f6": "sea — fully irregular",
+        "f7": "hopefully / let's hope — always with the subjunctive",
+        "f8": "'Quiero comprar' — same subject takes the infinitive",
+        "f9": "it's a shame that… — takes the subjunctive",
+        "f10": "I'm glad that… — takes the subjunctive"
+      },
+      "quiz": {
+        "q1": "'Quiero que' + a different person takes the subjunctive: vengas. 'Vienes' is indicative and 'venga' would be for usted.",
+        "q2": "'Es importante que' takes the subjunctive: coman.",
+        "q3": "Same subject: infinitive (quiero comprar). 'Que compre' would be for someone else doing the buying.",
+        "q4": "'Ojalá' always takes the subjunctive: haga.",
+        "q5": "'Me alegro de que' takes the subjunctive: estéis. 'Estáis' is indicative; 'sois' also mixes up ser and estar."
+      }
+    },
 //__APPEND_HERE__
 }};

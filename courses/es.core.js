@@ -1325,5 +1325,169 @@ window.PTB_COURSES.es = {
           }
         ]
       },
+      "b1-pasados": {
+        "id": "b1-pasados",
+        "icon": "📖",
+        "level": "B1",
+        "title": "Contar el pasado: ¿indefinido o imperfecto?",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Dos pasados, dos trabajos",
+            "body": "El <strong>indefinido</strong> hace avanzar la historia: acciones completas, una detrás de otra. <em>Llegué, cené y me acosté.</em> El <strong>imperfecto</strong> pinta el fondo: descripciones, costumbres, acciones en curso. <em>Era de noche, llovía y no había nadie en la calle.</em> En un relato español típico, el imperfecto prepara la escena y el indefinido cuenta lo que pasó."
+          },
+          {
+            "id": "t2",
+            "heading": "Las señales del texto",
+            "body": "Marcadores de <strong>indefinido</strong>: <em>ayer, el año pasado, de repente, una vez, en 2010</em> — acción cerrada. Marcadores de <strong>imperfecto</strong>: <em>mientras, todos los días, siempre, de pequeño, antes</em> — costumbre o proceso. La combinación clásica: imperfecto interrumpido por indefinido. <em><strong>Dormía</strong> tranquilamente cuando <strong>sonó</strong> el teléfono.</em>"
+          },
+          {
+            "id": "t3",
+            "heading": "Verbos que cambian de sentido",
+            "body": "Algunos verbos cambian de significado según el pasado. <em><strong>Conocí</strong> a Marta en una boda</em> = la vi por primera vez; <em><strong>conocía</strong> Madrid</em> = ya lo sabía de antes. <em>No <strong>quiso</strong> venir</em> = se negó; <em>no <strong>quería</strong> venir</em> = no le apetecía. <em><strong>Supe</strong> la noticia ayer</em> = me enteré; <em><strong>sabía</strong> la verdad</em> = la conocía desde antes."
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "Era una tarde de agosto y hacía muchísimo calor en Sevilla."},
+          {"id": "e2", "text": "De repente, se fue la luz en todo el barrio."},
+          {"id": "e3", "text": "Mientras esperábamos el autobús, empezó a nevar."},
+          {"id": "e4", "text": "Antes veraneábamos en Benidorm; aquel año fuimos a Menorca."},
+          {"id": "e5", "text": "Conocí a mi mejor amigo en el instituto, en segundo de la ESO."},
+          {"id": "e6", "text": "No quiso probar el pulpo: le daba muchísimo asco."},
+          {"id": "e7", "text": "Cuando vivía en Granada, subía a la Alhambra casi todos los domingos."},
+          {"id": "e8", "text": "Llegamos a la estación, compramos los billetes y cogimos el último AVE."}
+          ],
+        "flashcards": [
+          {"id": "f1", "front": "¿Qué pasado hace avanzar la historia?", "def": "El indefinido: acciones completas, una detrás de otra (llegué, cené, me acosté)."},
+          {"id": "f2", "front": "¿Qué pasado describe el fondo y las costumbres?", "def": "El imperfecto: descripciones y hábitos (llovía, era de noche, jugaba siempre)."},
+          {"id": "f3", "front": "de repente", "def": "en un momento, sin aviso; suele ir con indefinido"},
+          {"id": "f4", "front": "mientras", "def": "al mismo tiempo que; suele ir con imperfecto"},
+          {"id": "f5", "front": "conocí (a alguien)", "def": "vi a esa persona por primera vez"},
+          {"id": "f6", "front": "conocía (un lugar)", "def": "ya lo sabía o lo había visitado antes"},
+          {"id": "f7", "front": "no quiso", "def": "se negó, dijo que no"},
+          {"id": "f8", "front": "no quería", "def": "no tenía ganas, no le apetecía"},
+          {"id": "f9", "front": "supe", "def": "me enteré, recibí la noticia"},
+          {"id": "f10", "front": "una vez", "def": "en una ocasión; marcador de indefinido"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Anoche ___ (yo) a casa, cené y me acosté pronto.",
+            "options": ["volvía", "volví", "vuelvo", "volvió"],
+            "correct": 1,
+            "explain": "Tres acciones completas en cadena (volví, cené, me acosté): indefinido. 'Volvía' describiría el fondo, no la cadena de hechos."
+          },
+          {
+            "id": "q2",
+            "q": "Mientras ___ (nosotros) por el Retiro, de repente empezó a llover.",
+            "options": ["paseamos", "paseábamos", "paseemos", "paseasteis"],
+            "correct": 1,
+            "explain": "'Mientras' marca una acción en curso que sirve de fondo: imperfecto (paseábamos). El indefinido 'paseamos' no encaja con una acción interrumpida."
+          },
+          {
+            "id": "q3",
+            "q": "'Conocí a Marta en 2015' significa que…",
+            "options": ["ya la conocía desde hacía años", "la vi por primera vez en 2015", "no quería conocerla", "la veía todos los días"],
+            "correct": 1,
+            "explain": "'Conocer' en indefinido = el primer encuentro. En imperfecto (conocía) significaría que ya la conocía de antes."
+          },
+          {
+            "id": "q4",
+            "q": "De niño, mi padre me ___ un cuento cada noche antes de dormir.",
+            "options": ["contó", "cuenta", "contaba", "conté"],
+            "correct": 2,
+            "explain": "'Cada noche' indica costumbre repetida en el pasado: imperfecto (contaba). 'Contó' sería una sola vez."
+          },
+          {
+            "id": "q5",
+            "q": "Cuando sonó la alarma de incendios, todos ___ todavía.",
+            "options": ["durmieron", "duermen", "dormisteis", "dormían"],
+            "correct": 3,
+            "explain": "'Todavía' muestra una acción en curso interrumpida por la alarma: imperfecto (dormían). 'Durmieron' cerraría la acción y no encaja con 'todavía'."
+          }
+        ]
+      },
+      "b1-subjuntivo": {
+        "id": "b1-subjuntivo",
+        "icon": "🪄",
+        "level": "B1",
+        "title": "El subjuntivo presente: primeros pasos",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "La forma: la vocal contraria",
+            "body": "El subjuntivo presente se forma con la <strong>vocal contraria</strong>: los verbos en <em>-ar</em> toman <strong>-e</strong> (hable, hables, hable, hablemos, habléis, hablen) y los verbos en <em>-er/-ir</em> toman <strong>-a</strong> (coma, comas…; viva, vivas…). Los irregulares salen de la forma <em>yo</em>: tengo → <strong>tenga</strong>, hago → <strong>haga</strong>, digo → <strong>diga</strong>. Y unos pocos van por libre: ser → <strong>sea</strong>, ir → <strong>vaya</strong>, estar → <strong>esté</strong>, saber → <strong>sepa</strong>, haber → <strong>haya</strong>."
+          },
+          {
+            "id": "t2",
+            "heading": "Deseo e influencia: quiero que…",
+            "body": "Cuando un sujeto quiere influir sobre <strong>otro</strong>, el segundo verbo va en subjuntivo: <em>Quiero que <strong>vengas</strong></em>, <em>Espero que <strong>apruebes</strong></em>, <em>Es importante que los niños <strong>coman</strong> verdura</em>. Ojo: si el sujeto es el <strong>mismo</strong>, se usa infinitivo, no subjuntivo: <em>Quiero <strong>comprar</strong> un piso</em> (yo quiero, yo compro), pero <em>Quiero que mi hermano <strong>compre</strong> un piso</em>."
+          },
+          {
+            "id": "t3",
+            "heading": "Emociones, valoraciones y ojalá",
+            "body": "Las emociones y valoraciones también piden subjuntivo: <em>Me alegro de que <strong>estéis</strong> aquí</em>, <em>Es una pena que no <strong>puedas</strong> venir</em>, <em>Qué raro que no <strong>haya</strong> nadie</em>. Y la palabra <strong>ojalá</strong> (del árabe <em>law šá lláh</em>, 'si Dios quiere') siempre va con subjuntivo: <em>Ojalá <strong>haga</strong> buen tiempo</em>, <em>Ojalá <strong>toque</strong> la lotería de Navidad</em>."
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "Quiero que vengas a la cena de Nochevieja."},
+          {"id": "e2", "text": "Espero que apruebes el examen del carné."},
+          {"id": "e3", "text": "Es importante que bebáis mucha agua con este calor."},
+          {"id": "e4", "text": "Mis padres quieren que estudie en Salamanca."},
+          {"id": "e5", "text": "Me alegro de que estés mejor."},
+          {"id": "e6", "text": "Es una pena que el museo cierre los lunes."},
+          {"id": "e7", "text": "Ojalá haga sol este puente."},
+          {"id": "e8", "text": "Qué raro que no haya cola en el mercado hoy."}
+          ],
+        "flashcards": [
+          {"id": "f1", "front": "¿Qué forma sigue a 'quiero que…'?", "def": "El subjuntivo: quiero que vengas, quiero que coma."},
+          {"id": "f2", "front": "¿Subjuntivo de 'hablar' (yo)?", "def": "hable — los verbos en -ar toman la vocal e"},
+          {"id": "f3", "front": "¿Subjuntivo de 'comer' (yo)?", "def": "coma — los verbos en -er/-ir toman la vocal a"},
+          {"id": "f4", "front": "¿Subjuntivo de 'tener' (yo)?", "def": "tenga — sale de la forma 'tengo'"},
+          {"id": "f5", "front": "¿Subjuntivo de 'ir' (yo)?", "def": "vaya — completamente irregular"},
+          {"id": "f6", "front": "¿Subjuntivo de 'ser' (yo)?", "def": "sea — completamente irregular"},
+          {"id": "f7", "front": "ojalá", "def": "palabra de deseo; siempre con subjuntivo: ojalá llueva"},
+          {"id": "f8", "front": "¿'Quiero comprar' o 'quiero que compre'? (yo mismo)", "def": "Quiero comprar — mismo sujeto, infinitivo; 'que compre' es para otra persona"},
+          {"id": "f9", "front": "es una pena que…", "def": "expresión de valoración; va con subjuntivo"},
+          {"id": "f10", "front": "me alegro de que…", "def": "expresión de emoción; va con subjuntivo"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Quiero que ___ (tú) a mi fiesta de cumpleaños.",
+            "options": ["vienes", "vengas", "venir", "venga"],
+            "correct": 1,
+            "explain": "'Quiero que' + otra persona pide subjuntivo: vengas. 'Vienes' es indicativo, 'venir' infinitivo y 'venga' sería para usted/él."
+          },
+          {
+            "id": "q2",
+            "q": "Es importante que los niños ___ verdura.",
+            "options": ["comen", "comer", "coman", "comemos"],
+            "correct": 2,
+            "explain": "'Es importante que' pide subjuntivo: coman. 'Comen' es indicativo y 'comer' infinitivo."
+          },
+          {
+            "id": "q3",
+            "q": "Quiero ___ un piso en el centro. (yo quiero, yo lo compro)",
+            "options": ["comprar", "que compre", "compre", "comprando"],
+            "correct": 0,
+            "explain": "Mismo sujeto: infinitivo (quiero comprar). 'Que compre' se usaría si comprara otra persona."
+          },
+          {
+            "id": "q4",
+            "q": "Ojalá ___ buen tiempo el día de la boda.",
+            "options": ["hace", "hacer", "hará", "haga"],
+            "correct": 3,
+            "explain": "'Ojalá' siempre va con subjuntivo: haga. Indicativo (hace, hará) e infinitivo no valen aquí."
+          },
+          {
+            "id": "q5",
+            "q": "Me alegro de que ___ (vosotros) aquí esta noche.",
+            "options": ["estáis", "estéis", "estar", "sois"],
+            "correct": 1,
+            "explain": "'Me alegro de que' pide subjuntivo: estéis. 'Estáis' es indicativo; 'sois' además confunde ser y estar."
+          }
+        ]
+      },
 //__APPEND_HERE__
 }}};
