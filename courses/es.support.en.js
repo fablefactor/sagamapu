@@ -14,9 +14,7 @@
    NOTE: the course teaches Peninsular (Spain) Spanish on purpose —
    vosotros, coger, el zumo, el ordenador. This overlay is British English.
 
-   PART 1 (A1): overlays for the 7 A1 topics. A2/B1 overlays are appended
-   at the //__APPEND_HERE__ sentinel inside topics: replace
-   "//__APPEND_HERE__\n}};" with "<next topics>,\n//__APPEND_HERE__\n}};" */
+   Overlays for all 23 topics are present — authoring complete. */
 window.PTB_COURSES.es.support = window.PTB_COURSES.es.support || {};
 window.PTB_COURSES.es.support.en = {
   "name": "English",
@@ -933,5 +931,78 @@ window.PTB_COURSES.es.support.en = {
         "q5": "To say which weekday a date lands on, Spanish uses 'caer': cae en martes."
       }
     },
-//__APPEND_HERE__
+    "b1-mensajes": {
+      "title": "Writing: from formal emails to WhatsApp",
+      "theory": {
+        "t1": {"heading": "The formal email", "body": "Writing to a company, a university or officialdom: greeting <em><strong>Estimado/a</strong> Sr./Sra. García:</em> (with a colon, not a comma), body in usted form (<em>Le escribo para…</em> — I'm writing to…; <em>Quería preguntarle si…</em> — I wanted to ask you whether…), and sign-off <em><strong>Un cordial saludo</strong></em> or, even more formal, <em><strong>Atentamente</strong></em>. Useful phrases: <em>Adjunto le envío…</em> (please find attached), <em>Quedo a la espera de su respuesta</em> (I look forward to your reply)."},
+        "t2": {"heading": "WhatsApp: another planet", "body": "Between friends the register changes completely: <em>¡Buenas! ¿Qué tal?</em>, famous abbreviations (<em><strong>q</strong></em> = que, <em><strong>xq</strong></em> = porque, <em><strong>tb</strong></em> = también, <em><strong>bss</strong></em> = besos), laughing with <em><strong>jajaja</strong></em> (never 'hahaha') and quick sign-offs: <em>¡Nos vemos!, ¡Hasta luego!, Un beso</em>. In Spain closing a message to a friend with <em>un beso</em> (a kiss) or <em>un abrazo</em> (a hug) is completely normal."},
+        "t3": {"heading": "Choosing the register", "body": "The key is <strong>who you're writing to</strong>: to a landlord or an office, usted and full formulas; to a flatmate, tú and direct phrases. Formality signals: <em>quería + infinitive</em> (<em>quería preguntarle</em>) sounds softer than <em>quiero</em>; the conditional helps too (<em>¿sería posible…?</em> — would it be possible…?). And a cultural trick: Spanish formal emails thank in advance — <em>Muchas gracias de antemano</em>."}
+      },
+      "examples": {
+        "e1": "Dear Ms Navarro: I am writing to ask about the flat on Calle Mayor.",
+        "e2": "Please find attached my CV, as agreed on the phone.",
+        "e3": "I look forward to your reply. Yours sincerely, Laura Gil.",
+        "e4": "Would it be possible to move the meeting to Thursday morning?",
+        "e5": "Hiya! So are we meeting this afternoon or what?",
+        "e6": "Can't make it, got work. Another day works for me too. Kisses!",
+        "e7": "Hahaha, brilliant. See you at the weekend then.",
+        "e8": "Many thanks in advance for your help."
+      },
+      "flashcards": {
+        "f1": "formal email greeting; ends with a colon",
+        "f2": "Yours faithfully — the most formal sign-off",
+        "f3": "Kind regards — standard formal sign-off",
+        "f4": "please find attached…",
+        "f5": "I look forward to your reply",
+        "f6": "porque / por qué — texting abbreviation",
+        "f7": "también (also) — texting abbreviation",
+        "f8": "Spanish written laughter (with a j)",
+        "f9": "I wanted to ask you… — the imperfect softens the request",
+        "f10": "many thanks in advance — formal email closing courtesy"
+      },
+      "quiz": {
+        "q1": "Writing formally to a stranger: Estimado/a + surname and a colon. The others are all informal registers.",
+        "q2": "'Atentamente' is the classic formal sign-off. The others belong in WhatsApp.",
+        "q3": "'xq' abbreviates porque/por qué. 'Tb' is también and 'curro' is colloquial Spanish for work.",
+        "q4": "The conditional ('¿sería posible…?') is the polite formula. The others are commands or too casual.",
+        "q5": "Spanish laughs with a j: jajaja. 'Hahaha' is the English pattern."
+      }
+    },
+    "b1-opinar": {
+      "title": "Opinions and debate: creo que sí, no creo que sea",
+      "theory": {
+        "t1": {"heading": "Affirming: creo que + indicative", "body": "For an affirmative opinion, Spanish uses the <strong>indicative</strong>: <em>Creo que <strong>tienes</strong> razón</em> — I think you're right; <em>Me parece que el AVE <strong>es</strong> caro</em>. Other formulas: <em>en mi opinión, para mí, desde mi punto de vista, la verdad es que…</em> (truth is…)."},
+        "t2": {"heading": "Negating: no creo que + subjunctive", "body": "As soon as the opinion is negated, the <strong>subjunctive</strong> appears: <em>No creo que <strong>tengas</strong> razón</em> — I don't think you're right; <em>No me parece que <strong>sea</strong> caro</em>. The practical rule: <strong>creo que + indicative, no creo que + subjunctive</strong>. Same with <em>es verdad que <strong>es</strong>…</em> versus <em>no es verdad que <strong>sea</strong>…</em>"},
+        "t3": {"heading": "The art of the sobremesa", "body": "Debating is Spain's after-lunch sport: people interrupt affectionately and lean on connectors. Agreeing: <em>estoy de acuerdo, tienes razón, claro, por supuesto</em>. Disagreeing politely: <em>ya, pero…</em> (yes, but…), <em>no sé yo…</em> (I'm not so sure), <em>depende</em>, <em>no estoy del todo de acuerdo</em>. Organising: <em>por un lado… por otro</em> (on one hand… on the other), <em>sin embargo</em> (however), <em>además</em> (besides), <em>total, que…</em> (long story short…)."}
+      },
+      "examples": {
+        "e1": "I honestly think the best jamón is from Huelva.",
+        "e2": "I don't think football is that important, to be honest.",
+        "e3": "I think the Fallas fall on a weekend this year.",
+        "e4": "I don't think the flat is that bad for the price.",
+        "e5": "Yes, but Madrid empties out in August: not even the doorman stays.",
+        "e6": "On one hand I fancy going out; on the other, I'm up early tomorrow.",
+        "e7": "I'm not so sure… it depends on the ticket prices.",
+        "e8": "Long story short, we ended up with no paella."
+      },
+      "flashcards": {
+        "f1": "indicative: creo que tienes razón",
+        "f2": "subjunctive: no creo que tengas razón",
+        "f3": "in my opinion",
+        "f4": "yes, but… — soft disagreement: concede, then counter",
+        "f5": "I'm not so sure… — very Spanish doubt",
+        "f6": "it depends",
+        "f7": "on one hand… on the other…",
+        "f8": "however — contrast connector",
+        "f9": "long story short… — colloquial summariser",
+        "f10": "I agree"
+      },
+      "quiz": {
+        "q1": "Affirmative opinion: creo que + indicative (está).",
+        "q2": "Negated opinion: no creo que + subjunctive (esté).",
+        "q3": "'Ya, pero…' concedes first and disagrees second. 'Total, que' summarises and 'además' adds.",
+        "q4": "'No es verdad que' takes the subjunctive: duerma.",
+        "q5": "'Total, que…' is the colloquial summariser par excellence."
+      }
+    }
 }};

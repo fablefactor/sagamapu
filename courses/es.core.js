@@ -15,10 +15,8 @@
    NEVER renumber or reuse existing ids, even when inserting mid-array
    or deleting items.
 
-   PART 1 (A1): meta, 7 A1 topics, full placement (20), pronunciation.
-   A2/B1 topics are appended at the //__APPEND_HERE__ sentinel inside
-   core.topics (which is deliberately the LAST key of core): replace
-   "//__APPEND_HERE__\n}}};" with "<next topics>,\n//__APPEND_HERE__\n}}};" */
+   All 23 topics (7 A1, 8 A2, 8 B1) are present — authoring complete.
+   Insertions must follow the ID STABILITY RULE above. */
 window.PTB_COURSES = window.PTB_COURSES || {};
 window.PTB_COURSES.es = {
   "meta": {
@@ -1817,5 +1815,168 @@ window.PTB_COURSES.es = {
           }
         ]
       },
-//__APPEND_HERE__
+      "b1-mensajes": {
+        "id": "b1-mensajes",
+        "icon": "📱",
+        "level": "B1",
+        "title": "Escribir: del correo formal al WhatsApp",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "El correo formal",
+            "body": "Para escribir a una empresa, una universidad o la administración: saludo <em><strong>Estimado/a</strong> Sr./Sra. García:</em> (con dos puntos, no coma), cuerpo de usted (<em>Le escribo para…</em>, <em>Quería preguntarle si…</em>), y despedida <em><strong>Un cordial saludo</strong></em> o, más formal aún, <em><strong>Atentamente</strong></em>. Frases útiles: <em>Adjunto le envío…</em> (I attach), <em>Quedo a la espera de su respuesta</em>."
+          },
+          {
+            "id": "t2",
+            "heading": "El WhatsApp: otro planeta",
+            "body": "Entre amigos, el registro cambia por completo: <em>¡Buenas! ¿Qué tal?</em>, abreviaturas famosas (<em><strong>q</strong></em> = que, <em><strong>xq</strong></em> = porque, <em><strong>tb</strong></em> = también, <em><strong>bss</strong></em> = besos), risas con <em><strong>jajaja</strong></em> (nunca 'hahaha') y despedidas rápidas: <em>¡Nos vemos!, ¡Hasta luego!, Un beso</em>. En España se cierran los mensajes a amigos con <em>un beso</em> o <em>un abrazo</em> con total normalidad."
+          },
+          {
+            "id": "t3",
+            "heading": "Elegir el registro",
+            "body": "La clave es <strong>a quién escribes</strong>: al casero o a una oficina, usted y fórmulas completas; a un compañero de piso, tú y frases directas. Señales de formalidad: <em>quería + infinitivo</em> (<em>quería preguntarle</em>) suena más suave que <em>quiero</em>; el condicional también ayuda (<em>¿sería posible…?</em>). Y un truco cultural: en España un correo formal se agradece por adelantado — <em>Muchas gracias de antemano</em>."
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "Estimada Sra. Navarro: Le escribo para preguntarle por el piso de la calle Mayor."},
+          {"id": "e2", "text": "Adjunto le envío mi currículum, como acordamos por teléfono."},
+          {"id": "e3", "text": "Quedo a la espera de su respuesta. Atentamente, Laura Gil."},
+          {"id": "e4", "text": "¿Sería posible cambiar la reunión al jueves por la mañana?"},
+          {"id": "e5", "text": "¡Buenas! ¿Al final quedamos esta tarde o q?"},
+          {"id": "e6", "text": "No puedo ir, tengo curro. Otro día tb me va bien. ¡Bss!"},
+          {"id": "e7", "text": "Jajaja, qué bueno. Nos vemos el finde entonces."},
+          {"id": "e8", "text": "Muchas gracias de antemano por su ayuda."}
+        ],
+        "flashcards": [
+          {"id": "f1", "front": "Estimado/a Sr./Sra. …:", "def": "saludo de correo formal; termina en dos puntos"},
+          {"id": "f2", "front": "Atentamente", "def": "despedida muy formal de un correo"},
+          {"id": "f3", "front": "Un cordial saludo", "def": "despedida formal estándar, algo menos fría que 'atentamente'"},
+          {"id": "f4", "front": "Adjunto le envío…", "def": "fórmula para decir que el documento va con el correo"},
+          {"id": "f5", "front": "Quedo a la espera de su respuesta", "def": "cierre formal: espero su contestación"},
+          {"id": "f6", "front": "¿Qué significa 'xq' en un mensaje?", "def": "porque / por qué — abreviatura de móvil"},
+          {"id": "f7", "front": "¿Qué significa 'tb' en un mensaje?", "def": "también — abreviatura de móvil"},
+          {"id": "f8", "front": "jajaja", "def": "la risa escrita en español (con jota)"},
+          {"id": "f9", "front": "quería preguntarle si…", "def": "petición suave y formal; el imperfecto suaviza"},
+          {"id": "f10", "front": "Muchas gracias de antemano", "def": "agradecer por adelantado en un correo formal"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Escribes a la administración por primera vez. ¿Cómo empiezas?",
+            "options": ["¡Buenas! ¿Qué tal?", "Estimada Sra. Ruiz:", "Hola guapa:", "Oye, mira…"],
+            "correct": 1,
+            "explain": "Con un desconocido y por escrito formal: Estimado/a + apellido y dos puntos. El resto son registros de confianza."
+          },
+          {
+            "id": "q2",
+            "q": "¿Qué despedida cierra un correo muy formal?",
+            "options": ["¡Bss!", "Nos vemos", "Atentamente", "Jajaja"],
+            "correct": 2,
+            "explain": "'Atentamente' es la despedida formal clásica. Las otras son de WhatsApp entre amigos."
+          },
+          {
+            "id": "q3",
+            "q": "En un WhatsApp, 'no puedo, xq tengo curro, tb mañana' usa 'xq' para decir…",
+            "options": ["por qué / porque", "aunque", "cuando", "quizás"],
+            "correct": 0,
+            "explain": "'xq' abrevia porque/por qué. 'Tb' es también y 'curro' es trabajo, coloquial de España."
+          },
+          {
+            "id": "q4",
+            "q": "Para pedir algo con mucha suavidad en un correo formal escribes:",
+            "options": ["Quiero que me contestes ya", "¿Sería posible adelantar la cita?", "Contéstame, anda", "Dame otra cita"],
+            "correct": 1,
+            "explain": "El condicional ('¿sería posible…?') es la fórmula suave. Las otras son órdenes o registro coloquial."
+          },
+          {
+            "id": "q5",
+            "q": "La risa escrita en español es…",
+            "options": ["hahaha", "jejeje en correos formales", "jajaja", "lololol"],
+            "correct": 2,
+            "explain": "En español se ríe con jota: jajaja. 'Hahaha' es el patrón inglés."
+          }
+        ]
+      },
+      "b1-opinar": {
+        "id": "b1-opinar",
+        "icon": "💬",
+        "level": "B1",
+        "title": "Opinar y debatir: creo que sí, no creo que sea",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "Afirmar: creo que + indicativo",
+            "body": "Para dar una opinión afirmativa, el español usa <strong>indicativo</strong>: <em>Creo que <strong>tienes</strong> razón</em>, <em>Me parece que el AVE <strong>es</strong> caro</em>, <em>Pienso que <strong>deberíamos</strong> ir</em>. Otras fórmulas: <em>en mi opinión, para mí, desde mi punto de vista, la verdad es que…</em>"
+          },
+          {
+            "id": "t2",
+            "heading": "Negar: no creo que + subjuntivo",
+            "body": "En cuanto la opinión se niega, aparece el <strong>subjuntivo</strong>: <em>No creo que <strong>tengas</strong> razón</em>, <em>No me parece que <strong>sea</strong> caro</em>, <em>No pienso que <strong>haya</strong> problema</em>. La regla práctica: <strong>creo que + indicativo, no creo que + subjuntivo</strong>. Lo mismo pasa con <em>es verdad que <strong>es</strong>…</em> frente a <em>no es verdad que <strong>sea</strong>…</em>"
+          },
+          {
+            "id": "t3",
+            "heading": "El arte de la sobremesa",
+            "body": "Debatir en España es deporte de sobremesa: se interrumpe con cariño y se usan conectores. Para acordar: <em>estoy de acuerdo, tienes razón, claro, por supuesto</em>. Para discrepar con educación: <em>ya, pero…</em>, <em>no sé yo…</em>, <em>depende</em>, <em>no estoy del todo de acuerdo</em>. Para organizar: <em>por un lado… por otro</em>, <em>sin embargo</em>, <em>además</em>, <em>total, que…</em> (para resumir)."
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "Creo que el mejor jamón es el de Huelva, sinceramente."},
+          {"id": "e2", "text": "No creo que el fútbol sea tan importante, la verdad."},
+          {"id": "e3", "text": "Me parece que este año las Fallas caen en fin de semana."},
+          {"id": "e4", "text": "No me parece que el piso esté tan mal por ese precio."},
+          {"id": "e5", "text": "Ya, pero en agosto Madrid se vacía: no queda ni el portero."},
+          {"id": "e6", "text": "Por un lado me apetece salir; por otro, mañana madrugo."},
+          {"id": "e7", "text": "No sé yo… depende del precio de los billetes."},
+          {"id": "e8", "text": "Total, que al final nos quedamos sin paella."}
+        ],
+        "flashcards": [
+          {"id": "f1", "front": "¿'Creo que' va con indicativo o subjuntivo?", "def": "indicativo: creo que tienes razón"},
+          {"id": "f2", "front": "¿'No creo que' va con indicativo o subjuntivo?", "def": "subjuntivo: no creo que tengas razón"},
+          {"id": "f3", "front": "en mi opinión", "def": "fórmula para introducir tu punto de vista"},
+          {"id": "f4", "front": "ya, pero…", "def": "manera suave de discrepar: acepto y contraataco"},
+          {"id": "f5", "front": "no sé yo…", "def": "expresión de duda muy española: no lo veo claro"},
+          {"id": "f6", "front": "depende", "def": "ni sí ni no: según las circunstancias"},
+          {"id": "f7", "front": "por un lado… por otro…", "def": "conector para contrastar dos aspectos"},
+          {"id": "f8", "front": "sin embargo", "def": "conector de contraste: pero, no obstante"},
+          {"id": "f9", "front": "total, que…", "def": "conector coloquial para resumir una historia"},
+          {"id": "f10", "front": "estoy de acuerdo", "def": "fórmula para expresar acuerdo"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Creo que el gazpacho ___ mejor frío del todo.",
+            "options": ["esté", "está", "sea", "estar"],
+            "correct": 1,
+            "explain": "Opinión afirmativa: creo que + indicativo (está). El subjuntivo llegaría con 'no creo que'."
+          },
+          {
+            "id": "q2",
+            "q": "No creo que el museo ___ abierto un lunes.",
+            "options": ["está", "es", "esté", "estás"],
+            "correct": 2,
+            "explain": "Opinión negada: no creo que + subjuntivo (esté)."
+          },
+          {
+            "id": "q3",
+            "q": "Tu amigo dice algo y tú aceptas su punto pero vas a discrepar. Empiezas con…",
+            "options": ["Total, que…", "Ya, pero…", "Además…", "Por supuesto."],
+            "correct": 1,
+            "explain": "'Ya, pero…' concede primero y discrepa después. 'Total, que' resume y 'además' añade."
+          },
+          {
+            "id": "q4",
+            "q": "No es verdad que en España todo el mundo ___ la siesta.",
+            "options": ["duerme", "duerma", "dormir", "dormís"],
+            "correct": 1,
+            "explain": "'No es verdad que' pide subjuntivo: duerma. Con 'es verdad que' iría indicativo (duerme)."
+          },
+          {
+            "id": "q5",
+            "q": "Para resumir una historia larga de forma coloquial dices:",
+            "options": ["Sin embargo…", "Por un lado…", "Total, que nos quedamos en casa.", "Desde mi punto de vista…"],
+            "correct": 2,
+            "explain": "'Total, que…' es el resumen coloquial por excelencia. Los otros contrastan, enumeran u opinan."
+          }
+        ]
+      }
 }}};
