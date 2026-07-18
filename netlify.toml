@@ -10,3 +10,13 @@
 # timing works.
 [functions]
   directory = "netlify/functions"
+
+# Update-friendliness for phone home-screen installs: nothing here has
+# content-hashed filenames, so NOTHING may be cached without revalidation.
+# no-cache = "store, but revalidate before use" — with Netlify's ETags a
+# reload after deploy always picks up the new version (and version.js is
+# what the in-app update check fetches fresh at every start).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"

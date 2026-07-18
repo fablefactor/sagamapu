@@ -12,7 +12,10 @@
   <script src="courses/en.support.es.js"></script>
   <script src="courses/da.core.js"></script>
   <script src="courses/da.support.es.js"></script>
+  <script src="courses/es.core.js"></script>
+  <script src="courses/es.support.en.js"></script>
   <script src="strings.js"></script>
+  <script src="version.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -1397,6 +1400,21 @@ function SettingsScreen({course,uiLang,setUiLang,immersion,setImmersion,hasOverl
         </>
       )}
 
+      {secHead(t(uiLang,'settings.about'))}
+      <div style={{...S.card,marginBottom:18}}>
+        <div style={{display:'flex',alignItems:'baseline',gap:8,marginBottom:10}}>
+          <div style={{fontWeight:800,fontSize:15}}>{t(uiLang,'settings.version')}</div>
+          <Badge color={C.teal} bg={C.tealSoft}>v{PTB_VERSION.version}</Badge>
+          <span style={{fontSize:12,color:C.sub}}>{(PTB_VERSION.changelog[0]||{}).date||''}</span>
+        </div>
+        <div style={{fontWeight:700,fontSize:13,color:C.sub,marginBottom:6}}>{t(uiLang,'settings.changelog')}</div>
+        <ul style={{margin:'0 0 0 18px',padding:0,fontSize:13,lineHeight:1.7,maxHeight:200,overflowY:'auto'}}>
+          {PTB_VERSION.changelog.map(e=>(
+            <li key={e.v}><strong>v{e.v}</strong> <span style={{color:C.sub}}>({e.date})</span> · {e[uiLang]||e.en}</li>
+          ))}
+        </ul>
+      </div>
+
       {secHead(t(uiLang,'settings.dangerZone'))}
       <div style={{...S.card,border:`2px solid #B3261E`,background:'#FDF3F2'}}>
         <div style={{fontWeight:800,fontSize:15,marginBottom:4,color:'#B3261E'}}>{t(uiLang,'settings.startOver')}</div>
@@ -1612,8 +1630,62 @@ function AppShell(){
       <div style={{color:C.sub,fontSize:15,padding:40}}>{t(lsRaw('ptb1:uiLang','en'),'common.loading')}</div>
     </div>
   );
-  if(phase==='login') return <LoginScreen/>;
-  return <Root user={user}/>;
+  if(phase==='login') return <><UpdateGate/><LoginScreen/></>;
+  return <><UpdateGate/><Root user={user}/></>;
+}
+
+/* ══ Update check ═════════════════════════════════════════════
+   The deployed app is a home-screen web app on phones; a restored
+   instance can silently run a stale version. On every start (and when
+   returning to the foreground) we re-fetch version.js fresh
+   (cache: no-store), parse its pure-JSON payload, and if the deployed
+   version is newer than the RUNNING window.PTB_VERSION we show a
+   modal: one line per change since the running version, plus
+   "Update now" (reload; no-cache headers in netlify.toml make the
+   reload pick up everything fresh) or "Later". Never auto-reload. */
+function fetchLatestVersion(){
+  return withTimeout(fetch('version.js?ts='+Date.now(),{cache:'no-store'}),SB_TIMEOUT)
+    .then(r=>r.text())
+    .then(txt=>{
+      const start=txt.indexOf('{',txt.indexOf('window.PTB_VERSION'));  // skip header comment
+      return JSON.parse(txt.slice(start,txt.lastIndexOf('}')+1));
+    });
+}
+function UpdateGate(){
+  const uiLang=lsRaw('ptb1:uiLang','en');
+  const[avail,setAvail]=useState(null);        // {version, notes:[{v,date,en,es}]}
+  const dismissedRef=useRef(false);            // "Later" silences until next start
+  useEffect(()=>{
+    const check=()=>{
+      if(dismissedRef.current)return;
+      fetchLatestVersion().then(latest=>{
+        if(latest&&latest.version>PTB_VERSION.version){
+          setAvail({version:latest.version,notes:(latest.changelog||[]).filter(e=>e.v>PTB_VERSION.version)});
+        }
+      }).catch(()=>{});                        // offline/suspended: silently skip
+    };
+    check();
+    const h=()=>{ if(document.visibilityState==='visible')check(); };
+    document.addEventListener('visibilitychange',h);
+    return()=>document.removeEventListener('visibilitychange',h);
+  },[]);
+  if(!avail) return null;
+  return(
+    <div style={{position:'fixed',inset:0,background:'rgba(20,40,40,.45)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center',padding:20}}>
+      <div style={{...S.card,maxWidth:420,width:'100%',padding:24}}>
+        <div style={{fontSize:34,marginBottom:6}}>✨</div>
+        <div style={{fontWeight:800,fontSize:18,marginBottom:4}}>{t(uiLang,'update.title')}</div>
+        <div style={{fontSize:13,color:C.sub,marginBottom:12}}>{t(uiLang,'update.subtitle',{from:PTB_VERSION.version,to:avail.version})}</div>
+        <ul style={{margin:'0 0 16px 18px',padding:0,fontSize:13.5,lineHeight:1.7,maxHeight:180,overflowY:'auto'}}>
+          {avail.notes.map(e=>(
+            <li key={e.v}><strong>v{e.v}</strong> · {e[uiLang]||e.en}</li>
+          ))}
+        </ul>
+        <button onClick={()=>window.location.reload()} style={{...S.btn(C.teal),width:'100%'}}>{t(uiLang,'update.now')}</button>
+        <button onClick={()=>{dismissedRef.current=true;setAvail(null);}} style={{...S.ghost,width:'100%',marginTop:8,fontSize:13}}>{t(uiLang,'update.later')}</button>
+      </div>
+    </div>
+  );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<AppShell/>);
