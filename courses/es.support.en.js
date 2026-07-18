@@ -859,5 +859,79 @@ window.PTB_COURSES.es.support.en = {
         "q5": "With an infinitive the pronoun attaches to the end: comprarlo. 'El regalo' is a masculine direct object."
       }
     },
+    "b1-futuro": {
+      "title": "The future and the conditional",
+      "theory": {
+        "t1": {"heading": "The simple future: hablaré", "body": "Formed with the <strong>infinitive + -é, -ás, -á, -emos, -éis, -án</strong>: <em>hablaré, comerás, vivirá</em>. Common irregulars: <em>tener → <strong>tendré</strong>, hacer → <strong>haré</strong>, poder → <strong>podré</strong>, salir → <strong>saldré</strong>, decir → <strong>diré</strong>, haber → <strong>habrá</strong></em>. For plans already made, Spanish prefers <em>ir a + infinitive</em> or the present (<em>mañana <strong>voy</strong> al dentista</em>); the simple future sounds more like a promise or prediction: <em>Te <strong>llamaré</strong> esta noche</em> — I'll call you tonight."},
+        "t2": {"heading": "The future of probability", "body": "A very Spanish use of the future: <strong>guessing</strong> about the present. <em>¿Qué hora <strong>será</strong>?</em> = what time is it, roughly? <em><strong>Serán</strong> las tres</em> = it must be about three. <em>¿Dónde está Juan? — <strong>Estará</strong> en el bar</em> = he's probably at the bar. It's not about the future at all: it marks a present-time guess."},
+        "t3": {"heading": "The conditional: politeness and wishes", "body": "The conditional (<strong>infinitive + -ía</strong>: <em>hablaría, comería, viviría</em>; same irregular stems as the future: <em>tendría, haría, podría</em>) softens and hypothesises. Politeness: <em>¿<strong>Podrías</strong> ayudarme?</em> — could you help me? Wishes: <em>Me <strong>gustaría</strong> vivir junto al mar</em> — I'd like to live by the sea. Advice: <em>Yo en tu lugar <strong>hablaría</strong> con ella</em> — if I were you, I'd talk to her."}
+      },
+      "examples": {
+        "e1": "I'll call you as soon as I leave work.",
+        "e2": "Next year I'll walk the Camino de Santiago.",
+        "e3": "Where can Lucía be? She's not answering her phone.",
+        "e4": "It must be about two: the bakery has just closed.",
+        "e5": "I'd like to work from home two days a week.",
+        "e6": "Could you turn the music down a bit, please?",
+        "e7": "If I were you, I'd catch the eight o'clock train.",
+        "e8": "There must be about fifty people in the museum queue."
+      },
+      "flashcards": {
+        "f1": "tendré — irregular future of tener",
+        "f2": "haré — irregular future of hacer",
+        "f3": "podré — irregular future of poder",
+        "f4": "a guess about the present: where he probably is",
+        "f5": "me gustaría — I'd like (polite wishes)",
+        "f6": "could you…? — polite request with the conditional",
+        "f7": "if I were you… — advice formula, takes the conditional",
+        "f8": "mañana voy — the present is preferred for fixed appointments",
+        "f9": "habrá — future of 'hay': there will be",
+        "f10": "diría — irregular like the future (diré)"
+      },
+      "quiz": {
+        "q1": "A promise about the future: llamaré. The past tenses don't fit and 'llame' is subjunctive.",
+        "q2": "Future of probability: ¿qué hora será? = what time is it, roughly? The guess is marked with the future.",
+        "q3": "The conditional softens requests: ¿podrías…? 'Podrás' asks about the future and 'pudiste' about the past.",
+        "q4": "Polite wish: me gustaría + infinitive.",
+        "q5": "'El año que viene' points to the future: haremos."
+      }
+    },
+    "b1-fiestas": {
+      "title": "Fiestas and plural Spain",
+      "theory": {
+        "t1": {"heading": "The festive calendar", "body": "Spain lives by its calendar: the <strong>Reyes Magos</strong> (Three Kings, 6 January) bring the presents and everyone eats <strong>roscón</strong>; in <strong>Semana Santa</strong> (Holy Week) processions fill the streets, especially in Andalusia and Castile; at Valencia's <strong>Fallas</strong> (March) giant cardboard monuments are burnt; at <strong>San Fermín</strong> (Pamplona, July) people run ahead of the bulls; and on <strong>Nochevieja</strong> (New Year's Eve) everyone eats the <strong>twelve grapes</strong> with the chimes from the Puerta del Sol."},
+        "t2": {"heading": "One Spain, several languages", "body": "Spanish (also called <strong>castellano</strong>) lives alongside co-official languages: <strong>Catalan</strong> (Catalonia, the Balearics and, as Valencian, in the Valencia region), <strong>Galician</strong> (Galicia) and <strong>Basque</strong>/euskera (the Basque Country and part of Navarre). In those regions you'll see bilingual signs and hear people switch languages completely naturally."},
+        "t3": {"heading": "Talking about traditions", "body": "Useful festive vocabulary: <em>se celebra</em> (it takes place), <em>cae en</em> (<em>this year Reyes <strong>falls on</strong> a Monday</em>), <em>el día festivo</em> (public holiday), <em>el desfile</em> (parade), <em>la verbena</em> (open-air night festival), <em>los fuegos artificiales</em> (fireworks), <em>disfrazarse</em> (to dress up, at Carnival). And the all-purpose question for fitting in: <em>¿Y aquí cómo se celebra?</em> — and how do you celebrate it here?"}
+      },
+      "examples": {
+        "e1": "On New Year's Eve we eat the twelve grapes with the chimes.",
+        "e2": "The Three Kings arrive on the night of the fifth of January.",
+        "e3": "This year we're buying the roscón with cream, as always.",
+        "e4": "In Valencia, the fallas are burnt on the night of San José.",
+        "e5": "My cousin ran the San Fermín bull run last year.",
+        "e6": "In Galicia the signs are in Galician and in Spanish.",
+        "e7": "Does Reyes fall on a Monday or a Tuesday this year?",
+        "e8": "The San Juan verbena is held on the beach, with bonfires."
+      },
+      "flashcards": {
+        "f1": "the Three Kings — they bring the presents on 6 January",
+        "f2": "ring-shaped sweet bread eaten on Kings' Day",
+        "f3": "the twelve grapes — eaten on New Year's Eve, one per chime",
+        "f4": "Valencia's March festival: cardboard monuments are burnt",
+        "f5": "Pamplona's July festival, famous for the bull runs",
+        "f6": "the bull run through the streets",
+        "f7": "open-air night festival with music and dancing",
+        "f8": "castellano — another name for the Spanish language",
+        "f9": "Basque — co-official language of the Basque Country",
+        "f10": "falls on (a date): this year it falls on a Monday"
+      },
+      "quiz": {
+        "q1": "The strong Spanish tradition is the Reyes Magos (6 January), though Father Christmas has also entered many homes.",
+        "q2": "One grape per chime: twelve grapes for twelve months of luck.",
+        "q3": "The Fallas are Valencia's great festival, in March. Pamplona has San Fermín.",
+        "q4": "Basque (euskera) is co-official in the Basque Country (and part of Navarre).",
+        "q5": "To say which weekday a date lands on, Spanish uses 'caer': cae en martes."
+      }
+    },
 //__APPEND_HERE__
 }};

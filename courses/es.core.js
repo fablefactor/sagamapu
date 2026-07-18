@@ -1653,5 +1653,169 @@ window.PTB_COURSES.es = {
           }
         ]
       },
+      "b1-futuro": {
+        "id": "b1-futuro",
+        "icon": "🔮",
+        "level": "B1",
+        "title": "El futuro y el condicional",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "El futuro simple: hablaré",
+            "body": "Se forma con el <strong>infinitivo + -é, -ás, -á, -emos, -éis, -án</strong>: <em>hablaré, comerás, vivirá</em>. Irregulares frecuentes: <em>tener → <strong>tendré</strong>, hacer → <strong>haré</strong>, poder → <strong>podré</strong>, salir → <strong>saldré</strong>, decir → <strong>diré</strong>, haber → <strong>habrá</strong></em>. Para planes ya decididos, el español prefiere <em>ir a + infinitivo</em> o el presente (<em>mañana <strong>voy</strong> al dentista</em>); el futuro simple suena más a promesa o predicción: <em>Te <strong>llamaré</strong> esta noche.</em>"
+          },
+          {
+            "id": "t2",
+            "heading": "El futuro de probabilidad",
+            "body": "Un uso muy español del futuro: <strong>suponer</strong> sobre el presente. <em>¿Qué hora <strong>será</strong>?</em> = ¿qué hora es, más o menos? <em><strong>Serán</strong> las tres</em> = son las tres, supongo. <em>¿Dónde está Juan? — <strong>Estará</strong> en el bar</em> = probablemente está allí. No habla del futuro: habla de una suposición presente."
+          },
+          {
+            "id": "t3",
+            "heading": "El condicional: cortesía y deseos",
+            "body": "El condicional (<strong>infinitivo + -ía</strong>: <em>hablaría, comería, viviría</em>; irregulares como el futuro: <em>tendría, haría, podría</em>) suaviza y hace hipótesis. Cortesía: <em>¿<strong>Podrías</strong> ayudarme?</em> Deseo: <em>Me <strong>gustaría</strong> vivir junto al mar.</em> Consejo: <em>Yo en tu lugar <strong>hablaría</strong> con ella.</em> Hipótesis: <em>Sin coche <strong>sería</strong> complicado llegar.</em>"
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "Te llamaré en cuanto salga del trabajo."},
+          {"id": "e2", "text": "El año que viene haré el Camino de Santiago."},
+          {"id": "e3", "text": "¿Dónde estará Lucía? No coge el teléfono."},
+          {"id": "e4", "text": "Serán las dos, más o menos: acaba de cerrar la panadería."},
+          {"id": "e5", "text": "Me gustaría trabajar desde casa dos días a la semana."},
+          {"id": "e6", "text": "¿Podrías bajar un poco la música, por favor?"},
+          {"id": "e7", "text": "Yo en tu lugar cogería el tren de las ocho."},
+          {"id": "e8", "text": "Habrá unas cincuenta personas en la cola del museo."}
+        ],
+        "flashcards": [
+          {"id": "f1", "front": "¿Futuro de 'tener' (yo)?", "def": "tendré — irregular"},
+          {"id": "f2", "front": "¿Futuro de 'hacer' (yo)?", "def": "haré — irregular"},
+          {"id": "f3", "front": "¿Futuro de 'poder' (yo)?", "def": "podré — irregular"},
+          {"id": "f4", "front": "¿Qué expresa '¿Dónde estará Juan?'", "def": "una suposición sobre el presente: probablemente dónde está"},
+          {"id": "f5", "front": "¿Condicional de 'gustar' + a mí?", "def": "me gustaría — para deseos educados"},
+          {"id": "f6", "front": "¿Podrías…?", "def": "petición cortés con condicional"},
+          {"id": "f7", "front": "yo en tu lugar…", "def": "fórmula de consejo; va con condicional: yo en tu lugar hablaría"},
+          {"id": "f8", "front": "¿'Mañana voy al dentista' o 'mañana iré al dentista'? (cita ya fijada)", "def": "mañana voy — para citas fijadas se prefiere el presente"},
+          {"id": "f9", "front": "habrá", "def": "futuro de 'hay': habrá mucha gente"},
+          {"id": "f10", "front": "¿Condicional de 'decir' (yo)?", "def": "diría — irregular como el futuro (diré)"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "Tranquila, te ___ esta noche sin falta. (una promesa)",
+            "options": ["llamaré", "llamaba", "llamé", "llame"],
+            "correct": 0,
+            "explain": "Una promesa hacia el futuro: llamaré. Los pasados no encajan y 'llame' es subjuntivo."
+          },
+          {
+            "id": "q2",
+            "q": "¿Qué hora ___? No llevo reloj, pero ya es de noche. (una suposición)",
+            "options": ["es", "era", "será", "sea"],
+            "correct": 2,
+            "explain": "Futuro de probabilidad: ¿qué hora será? = ¿qué hora es, aproximadamente? La suposición se marca con el futuro."
+          },
+          {
+            "id": "q3",
+            "q": "¿___ ayudarme con estas cajas, por favor? (petición cortés)",
+            "options": ["Puedes que", "Podrías", "Podrás", "Pudiste"],
+            "correct": 1,
+            "explain": "El condicional suaviza la petición: ¿podrías…? 'Podrás' pregunta por el futuro y 'pudiste' por el pasado."
+          },
+          {
+            "id": "q4",
+            "q": "Me ___ vivir en San Sebastián: dicen que se come de maravilla. (un deseo)",
+            "options": ["gustaré", "gustaría", "gusta que", "gustara"],
+            "correct": 1,
+            "explain": "Deseo educado: me gustaría + infinitivo. 'Gustaré' no existe con este sentido."
+          },
+          {
+            "id": "q5",
+            "q": "El año que viene ___ (nosotros) el Camino de Santiago entero.",
+            "options": ["hicimos", "hacíamos", "haremos", "hagamos"],
+            "correct": 2,
+            "explain": "'El año que viene' apunta al futuro: haremos. Los pasados no encajan y 'hagamos' es subjuntivo."
+          }
+        ]
+      },
+      "b1-fiestas": {
+        "id": "b1-fiestas",
+        "icon": "🎆",
+        "level": "B1",
+        "title": "Fiestas y España plural",
+        "theory": [
+          {
+            "id": "t1",
+            "heading": "El calendario festivo",
+            "body": "España vive su calendario: los <strong>Reyes Magos</strong> (6 de enero) traen los regalos y se come el <strong>roscón</strong>; en <strong>Semana Santa</strong> salen las procesiones, sobre todo en Andalucía y Castilla; en <strong>Las Fallas</strong> de Valencia (marzo) se queman monumentos de cartón; en <strong>San Fermín</strong> (Pamplona, julio) se corre delante de los toros; y en <strong>Nochevieja</strong> se toman las <strong>doce uvas</strong> con las campanadas de la Puerta del Sol."
+          },
+          {
+            "id": "t2",
+            "heading": "Una España, varias lenguas",
+            "body": "El español (o <strong>castellano</strong>) convive con otras lenguas cooficiales: el <strong>catalán</strong> (Cataluña, Baleares y, como valenciano, en la Comunidad Valenciana), el <strong>gallego</strong> (Galicia) y el <strong>euskera</strong> (País Vasco y parte de Navarra). En esas zonas verás carteles en dos lenguas y oirás cambiar de una a otra con total naturalidad."
+          },
+          {
+            "id": "t3",
+            "heading": "Hablar de tradiciones",
+            "body": "Vocabulario festivo útil: <em>se celebra</em> (tiene lugar), <em>cae en</em> (<em>este año Reyes <strong>cae en</strong> lunes</em>), <em>el día festivo</em>, <em>el desfile</em>, <em>la verbena</em> (fiesta popular nocturna), <em>los fuegos artificiales</em>, <em>disfrazarse</em> (Carnaval). Y la pregunta comodín para integrarte: <em>¿Y aquí cómo se celebra?</em>"
+          }
+        ],
+        "examples": [
+          {"id": "e1", "text": "En Nochevieja tomamos las doce uvas con las campanadas."},
+          {"id": "e2", "text": "Los Reyes Magos llegan la noche del cinco de enero."},
+          {"id": "e3", "text": "Este año el roscón lo compramos con nata, como siempre."},
+          {"id": "e4", "text": "En Valencia, las Fallas se queman la noche de San José."},
+          {"id": "e5", "text": "Mi prima corrió el encierro de San Fermín el año pasado."},
+          {"id": "e6", "text": "En Galicia los carteles están en gallego y en castellano."},
+          {"id": "e7", "text": "¿Este año Reyes cae en lunes o en martes?"},
+          {"id": "e8", "text": "La verbena de San Juan se celebra en la playa, con hogueras."}
+        ],
+        "flashcards": [
+          {"id": "f1", "front": "los Reyes Magos", "def": "traen los regalos el 6 de enero"},
+          {"id": "f2", "front": "el roscón", "def": "dulce en forma de anillo que se come el día de Reyes"},
+          {"id": "f3", "front": "las doce uvas", "def": "se toman en Nochevieja, una por campanada"},
+          {"id": "f4", "front": "Las Fallas", "def": "fiesta de Valencia en marzo: se queman monumentos de cartón"},
+          {"id": "f5", "front": "San Fermín", "def": "fiesta de Pamplona en julio, famosa por los encierros"},
+          {"id": "f6", "front": "el encierro", "def": "carrera delante de los toros por las calles"},
+          {"id": "f7", "front": "la verbena", "def": "fiesta popular nocturna, con música y baile"},
+          {"id": "f8", "front": "el castellano", "def": "otro nombre del idioma español"},
+          {"id": "f9", "front": "el euskera", "def": "lengua cooficial del País Vasco"},
+          {"id": "f10", "front": "cae en (una fecha)", "def": "coincide con ese día: este año cae en lunes"}
+        ],
+        "quiz": [
+          {
+            "id": "q1",
+            "q": "En España, los niños reciben los regalos sobre todo…",
+            "options": ["en Nochebuena, de Papá Noel únicamente", "el 6 de enero, de los Reyes Magos", "el primer día de las rebajas", "en Carnaval"],
+            "correct": 1,
+            "explain": "La tradición fuerte en España son los Reyes Magos (6 de enero), aunque Papá Noel también ha entrado en muchas casas."
+          },
+          {
+            "id": "q2",
+            "q": "¿Qué se hace en Nochevieja con las campanadas?",
+            "options": ["quemar una falla", "correr un encierro", "tomar las doce uvas", "comer roscón"],
+            "correct": 2,
+            "explain": "Una uva por campanada: doce uvas para doce meses de suerte. El roscón es de Reyes; las fallas, de Valencia."
+          },
+          {
+            "id": "q3",
+            "q": "Las Fallas se celebran en…",
+            "options": ["Valencia", "Pamplona", "Sevilla", "Bilbao"],
+            "correct": 0,
+            "explain": "Las Fallas son la gran fiesta de Valencia, en marzo. En Pamplona es San Fermín."
+          },
+          {
+            "id": "q4",
+            "q": "El euskera es lengua cooficial en…",
+            "options": ["Galicia", "el País Vasco", "Andalucía", "Canarias"],
+            "correct": 1,
+            "explain": "El euskera se habla en el País Vasco (y parte de Navarra). En Galicia la lengua cooficial es el gallego."
+          },
+          {
+            "id": "q5",
+            "q": "'Este año San Juan ___ en martes.'",
+            "options": ["cae", "corre", "quema", "celebra"],
+            "correct": 0,
+            "explain": "Para decir en qué día de la semana coincide una fecha se usa 'caer': cae en martes."
+          }
+        ]
+      },
 //__APPEND_HERE__
 }}};
