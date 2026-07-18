@@ -721,7 +721,7 @@ window.PTB_COURSES.es.support.en = {
         "e2": "Suddenly, the power went out in the whole neighbourhood.",
         "e3": "While we were waiting for the bus, it started to snow.",
         "e4": "We used to spend summers in Benidorm; that year we went to Menorca.",
-        "e5": "I met my best friend at secondary school, in year 8.",
+        "e5": "I met my best friend at secondary school, in Year 9.",
         "e6": "He refused to try the octopus: it really disgusted him.",
         "e7": "When I lived in Granada, I used to walk up to the Alhambra almost every Sunday.",
         "e8": "We got to the station, bought the tickets and caught the last AVE."
@@ -740,7 +740,7 @@ window.PTB_COURSES.es.support.en = {
       },
       "quiz": {
         "q1": "Three completed actions in a chain (came home, had dinner, went to bed) take the preterite: volví. 'Volvía' would describe the background, not the chain of events.",
-        "q2": "'Mientras' marks an ongoing background action: imperfect (paseábamos). The preterite doesn't fit an interrupted action.",
+        "q2": "'Mientras' marks an ongoing background action: imperfect (paseábamos). 'Paseando' is a gerund and cannot stand as the main verb.",
         "q3": "'Conocer' in the preterite = meeting for the first time. In the imperfect (conocía) it would mean you already knew her.",
         "q4": "'Cada noche' signals a repeated habit in the past: imperfect (contaba). 'Contó' would be a single occasion.",
         "q5": "'Todavía' (still) shows an action in progress interrupted by the alarm: imperfect (dormían)."
@@ -788,7 +788,7 @@ window.PTB_COURSES.es.support.en = {
       "theory": {
         "t1": {"heading": "Para: destination and purpose", "body": "<strong>Para</strong> looks forward: <strong>purpose</strong> (<em>estudio para aprobar</em> — I study in order to pass), <strong>recipient</strong> (<em>este regalo es para ti</em>), <strong>direction</strong> (<em>salgo para Madrid</em>) and <strong>deadline</strong> (<em>es para el viernes</em> — it's due Friday). Trick: if you can say 'in order to' or 'destined for', it's almost always <em>para</em>."},
         "t2": {"heading": "Por: cause, means and route", "body": "<strong>Por</strong> looks backwards or around: <strong>cause</strong> (<em>se suspendió por la lluvia</em> — cancelled because of the rain), <strong>means</strong> (<em>por correo</em> — by post), <strong>route</strong> (<em>pasear por el casco antiguo</em> — to stroll through the old town), <strong>exchange</strong> (<em>por veinte euros</em>) and <strong>part of the day</strong> (<em>por la mañana</em>). Trick: 'because of' or 'through' → <em>por</em>."},
-        "t3": {"heading": "Tricky pairs", "body": "Compare: <em>Lo hice <strong>por</strong> ti</em> (because of you, with you in mind) versus <em>Lo hice <strong>para</strong> ti</em> (the result is for you). <em>Voy <strong>por</strong> el parque</em> (through it) versus <em>voy <strong>para</strong> el parque</em> (towards it). Fixed expressions with <em>por</em>: <em>por favor, por fin, por supuesto, por cierto</em> (by the way). With <em>para</em>: <em>para siempre</em> (forever), <em>para nada</em> (not at all)."}
+        "t3": {"heading": "Tricky pairs", "body": "Compare: <em>Lo hice <strong>por</strong> ti</em> (because of you, with you in mind) versus <em>Lo hice <strong>para</strong> ti</em> (the result is for you). <em>Voy <strong>por</strong> el parque</em> (through it) versus <em>voy <strong>para</strong> el parque</em> (towards it). Fixed expressions with <em>por</em>: <em>por favor, por fin, por supuesto, por cierto</em> (by the way). With <em>para</em>: <em>para siempre</em> (forever), <em>para nada</em> (not at all), <em>para variar</em> (for a change)."}
       },
       "examples": {
         "e1": "I'm studying Spanish (in order) to work in Valencia.",
@@ -950,7 +950,7 @@ window.PTB_COURSES.es.support.en = {
       },
       "flashcards": {
         "f1": "formal email greeting; ends with a colon",
-        "f2": "Yours faithfully — the most formal sign-off",
+        "f2": "Yours sincerely — the most formal sign-off",
         "f3": "Kind regards — standard formal sign-off",
         "f4": "please find attached…",
         "f5": "I look forward to your reply",

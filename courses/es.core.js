@@ -1378,9 +1378,9 @@ window.PTB_COURSES.es = {
           {
             "id": "q2",
             "q": "Mientras ___ (nosotros) por el Retiro, de repente empezó a llover.",
-            "options": ["paseamos", "paseábamos", "paseemos", "paseasteis"],
+            "options": ["paseando", "paseábamos", "paseemos", "paseasteis"],
             "correct": 1,
-            "explain": "'Mientras' marca una acción en curso que sirve de fondo: imperfecto (paseábamos). El indefinido 'paseamos' no encaja con una acción interrumpida."
+            "explain": "'Mientras' marca una acción en curso que sirve de fondo: imperfecto (paseábamos). 'Paseando' es gerundio y no puede ser el verbo principal; 'paseemos' es subjuntivo."
           },
           {
             "id": "q3",
@@ -1563,7 +1563,7 @@ window.PTB_COURSES.es = {
           {
             "id": "q5",
             "q": "'Lo hice por ti' significa que…",
-            "options": ["el resultado es un regalo para ti", "lo hice a causa de ti, pensando en ti", "lo hice en tu lugar, sin avisarte", "lo hice para siempre"],
+            "options": ["el resultado es un regalo para ti", "lo hice a causa de ti, pensando en ti", "lo hice hace mucho tiempo, sin motivo", "lo hice para siempre"],
             "correct": 1,
             "explain": "'Por ti' = a causa de ti, motivado por ti. 'Para ti' sería el destinatario del resultado."
           }
@@ -1609,7 +1609,7 @@ window.PTB_COURSES.es = {
           {"id": "f5", "front": "¿'Veo lo' o 'lo veo'?", "def": "lo veo — el pronombre va delante del verbo conjugado"},
           {"id": "f6", "front": "¿Dónde va el pronombre con infinitivo?", "def": "detrás y pegado (voy a llamarte) o delante del verbo conjugado (te voy a llamar)"},
           {"id": "f7", "front": "¿Dónde va el pronombre con imperativo afirmativo?", "def": "siempre detrás y pegado: ¡dímelo!, ¡cómpralo!"},
-          {"id": "f8", "front": "el leísmo", "def": "usar 'le' por 'lo' para persona masculina: 'a Juan le vi' — típico de España"},
+          {"id": "f8", "front": "el leísmo", "def": "usar 'le' por 'lo' para persona masculina singular: 'a Juan le vi' — típico de España"},
           {"id": "f9", "front": "se lo / se la / se los / se las", "def": "orden fijo: se + directo + verbo (se lo di)"},
           {"id": "f10", "front": "¿'No se lo digas' o 'no dígaselo'?", "def": "no se lo digas — con imperativo negativo el pronombre va delante"}
         ],
@@ -1705,7 +1705,7 @@ window.PTB_COURSES.es = {
           },
           {
             "id": "q2",
-            "q": "¿Qué hora ___? No llevo reloj, pero ya es de noche. (una suposición)",
+            "q": "¿Qué hora ___? No llevo reloj, pero ya es de noche. (hablas solo, haciendo una suposición)",
             "options": ["es", "era", "será", "sea"],
             "correct": 2,
             "explain": "Futuro de probabilidad: ¿qué hora será? = ¿qué hora es, aproximadamente? La suposición se marca con el futuro."
@@ -1876,7 +1876,7 @@ window.PTB_COURSES.es = {
           },
           {
             "id": "q3",
-            "q": "En un WhatsApp, 'no puedo, xq tengo curro, tb mañana' usa 'xq' para decir…",
+            "q": "En un WhatsApp, 'no puedo, xq tengo curro; mañana tb lo tengo difícil' usa 'xq' para decir…",
             "options": ["por qué / porque", "aunque", "cuando", "quizás"],
             "correct": 0,
             "explain": "'xq' abrevia porque/por qué. 'Tb' es también y 'curro' es trabajo, coloquial de España."
