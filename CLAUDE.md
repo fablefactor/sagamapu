@@ -17,6 +17,7 @@
 - `tests/e2e-ui-lang.js` — Playwright E2E for tutoring-language coherence (speak list = UI_LANGS only, incoherent-immersion courses hidden, lesson titles/grammar/settings in the UI language, deliberate immersion respected). Same setup recipe as `e2e-da.js`.
 - `tests/e2e-one-language.js` — Playwright E2E for the single tutoring-language model (one "Your language" control drives chrome + content together; switching flips both; immersion toggle → target-only content, chrome unchanged). Same setup recipe.
 - `tests/e2e-db-errors.js` — Playwright E2E for Supabase-suspended handling (hanging/erroring DB stubs → no loading-screen freeze, mounts on local data, friendly offline banner, friendly localized login error). Same setup recipe.
+- `tests/e2e-es.js` — Playwright E2E for the Spanish course (en-speaker onboarding→placement, English-overlay lessons/decks, ESPAÑOL/English card labels, three-course switching with progress isolation, Peninsular content + ñ through `norm()`). Same setup recipe.
 - `tests/e2e-update.js` — Playwright E2E for the update scheme (newer deployed version.js → localized prompt with per-change lines since the running version, Later/Update-now behavior, Settings About). Same setup recipe; update its version literals when `PTB_VERSION` moves on.
 - `tools/split-curriculum.js` — the one-time Phase 3 transform that generated the course files from the pre-split monolithic curriculum data (deleted in Phase 3); kept as documentation of the transformation.
 
