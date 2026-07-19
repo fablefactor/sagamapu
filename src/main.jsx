@@ -2,21 +2,14 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createClient } from '@supabase/supabase-js';
 import { STRINGS, t, tPlural, pluralDays, UI_LANGS, uiLangName } from './strings.js';
-import enCore from './courses/en.core.js';
-import enSupportEs from './courses/en.support.es.js';
-import daCore from './courses/da.core.js';
-import daSupportEs from './courses/da.support.es.js';
-import esCore from './courses/es.core.js';
-import esSupportEn from './courses/es.support.en.js';
+import { COURSE_MANIFEST } from './courses/index.js';
 
-/* Reassemble the runtime course registry exactly as the old <script src>
-   course files did (window.PTB_COURSES stays the registry: migrateStorage
-   and a couple of tests read it directly). Phase A: all courses eager. */
-window.PTB_COURSES = {
-  en: { ...enCore, support: { es: enSupportEs } },
-  da: { ...daCore, support: { es: daSupportEs } },
-  es: { ...esCore, support: { en: esSupportEn } },
-};
+/* Phase B: courses are LAZY. window.PTB_COURSES is the runtime registry of
+   LOADED courses (migrateStorage and a couple of tests read it directly); it
+   starts empty and ensureCourseLoaded(cid) fills it on demand. The eager
+   COURSE_MANIFEST holds only metas + overlay names (for the course lists /
+   coherence), so onboarding and the switcher never load a course's payload. */
+window.PTB_COURSES = {};
 
 /* Supabase config (was a plain <script> in index.html). The optional
    window.__sbClientFactory hook lets E2E tests inject a stub client without
@@ -44,8 +37,22 @@ const FONT = "'Avenir Next','Segoe UI',system-ui,-apple-system,sans-serif";
    automatically, no code changes needed. The ACTIVE course id is stored
    under ptb1:course, and every content/progress helper below is
    parameterized by course id (cid). */
-const COURSES = window.PTB_COURSES;
-const COURSE_IDS = Object.keys(COURSES);
+const COURSES = window.PTB_COURSES;              // registry of LOADED courses
+const COURSE_IDS = Object.keys(COURSE_MANIFEST); // ALL courses (metadata, eager)
+
+/* Load a course's core + all its overlays (one Vite chunk each) into the
+   registry, if not already loaded. Idempotent. Callers await this before
+   anything that reads the course's topics via courseBundle/resolveCourse
+   (mount, course switch/add, onboarding finish). */
+async function ensureCourseLoaded(cid){
+  if(COURSES[cid] && COURSES[cid].core) return;
+  const m=COURSE_MANIFEST[cid]; if(!m) return;
+  const core=(await m.loadCore()).default;
+  const support={};
+  for(const [lang,load] of Object.entries(m.loadSupport||{})) support[lang]=(await load()).default;
+  COURSES[cid]={...core,support};
+  delete COURSE_BUNDLES[cid];                     // rebuild bundle from fresh data
+}
 
 /* Per-course derived bundle (meta + topic/level indexes + resolver
    cache). Content is static, so bundles are cached for the session.
@@ -66,10 +73,13 @@ function courseBundle(cid){
     support:c.support||{}, resolved:{},
   };
 }
-function courseName(cid,uiLang){ const m=COURSES[cid].meta; return (m.nameByLang||{})[uiLang]||m.name; }
-/* The support overlay of course cid for language langId, or null when there
-   is none ('none', unknown id, or langId === the target language itself). */
-function overlayOf(cid,langId){ const ov=(COURSES[cid].support||{})[langId]; return (ov&&langId!==cid)?ov:null; }
+/* Metadata (name / overlay availability) reads the eager MANIFEST, so it works
+   for courses whose payload isn't loaded yet (onboarding, switcher). */
+function courseName(cid,uiLang){ const m=COURSE_MANIFEST[cid].meta; return (m.nameByLang||{})[uiLang]||m.name; }
+/* The support overlay descriptor {name} of course cid for language langId, or
+   null when there is none ('none', unknown id, or langId === the target
+   language itself). Reads the manifest — callers use .name / truthiness only. */
+function overlayOf(cid,langId){ const ov=(COURSE_MANIFEST[cid].supportLangs||{})[langId]; return (ov&&langId!==cid)?ov:null; }
 
 /* ══ Localization ══════════════════════════════════════════════
    Two independent settings (Phase 4):
@@ -1145,7 +1155,7 @@ function Onboarding({onDone}){
             <>
               <div style={{display:'grid',gap:8}}>
                 {COURSE_IDS.filter(cid=>courseCoherent(cid,speaks)).map(cid=>{
-                  const meta=COURSES[cid].meta;
+                  const meta=COURSE_MANIFEST[cid].meta;
                   const ov=overlayOf(cid,speaks);
                   const immersion=!ov;
                   return(
@@ -1210,7 +1220,7 @@ function CoursePanel({uiLang,enrolled,course,onSwitch,onAdd}){
               return(
                 <button key={cid} onClick={()=>{setAdding(false);onAdd(cid,'auto');}}
                   style={{...S.optBtn,gap:10}}>
-                  <span style={{fontSize:22}}>{COURSES[cid].meta.icon||'📘'}</span>
+                  <span style={{fontSize:22}}>{COURSE_MANIFEST[cid].meta.icon||'📘'}</span>
                   <div style={{flex:1}}>
                     <div style={{fontWeight:800,fontSize:15}}>{courseName(cid,uiLang)}</div>
                     <div style={{fontSize:12.5,color:C.sub}}>{ov?t(uiLang,'onboard.fullSupport',{lang:ov.name}):t(uiLang,'onboard.immersion',{lang:courseName(cid,uiLang)})}</div>
@@ -1522,22 +1532,29 @@ function Root({user}){
     return (e.length&&COURSES[e[0].target])?e[0].target:null;
   });
   const setUiLang=useCallback(l=>{ setUiLangState(l); lsRawSet('ptb1:uiLang',l); },[]);
-  const setCourse=useCallback(cid=>{ setCourseState(cid); lsRawSet('ptb1:course',cid); },[]);
+  /* Switching only ever targets an enrolled course (already preloaded), so the
+     await resolves instantly; it is here as insurance so App never mounts a
+     course whose payload isn't in the registry. */
+  const setCourse=useCallback(async cid=>{ await ensureCourseLoaded(cid); setCourseState(cid); lsRawSet('ptb1:course',cid); },[]);
   const setCourseSupport=useCallback((cid,s)=>{
     lsRawSet(ck(cid,'support'),s);
     setEnrolled(prev=>{ const next=prev.map(e=>e.target===cid?{...e,support:s}:e); lsSet('ptb1:courses',next); return next; });
   },[]);
-  const addCourse=useCallback((target,support)=>{
+  /* Adding a course loads its (not-yet-enrolled) payload on demand before it
+     becomes active. */
+  const addCourse=useCallback(async (target,support)=>{
+    await ensureCourseLoaded(target);
     lsRawSet(ck(target,'support'),support);
     setEnrolled(prev=>{ const next=prev.some(e=>e.target===target)?prev:[...prev,{target,support}]; lsSet('ptb1:courses',next); return next; });
-    setCourse(target);
-  },[setCourse]);
+    setCourseState(target); lsRawSet('ptb1:course',target);
+  },[]);
   const factoryReset=useCallback(()=>{ setEnrolled([]); setCourseState(null); setUiLangState('en'); },[]);
-  const finishOnboarding=({uiLang:ul,target,support})=>{
+  const finishOnboarding=async ({uiLang:ul,target,support})=>{
+    await ensureCourseLoaded(target);
     setUiLang(ul);
     lsRawSet(ck(target,'support'),support);
     const list=[{target,support}]; lsSet('ptb1:courses',list); setEnrolled(list);
-    setCourse(target);
+    setCourseState(target); lsRawSet('ptb1:course',target);
   };
 
   if(!enrolled.length||!course) return <Onboarding onDone={finishOnboarding}/>;
@@ -1552,15 +1569,29 @@ function AppShell(){
   const userRef=useRef(null);
 
   useEffect(()=>{
-    /* migrateStorage() runs on EVERY startup, sequenced AFTER the cloud
-       restore (fresh devices restore old-format keys from the cloud). */
-    if(!sbClient){ migrateStorage(); setPhase('app'); return; }
+    /* Course payloads are lazy (Phase B). Before migrateStorage + mount we
+       must load every ENROLLED course (so the active course + switcher render
+       synchronously), and — only if legacy pre-Phase-4 keys are present — the
+       'en' course, since migrateStorage remaps legacy index-based keys against
+       window.PTB_COURSES.en. Current (already-migrated) users have no legacy
+       keys, so a Danish/Spanish-only learner never loads English. */
+    const hasLegacyKeys=()=>['ptb1:lang','ptb1:level','ptb1:placementDone','ptb1:app','ptb1:wrongs']
+      .some(k=>localStorage.getItem(k)!==null)
+      || Object.keys(localStorage).some(k=>/^ptb1:fc:/.test(k));
+    const loadForStartup=async()=>{
+      if(hasLegacyKeys()) await ensureCourseLoaded('en');
+      migrateStorage();                                    // creates ptb1:courses for legacy users
+      const enrolled=getEnrolled();
+      await Promise.all(enrolled.map(e=>ensureCourseLoaded(e.target)));
+    };
+
+    if(!sbClient){ loadForStartup().then(()=>setPhase('app')); return; }
 
     const enterApp=async(u)=>{
       userRef.current=u;
       setUser(u);
       await restoreFromSupabase(sbClient,u.id);
-      migrateStorage();
+      await loadForStartup();
       setPhase('app');
     };
 

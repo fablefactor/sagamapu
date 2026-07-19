@@ -9,28 +9,10 @@
    array index. Future insertions MUST mint NEW ids (t4, e9, f11, ...);
    NEVER renumber or reuse existing ids, even when inserting mid-array
    or deleting items. */
+import meta from './en.meta.js';
+
 export default {
-  "meta": {
-    "id": "en",
-    "name": "English",
-    "levels": [
-      "A1",
-      "A2",
-      "B1"
-    ],
-    "speechLocale": "en-GB",
-    "nameByLang": {
-      "en": "English",
-      "es": "Inglés"
-    },
-    "icon": "🇬🇧",
-    "title": "Pathway to B1",
-    "tagline": {
-      "en": "Your English journey, one level at a time",
-      "es": "Tu camino al inglés, un nivel a la vez"
-    },
-    "frontLabel": "English"
-  },
+  meta,
   "core": {
     "topics": {
       "a1-greet": {

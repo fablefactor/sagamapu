@@ -58,6 +58,26 @@ async function loadCourses() {
 const PTB_COURSES = await loadCourses();
 if (Object.keys(PTB_COURSES).length === 0) err('no courses loaded from src/courses/');
 
+/* ── Manifest drift check: the eager COURSE_MANIFEST (src/courses/index.js)
+   carries metas + overlay names used before a course's payload loads; assert
+   they match the actual course/overlay modules so onboarding/switcher never
+   show stale metadata. ── */
+try {
+  const { COURSE_MANIFEST } = await import('file://' + path.join(COURSES_DIR, 'index.js'));
+  for (const [cid, course] of Object.entries(PTB_COURSES)) {
+    const m = COURSE_MANIFEST[cid];
+    if (!m) { err(`manifest: course '${cid}' missing from COURSE_MANIFEST`); continue; }
+    if (JSON.stringify(m.meta) !== JSON.stringify(course.meta))
+      err(`manifest: '${cid}'.meta differs from ${cid}.core.js meta`);
+    for (const lang of Object.keys(course.support || {})) {
+      const mName = ((m.supportLangs || {})[lang] || {}).name;
+      if (mName !== course.support[lang].name)
+        err(`manifest: '${cid}'.supportLangs.${lang}.name ('${mName}') != overlay name ('${course.support[lang].name}')`);
+    }
+    if (typeof m.loadCore !== 'function') err(`manifest: '${cid}'.loadCore missing`);
+  }
+} catch (e) { err(`manifest: failed to load src/courses/index.js: ${e.message}`); }
+
 const isStr = (v) => typeof v === 'string' && v.length > 0;
 const isInt = (v) => Number.isInteger(v);
 

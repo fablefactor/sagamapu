@@ -17,25 +17,10 @@
 
    All 23 topics (7 A1, 8 A2, 8 B1) are present — authoring complete.
    Insertions must follow the ID STABILITY RULE above. */
+import meta from './es.meta.js';
+
 export default {
-  "meta": {
-    "id": "es",
-    "name": "Español",
-    "levels": ["A1", "A2", "B1"],
-    "speechLocale": "es-ES",
-    "nameByLang": {
-      "en": "Spanish",
-      "es": "Español",
-      "da": "Spansk"
-    },
-    "icon": "🇪🇸",
-    "title": "Camino al B1",
-    "tagline": {
-      "en": "Your Spanish journey to B1",
-      "es": "Tu camino al español hasta B1"
-    },
-    "frontLabel": "ESPAÑOL"
-  },
+  meta,
   "core": {
     "placement": [
       { "id": "p1", "q": "Yo ___ Marta.", "opts": ["me llamo", "se llama", "te llamas", "nos llamamos"], "ans": 0, "level": "A1" },

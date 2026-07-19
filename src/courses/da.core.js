@@ -12,25 +12,10 @@
    COMPLETE: meta, full placement (20), pronunciation, and all 23 topics
    (A1 x7, A2 x8, B1 x8), authored in three parts. The append sentinel
    used during authoring has been removed. */
+import meta from './da.meta.js';
+
 export default {
-  "meta": {
-    "id": "da",
-    "name": "Dansk",
-    "levels": ["A1", "A2", "B1"],
-    "speechLocale": "da-DK",
-    "nameByLang": {
-      "en": "Danish",
-      "es": "Danés",
-      "da": "Dansk"
-    },
-    "icon": "🇩🇰",
-    "title": "Vejen til B1",
-    "tagline": {
-      "en": "Your Danish journey to B1",
-      "es": "Tu camino al danés hasta B1"
-    },
-    "frontLabel": "DANSK"
-  },
+  meta,
   "core": {
     "placement": [
       { "id": "p1", "q": "Jeg ___ Maria.", "opts": ["hedder", "hedde", "heddes", "at hedde"], "ans": 0, "level": "A1" },
