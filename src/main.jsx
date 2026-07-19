@@ -40,18 +40,30 @@ const FONT = "'Avenir Next','Segoe UI',system-ui,-apple-system,sans-serif";
 const COURSES = window.PTB_COURSES;              // registry of LOADED courses
 const COURSE_IDS = Object.keys(COURSE_MANIFEST); // ALL courses (metadata, eager)
 
+/* Timeout budget for a lazy course chunk (mirrors the Supabase SB_TIMEOUT):
+   a hung/aborted chunk fetch must never freeze startup on the loading screen. */
+const CHUNK_TIMEOUT=8000;
 /* Load a course's core + all its overlays (one Vite chunk each) into the
-   registry, if not already loaded. Idempotent. Callers await this before
-   anything that reads the course's topics via courseBundle/resolveCourse
-   (mount, course switch/add, onboarding finish). */
+   registry, if not already loaded. Idempotent, and RESILIENT: the core and
+   every overlay are fetched as one parallel batch, and a failed or slow chunk
+   (offline, a stale hashed URL after a deploy, a 404, a hang) resolves to
+   `false` instead of throwing — so a single course can never brick startup or
+   leave an unhandled rejection. Callers await this before anything that reads
+   the course's topics (mount, course switch/add, onboarding finish); a `false`
+   result means the course stayed unloaded and the caller should degrade
+   (mount/stay put) rather than activate a course with no payload. The registry
+   entry is written in one atomic assignment, so concurrent calls for the same
+   cid are safe (the browser module cache also de-dupes the underlying fetches). */
 async function ensureCourseLoaded(cid){
-  if(COURSES[cid] && COURSES[cid].core) return;
-  const m=COURSE_MANIFEST[cid]; if(!m) return;
-  const core=(await m.loadCore()).default;
-  const support={};
-  for(const [lang,load] of Object.entries(m.loadSupport||{})) support[lang]=(await load()).default;
-  COURSES[cid]={...core,support};
-  delete COURSE_BUNDLES[cid];                     // rebuild bundle from fresh data
+  if(COURSES[cid] && COURSES[cid].core) return true;
+  const m=COURSE_MANIFEST[cid]; if(!m) return false;
+  try{
+    const langs=Object.keys(m.loadSupport||{});
+    const mods=await withTimeout(Promise.all([m.loadCore(),...langs.map(l=>m.loadSupport[l]())]),CHUNK_TIMEOUT);
+    const support={}; langs.forEach((l,i)=>{support[l]=mods[i+1].default;});
+    COURSES[cid]={...mods[0].default,support};
+    return true;
+  }catch(e){ return false; }
 }
 
 /* Per-course derived bundle (meta + topic/level indexes + resolver
@@ -1532,29 +1544,35 @@ function Root({user}){
     return (e.length&&COURSES[e[0].target])?e[0].target:null;
   });
   const setUiLang=useCallback(l=>{ setUiLangState(l); lsRawSet('ptb1:uiLang',l); },[]);
+  /* Mark a (loaded) course active — the React state + ptb1:course together,
+     so the two can never drift. Never call for a course whose payload failed
+     to load (App would mount a course with no topics and crash). */
+  const activate=useCallback(cid=>{ setCourseState(cid); lsRawSet('ptb1:course',cid); },[]);
   /* Switching only ever targets an enrolled course (already preloaded), so the
      await resolves instantly; it is here as insurance so App never mounts a
-     course whose payload isn't in the registry. */
-  const setCourse=useCallback(async cid=>{ await ensureCourseLoaded(cid); setCourseState(cid); lsRawSet('ptb1:course',cid); },[]);
+     course whose payload isn't in the registry. If the (re)load fails, keep the
+     current course rather than switching to a broken one. */
+  const setCourse=useCallback(async cid=>{ if(await ensureCourseLoaded(cid)) activate(cid); },[activate]);
   const setCourseSupport=useCallback((cid,s)=>{
     lsRawSet(ck(cid,'support'),s);
     setEnrolled(prev=>{ const next=prev.map(e=>e.target===cid?{...e,support:s}:e); lsSet('ptb1:courses',next); return next; });
   },[]);
   /* Adding a course loads its (not-yet-enrolled) payload on demand before it
-     becomes active. */
+     becomes active. If the chunk can't be fetched, do NOT enroll/activate a
+     course with no payload — leave state untouched (the button simply no-ops). */
   const addCourse=useCallback(async (target,support)=>{
-    await ensureCourseLoaded(target);
+    if(!(await ensureCourseLoaded(target))) return;
     lsRawSet(ck(target,'support'),support);
     setEnrolled(prev=>{ const next=prev.some(e=>e.target===target)?prev:[...prev,{target,support}]; lsSet('ptb1:courses',next); return next; });
-    setCourseState(target); lsRawSet('ptb1:course',target);
-  },[]);
+    activate(target);
+  },[activate]);
   const factoryReset=useCallback(()=>{ setEnrolled([]); setCourseState(null); setUiLangState('en'); },[]);
   const finishOnboarding=async ({uiLang:ul,target,support})=>{
-    await ensureCourseLoaded(target);
+    if(!(await ensureCourseLoaded(target))) return;   // can't fetch the course → stay on onboarding
     setUiLang(ul);
     lsRawSet(ck(target,'support'),support);
     const list=[{target,support}]; lsSet('ptb1:courses',list); setEnrolled(list);
-    setCourseState(target); lsRawSet('ptb1:course',target);
+    activate(target);
   };
 
   if(!enrolled.length||!course) return <Onboarding onDone={finishOnboarding}/>;
@@ -1585,13 +1603,16 @@ function AppShell(){
       await Promise.all(enrolled.map(e=>ensureCourseLoaded(e.target)));
     };
 
-    if(!sbClient){ loadForStartup().then(()=>setPhase('app')); return; }
+    /* setPhase('app') must ALWAYS run — even if migrateStorage or a course
+       chunk fails — so a failure degrades (mounts on local data / onboarding)
+       rather than hanging forever on the 'checking' loading screen. */
+    if(!sbClient){ loadForStartup().catch(()=>{}).then(()=>setPhase('app')); return; }
 
     const enterApp=async(u)=>{
       userRef.current=u;
       setUser(u);
-      await restoreFromSupabase(sbClient,u.id);
-      await loadForStartup();
+      try{ await restoreFromSupabase(sbClient,u.id); await loadForStartup(); }
+      catch(e){ /* degrade to whatever loaded — never freeze on 'checking' */ }
       setPhase('app');
     };
 
