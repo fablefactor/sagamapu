@@ -2,7 +2,7 @@
  * deployed version shows a localized prompt listing one line per change since
  * the RUNNING version, with Update now (reload) / Later; Settings shows About
  * (version + full changelog). Manual gate; same setup recipe as tests/e2e-da.js.
- * NOTE: expectations reference the running version number — update the v10/v12
+ * NOTE: expectations reference the running version number — update the v11/v13
  * literals when PTB_VERSION moves on.
  */
 const { chromium } = require('playwright-core');
@@ -11,14 +11,14 @@ const REPO = process.env.REPO || process.cwd();
 const NM = REPO + '/node_modules';
 const BASE = process.env.BASE_URL || 'http://127.0.0.1:8877/index.html';
 const os=require('os');const SD=(process.env.SHOT_DIR||os.tmpdir()).replace(/\/$/,'');const SHOT = p => SD+'/upd-'+p+'.png';
-const STUB = `window.supabase={createClient:()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:async()=>({error:null})})})};`;
-// A "newer deployed" version.js (v12) with two new changelog lines beyond running v10.
+const STUB = `window.__sbClientFactory=()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:async()=>({error:null})})});`;
+// A "newer deployed" version.js (v13) with two new changelog lines beyond running v11.
 const NEWER = `window.PTB_VERSION = {
-  "version": 12,
+  "version": 13,
   "changelog": [
-    {"v": 12, "date": "2026-07-19", "en": "Something even newer", "es": "Algo aún más nuevo"},
-    {"v": 11, "date": "2026-07-19", "en": "Bug fixes", "es": "Corrección de errores"},
-    {"v": 10, "date": "2026-07-18", "en": "Spanish course added", "es": "Curso de español añadido"}
+    {"v": 13, "date": "2026-07-20", "en": "Something even newer", "es": "Algo aún más nuevo"},
+    {"v": 12, "date": "2026-07-20", "en": "Bug fixes", "es": "Corrección de errores"},
+    {"v": 11, "date": "2026-07-19", "en": "Faster startup", "es": "Inicio más rápido"}
   ]
 };`;
 
@@ -29,10 +29,7 @@ const innr = p => p.evaluate(() => document.getElementById('root').innerText + '
 async function open(browser, { newer } = {}) {
   const ctx = await browser.newContext({ viewport: { width: 420, height: 900 } });
   const page = await ctx.newPage();
-  await page.route('**/@supabase/**', r => r.fulfill({ contentType: 'application/javascript', body: STUB }));
-  await page.route('**/react@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react/umd/react.production.min.js', 'utf8') }));
-  await page.route('**/react-dom@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react-dom/umd/react-dom.production.min.js', 'utf8') }));
-  await page.route('**/@babel/standalone/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/@babel/standalone/babel.min.js', 'utf8') }));
+  await page.addInitScript({ content: STUB });
   if (newer) await page.route('**/version.js?*', r => r.fulfill({ contentType: 'application/javascript', body: NEWER })); // fetch has ?ts=; script tag (no query) gets the real file
   await page.addInitScript(() => {
     localStorage.setItem('ptb1:uiLang', 'es');
@@ -56,9 +53,9 @@ async function open(browser, { newer } = {}) {
     const { ctx, page } = await open(browser, { newer: true });
     const txt = await page.evaluate(() => document.body.innerText);
     S(/Nueva versión disponible/.test(txt), '1 update prompt shown (Spanish UI)');
-    S(/v10/.test(txt) && /v12/.test(txt), '1 subtitle names running v10 → new v12');
-    S(/Algo aún más nuevo/.test(txt) && /Corrección de errores/.test(txt), '1 changelog lines v11+v12 listed (localized)');
-    S(!/Curso de español añadido/.test(txt.split('Novedades')[1] || ''), '1 v10 (already running) NOT listed as new');
+    S(/v11/.test(txt) && /v13/.test(txt), '1 subtitle names running v11 → new v13');
+    S(/Algo aún más nuevo/.test(txt) && /Corrección de errores/.test(txt), '1 changelog lines v12+v13 listed (localized)');
+    S(!/Faster startup|Inicio más rápido/.test(txt.split('Novedades')[1] || ''), '1 v11 (already running) NOT listed as new');
     await page.screenshot({ path: SHOT('1-prompt') });
     // "Later" dismisses
     await page.locator('button', { hasText: /Más tarde/ }).click();
@@ -91,7 +88,7 @@ async function open(browser, { newer } = {}) {
     await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(x => x.getAttribute('aria-label') === 'Settings'); if (b) b.click(); });
     await page.waitForTimeout(500);
     const txt = await page.evaluate(() => document.body.innerText);
-    S(/Versión de la app/.test(txt) && /v10/.test(txt), '4 Settings About shows current version v10');
+    S(/Versión de la app/.test(txt) && /v11/.test(txt), '4 Settings About shows current version v11');
     S(/Primera versión/.test(txt), '4 full changelog reaches back to v1 (localized)');
     await page.screenshot({ path: SHOT('4-settings-about') });
     await ctx.close();
