@@ -13,7 +13,7 @@ const REPO = process.env.REPO || process.cwd();
 const NM = REPO + '/node_modules';
 const BASE = process.env.BASE_URL || 'http://127.0.0.1:8877/index.html';
 const os = require('os'); const SD = (process.env.SHOT_DIR||os.tmpdir()).replace(/\/$/,''); const SHOT = p => `${SD}/uil-${p}.png`;
-const STUB = `window.supabase={createClient:()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:()=>Promise.resolve({})})})};`;
+const STUB = `window.__sbClientFactory=()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:()=>Promise.resolve({})})});`;
 let failures = 0, steps = [], pageErrors = [];
 const S = (ok, n, d) => { steps.push(`${ok ? 'PASS' : 'FAIL'} | ${n}${d ? ' | ' + d : ''}`); if (!ok) failures++; console.log(steps[steps.length - 1]); };
 const innr = p => p.evaluate(() => document.getElementById('root').innerText);
@@ -24,10 +24,7 @@ const DANISH_LEAK = /\b(Hilsner|Familie|Dagligdag|Tal og|køn|navneord|Bøjning|
 async function newPage(browser, seed = {}) {
   const ctx = await browser.newContext({ viewport: { width: 420, height: 900 } });
   const page = await ctx.newPage();
-  await page.route('**/@supabase/**', r => r.fulfill({ contentType: 'application/javascript', body: STUB }));
-  await page.route('**/react@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react/umd/react.production.min.js', 'utf8') }));
-  await page.route('**/react-dom@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react-dom/umd/react-dom.production.min.js', 'utf8') }));
-  await page.route('**/@babel/standalone/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/@babel/standalone/babel.min.js', 'utf8') }));
+  await page.addInitScript({ content: STUB });
   await page.addInitScript(s => { for (const [k, v] of Object.entries(s)) localStorage.setItem(k, v); }, seed);
   page.on('pageerror', e => { console.log('PAGEERROR:', String(e).slice(0, 300)); pageErrors.push(String(e)); });
   await page.goto(BASE, { waitUntil: 'networkidle' }); await page.waitForTimeout(2500);

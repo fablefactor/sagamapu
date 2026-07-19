@@ -14,7 +14,7 @@ const os = require('os'); const SD = (process.env.SHOT_DIR||os.tmpdir()).replace
 // A "suspended DB" Supabase stub: getSession resolves from cache (as the real
 // SDK does), but every .from() query HANGS forever (never resolves) — the
 // worst case for the old code. signInWithOtp also hangs.
-const STUB_HANG = `window.supabase={createClient:()=>({
+const STUB_HANG = `window.__sbClientFactory=()=>({
   auth:{
     getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),
     onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),
@@ -25,10 +25,10 @@ const STUB_HANG = `window.supabase={createClient:()=>({
     select:()=>({eq:()=>({maybeSingle:()=>new Promise(()=>{})})}),  // hangs
     upsert:()=>new Promise(()=>{}),                                  // hangs
   }),
-})};`;
+});`;
 
 // A "suspended DB" stub that ERRORS fast (503-style) instead of hanging.
-const STUB_ERR = `window.supabase={createClient:()=>({
+const STUB_ERR = `window.__sbClientFactory=()=>({
   auth:{
     getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),
     onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),
@@ -39,7 +39,7 @@ const STUB_ERR = `window.supabase={createClient:()=>({
     select:()=>({eq:()=>({maybeSingle:async()=>{throw new Error('Failed to fetch');}})}),
     upsert:async()=>({error:{message:'Failed to fetch'}}),
   }),
-})};`;
+});`;
 
 let failures = 0, steps = [], pageErrors = [];
 const S = (ok, n, d) => { steps.push(`${ok ? 'PASS' : 'FAIL'} | ${n}${d ? ' | ' + d : ''}`); if (!ok) failures++; console.log(steps[steps.length - 1]); };
@@ -48,10 +48,7 @@ const innr = p => p.evaluate(() => document.getElementById('root').innerText);
 async function open(browser, stub, seed = {}) {
   const ctx = await browser.newContext({ viewport: { width: 420, height: 900 } });
   const page = await ctx.newPage();
-  await page.route('**/@supabase/**', r => r.fulfill({ contentType: 'application/javascript', body: stub }));
-  await page.route('**/react@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react/umd/react.production.min.js', 'utf8') }));
-  await page.route('**/react-dom@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react-dom/umd/react-dom.production.min.js', 'utf8') }));
-  await page.route('**/@babel/standalone/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/@babel/standalone/babel.min.js', 'utf8') }));
+  await page.addInitScript({ content: stub });
   await page.addInitScript(s => { for (const [k, v] of Object.entries(s)) localStorage.setItem(k, v); }, seed);
   page.on('pageerror', e => { console.log('PAGEERROR:', String(e).slice(0, 200)); pageErrors.push(String(e)); });
   await page.goto(BASE, { waitUntil: 'networkidle' });
@@ -129,7 +126,7 @@ const ENROLLED = {
 
   // ---- 4: healthy DB (control) — no banner, normal mount ----
   {
-    const OK = `window.supabase={createClient:()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:async()=>({error:null})})})};`;
+    const OK = `window.__sbClientFactory=()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:async()=>({error:null})})});`;
     const { ctx, page } = await open(browser, OK, ENROLLED);
     await page.waitForTimeout(2800);
     const txt = await innr(page);

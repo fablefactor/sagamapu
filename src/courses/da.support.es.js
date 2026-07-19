@@ -14,8 +14,7 @@
    COMPLETE: overlays for all 23 topics (A1 x7, A2 x8, B1 x8), authored
    in three parts. The append sentinel used during authoring has been
    removed. */
-window.PTB_COURSES.da.support = window.PTB_COURSES.da.support || {};
-window.PTB_COURSES.da.support.es = {
+export default {
   "name": "Español",
   "topics": {
     "a1-hils": {

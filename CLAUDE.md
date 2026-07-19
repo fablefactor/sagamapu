@@ -2,18 +2,20 @@
 
 ## Project overview
 
-"Pathway to B1" — a static, no-build English tutoring web app for Danish speakers learning English up to CEFR B1. Deployed to Netlify at https://sagamapu.netlify.app/.
+"Pathway to B1" — a language-tutoring web app (English, Danish, Spanish courses) up to CEFR B1. Deployed to Netlify at https://sagamapu.netlify.app/.
 
-**Stack:** React 18 + Babel Standalone from CDN. No bundler, no build step — JSX is compiled at runtime in the browser.
+**Stack:** React 18 + **Vite build** (`@vitejs/plugin-react`). JSX is precompiled and bundled at deploy time — there is now a build step (`npm run build`); the old runtime Babel-Standalone compile is gone. The app is still effectively one big module — no deep component decomposition.
 
 **Files:**
-- `index.html` — the entire app: all React components, CSS, and hooks in one file.
-- `courses/en.core.js` — course content in the **target language only** (English): 23 topics (A1 7, A2 8, B1 8) with stable item ids, plus the placement test and pronunciation sentences. Loaded via `<script src>` before the Babel block.
-- `courses/en.support.es.js` — the **Spanish support overlay**: translations keyed by topic id + item id (never by array index). Loaded after `en.core.js`.
-- `strings.js` — UI string table (`STRINGS`) + `t(uiLang,key)` helper (plus `tPlural`/`pluralDays` and the `UI_LANGS`/`uiLangName` registry derived from the `'lang.name'` entry), loaded via `<script src>` after the course files, before the Babel block.
-- `version.js` — `window.PTB_VERSION = {version, changelog}` in the pure-JSON wrapper convention. Single source of truth for the app version; loaded via `<script src>` AND re-fetched fresh (`cache:'no-store'`) by `UpdateGate` in index.html, which JSON-parses the text between the first `{` and last `}` — keep it a pure JSON literal. **VERSIONING RULE: every user-facing change that goes to master MUST bump `version` (+1) and prepend one `{v, date, en, es}` changelog entry (one short line per language, newest first).** The update prompt shows entries `> ` the running version; Settings → About shows the full list. `netlify.toml` sets `Cache-Control: no-cache` on everything (no hashed filenames here — nothing may skip revalidation).
+- `index.html` — a tiny shell: `<div id=root>`, the `<script src="/version.js">` tag, the `<style>` block, and `<script type=module src="/src/main.jsx">`. It is the Vite entry.
+- `src/main.jsx` — the entire app: all React components, hooks, helpers, the content resolver, storage/migration, Supabase sync, `UpdateGate`. Imports React/ReactDOM/Supabase/strings/courses; reassembles `window.PTB_COURSES` from the course modules (kept as the runtime registry that `migrateStorage` and a couple of tests read).
+- `src/courses/en.core.js` — course content in the **target language only** (English): 23 topics (A1 7, A2 8, B1 8) with stable item ids, plus the placement test and pronunciation sentences. ES module: `export default {meta, core}`.
+- `src/courses/en.support.es.js` — the **Spanish support overlay**: translations keyed by topic id + item id (never by array index). ES module: `export default {name, topics}`.
+- `src/strings.js` — UI string table (`STRINGS`) + `t(uiLang,key)` helper (plus `tPlural`/`pluralDays` and the `UI_LANGS`/`uiLangName` registry derived from the `'lang.name'` entry). ES module (each helper `export`ed); imported by `main.jsx`.
+- `public/version.js` — `window.PTB_VERSION = {version, changelog}` in the pure-JSON wrapper convention. Single source of truth for the app version. Lives in `public/` so Vite copies it **verbatim, un-hashed**; the `<script src="/version.js">` tag sets the RUNNING version, and `UpdateGate` re-fetches it fresh (`cache:'no-store'`) and JSON-parses the literal after `window.PTB_VERSION` — keep it a pure JSON literal (no braces in its header comment). **VERSIONING RULE: every user-facing change that goes to master MUST bump `version` (+1) and prepend one `{v, date, en, es}` changelog entry (one short line per language, newest first).** The update prompt shows entries `> ` the running version; Settings → About shows the full list. `netlify.toml` sets `no-cache` on `/index.html` + `/version.js` and `immutable` on `/assets/*` (hashed) — do NOT make index.html/version.js immutable.
+- `package.json` / `package-lock.json` — committed (Vite + plugin + react/react-dom/@supabase + playwright-core). `npm run build` → `dist/` (gitignored). `docs/vite-migration-plan.md` documents the migration (Phase A done: bundle + drop Babel; Phase B pending: lazy-load non-enrolled courses).
 - `tools/validate.js` — course content validator; run `node tools/validate.js` after any content edit (manual gate, no CI). Checks schema shape, stable-id uniqueness, quiz/placement answer indices, and overlay coverage/id-alignment.
-- `tests/e2e-da.js` — Playwright E2E for the Danish course (onboarding→placement, lessons/decks in es+immersion, en↔da course switching with per-course progress isolation, æøå through `norm()`). Manual gate; the file header documents the setup+run recipe (serves CDN libs from `node_modules`, stubs Supabase, asserts on `#root` innerText).
+- `tests/e2e-da.js` — Playwright E2E for the Danish course (onboarding→placement, lessons/decks in es+immersion, en↔da course switching with per-course progress isolation, æøå through `norm()`). Manual gate; the file header documents the run recipe. **All E2E suites now run against the built `dist/`** (`npm install && npm run build`, then serve `dist/` on :8877) and stub Supabase via the `window.__sbClientFactory` hook injected with `addInitScript` (no more CDN-URL interception); `tests/package.json` (`{"type":"commonjs"}`) keeps the suites CJS under the root `"type":"module"`. Assert on `#root` innerText.
 - `tests/e2e-ui-lang.js` — Playwright E2E for tutoring-language coherence (speak list = UI_LANGS only, incoherent-immersion courses hidden, lesson titles/grammar/settings in the UI language, deliberate immersion respected). Same setup recipe as `e2e-da.js`.
 - `tests/e2e-one-language.js` — Playwright E2E for the single tutoring-language model (one "Your language" control drives chrome + content together; switching flips both; immersion toggle → target-only content, chrome unchanged). Same setup recipe.
 - `tests/e2e-db-errors.js` — Playwright E2E for Supabase-suspended handling (hanging/erroring DB stubs → no loading-screen freeze, mounts on local data, friendly offline banner, friendly localized login error). Same setup recipe.
@@ -21,7 +23,7 @@
 - `tests/e2e-update.js` — Playwright E2E for the update scheme (newer deployed version.js → localized prompt with per-change lines since the running version, Later/Update-now behavior, Settings About). Same setup recipe; update its version literals when `PTB_VERSION` moves on.
 - `tools/split-curriculum.js` — the one-time Phase 3 transform that generated the course files from the pre-split monolithic curriculum data (deleted in Phase 3); kept as documentation of the transformation.
 
-**Deployment:** GitHub Pages serves `master` branch root. Develop on a feature branch; push to `master` only when asked to "go live". Never create a PR unless explicitly requested.
+**Deployment:** Netlify builds `master` on push (`npm run build`, publishes `dist/`). Develop on a feature branch; merge to `master` only when asked. `netlify/functions/keepalive.mjs` is a scheduled function (kept alive independently of the build).
 
 **Persistence:** `localStorage` under the `ptb1:` namespace (Phase 4 namespaced schema — see the storage section below). Cloud copy: one Supabase `user_progress` row per user containing all `ptb1:*` keys.
 
@@ -29,26 +31,11 @@
 
 ## Non-obvious gotchas
 
-### Babel Standalone = runtime compilation
-There is no build step. Syntax errors in JSX only surface when the browser actually loads the page — you won't catch them from a linter or `node`. To verify JSX syntax before committing, run:
-```
-node -e "
-const b=require('@babel/core');
-const fs=require('fs');
-const src=fs.readFileSync('index.html','utf8').match(/<script type=\"text\/babel\">([\s\S]*)<\/script>/)[1];
-b.transformSync(src,{presets:['@babel/preset-react']});
-console.log('JSX ok');
-"
-```
-This requires `@babel/core` and `@babel/preset-react` installed globally or in a local `node_modules`.
+### The build gate (replaces the old runtime-Babel JSX check)
+There IS a build step now. Before committing app changes, run **`npm run build`** — it precompiles `src/main.jsx` and fails on any JSX/syntax error (the old in-browser Babel compile that only surfaced errors at page load is gone). For content edits also run **`node tools/validate.js`**. The full gate before a merge: `npm run build` (green) + `node tools/validate.js` (0 errors) + the E2E suites against `dist/` (see the tests list). To iterate locally, `npm run dev` (Vite dev server, HMR) or `npm run preview` (serves a production build).
 
-### Course files and `strings.js` are plain JS, not JSX
-They're loaded by regular `<script src>` tags before the Babel block, so they must be valid JavaScript only — no JSX syntax. Course files follow the **wrapper convention**: a one-line `window.PTB_COURSES...` assignment around a pure JSON literal (no functions, no expressions), e.g.:
-```js
-window.PTB_COURSES = window.PTB_COURSES || {};
-window.PTB_COURSES.en = { "meta": {...}, "core": {...} };
-```
-Overlays assign `window.PTB_COURSES.en.support.es = {...}` and must load **after** the core. `tools/validate.js` vm-loads the files and validates the payload.
+### Course files and `src/strings.js` are ES modules, JSON-shaped data
+Course files are ES modules that `export default` a **pure JSON literal** (no functions, no expressions): cores `export default { "meta": {...}, "core": {...} }`, overlays `export default { "name": "…", "topics": {...} }`. `src/main.jsx` imports them and reassembles `window.PTB_COURSES[cid] = {...core, support:{<lang>: overlay}}` (the runtime registry `migrateStorage`/tests read). `tools/validate.js` dynamic-imports the same modules and validates the payload. `src/strings.js` is a normal ES module (helpers `export`ed) — no JSX.
 
 ### The Course concept: ONE tutoring language (`uiLang`) drives everything
 There is a single user-facing language setting — the tutoring language (`uiLang`). It drives BOTH the chrome (`t()`) AND the content overlay, so lesson titles / grammar / translations always match the interface; they can never diverge (an earlier build had a separate per-course "support language", which is gone — that split was the source of the "changed the language but not everywhere" bug).
@@ -61,7 +48,7 @@ A **course** = a target-language core (`window.PTB_COURSES[cid]`) + N support ov
 
 **UI strings** live in `strings.js`: a `STRINGS` table of dot-namespaced keys (`'nav.lessons'`, `'settings.signout'`, …) with `{en, es}` values, read via `t(uiLang, 'key')` (optional third argument interpolates `{placeholder}`s, e.g. `t(lang,'lessons.finishEarn',{xp:earned})`). Pluralization goes through `tPlural(lang, n, key)` (per-language rules; `pluralDays(lang,n)` is a convenience wrapper). The old inline `UI(lang,'…','…')` helper and the `cardBackLabel(lang)` shim are gone; don't reintroduce them — the flashcard back label is now the active overlay's own `name` field (`'Español'`) or `t(uiLang,'flashcards.back.definition')` in immersion (computed in `FlashcardDeck`).
 
-**Curriculum content** is localized by the **content resolver** in `index.html`. The old per-field helpers (`topicTitle`, `theoryHeading`, …) are gone — don't reintroduce them.
+**Curriculum content** is localized by the **content resolver** in `src/main.jsx`. The old per-field helpers (`topicTitle`, `theoryHeading`, …) are gone — don't reintroduce them.
 
 - `resolveCourse(cid, supportId)` merges the course core with the overlay **by item id** (synchronously) into resolved topics keyed by topic id, with presentation fields chosen for `supportId` (an overlay id, or `'none'` = immersion). Fallback rules per field ("ov" = active overlay present):
   - `title`: ov → `overlay.title||title`; none → `title`
@@ -97,7 +84,7 @@ A **course** = a target-language core (`window.PTB_COURSES[cid]`) + N support ov
 | `ptb1:<c>:wrongs` | per-course | JSON `[{topicId, qid, count, last}]` (**stable quiz item id**, not index) |
 | `ptb1:<c>:fc:<topic>:<cardId>` | per-course | JSON `{box,next}` (**stable card id**, not index) |
 
-`migrateStorage()` (in `index.html`, between `/*__MIGRATE_START__*/` sentinels for unit-test extraction) maps the legacy pre-Phase-4 keys (`ptb1:lang/level/placementDone/app/wrongs/fc:*`) to this schema. It is **idempotent, deletes legacy keys, never clobbers existing new-format values**, and runs on **every startup AFTER `restoreFromSupabase`** (inside `enterApp`, and in the `!sbClient` path) — a fresh device restores old-format keys from the cloud after a local-only migration would have no-oped. Never read or write the legacy key shapes outside `migrateStorage()`.
+`migrateStorage()` (in `src/main.jsx`, between `/*__MIGRATE_START__*/` sentinels for unit-test extraction) maps the legacy pre-Phase-4 keys (`ptb1:lang/level/placementDone/app/wrongs/fc:*`) to this schema. It is **idempotent, deletes legacy keys, never clobbers existing new-format values**, and runs on **every startup AFTER `restoreFromSupabase`** (inside `enterApp`, and in the `!sbClient` path) — a fresh device restores old-format keys from the cloud after a local-only migration would have no-oped. Never read or write the legacy key shapes outside `migrateStorage()`.
 
 Reset tiers (all in Settings):
 1. **Reset course progress** — `clearCourseStorage(cid)`: `ptb1:<cid>:*` only, except `ptb1:<cid>:support` (a preference, not progress). Per-level reset buttons (`clearLevelStorage(cid,lv)`) are scoped to the active course.

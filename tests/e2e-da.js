@@ -1,14 +1,13 @@
 /* E2E verification of the Danish course (target 'da', support Español).
  *
- * There is no build step and no CI; this is a manual gate like tools/validate.js.
- * The app loads React/Babel/Supabase from CDNs at runtime, so the test serves
- * those libs from node_modules and stubs Supabase (signed-in session) so the
- * app mounts headless. Assertions read document.getElementById('root').innerText
+ * Manual gate (no CI), like tools/validate.js. The app is a Vite build now,
+ * so this runs against the built dist/ and stubs Supabase via the
+ * window.__sbClientFactory hook (injected before the bundle runs). Assertions read document.getElementById('root').innerText
  * (NOT body textContent — that includes inlined <script> source).
  *
  * Setup + run (from the repo root):
- *   npm i --no-save playwright-core react@18 react-dom@18 @babel/standalone
- *   python3 -m http.server 8877 &            # serves the repo at :8877
+ *   npm install && npm run build
+ *   (cd dist && python3 -m http.server 8877) &
  *   REPO=$(pwd) node tests/e2e-da.js
  *
  * Env: REPO (repo root, default cwd), BASE_URL (default http://127.0.0.1:8877/index.html),
@@ -24,7 +23,7 @@ const BASE = process.env.BASE_URL || 'http://127.0.0.1:8877/index.html';
 const CHROMIUM = process.env.CHROMIUM || '/opt/pw-browsers/chromium';
 const SHOT_DIR = (process.env.SHOT_DIR || os.tmpdir()).replace(/\/$/, '');
 const SHOT = p => `${SHOT_DIR}/da-${p}.png`;
-const STUB = `window.supabase={createClient:()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:()=>Promise.resolve({})})})};`;
+const STUB = `window.__sbClientFactory=()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:()=>Promise.resolve({})})});`;
 
 let failures = 0, steps = [], pageErrors = [];
 function step(ok, name, detail) { steps.push(`${ok ? 'PASS' : 'FAIL'} | ${name}${detail ? ' | ' + detail : ''}`); if (!ok) failures++; console.log(steps[steps.length - 1]); }
@@ -34,10 +33,7 @@ const dump = p => p.evaluate(() => Object.fromEntries(Object.keys(localStorage).
 async function newPage(browser, seed = {}) {
   const ctx = await browser.newContext({ viewport: { width: 420, height: 860 } });
   const page = await ctx.newPage();
-  await page.route('**/@supabase/**', r => r.fulfill({ contentType: 'application/javascript', body: STUB }));
-  await page.route('**/react@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react/umd/react.production.min.js', 'utf8') }));
-  await page.route('**/react-dom@18/umd/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/react-dom/umd/react-dom.production.min.js', 'utf8') }));
-  await page.route('**/@babel/standalone/**', r => r.fulfill({ contentType: 'application/javascript', body: fs.readFileSync(NM + '/@babel/standalone/babel.min.js', 'utf8') }));
+  await page.addInitScript({ content: STUB });
   await page.addInitScript(s => { for (const [k, v] of Object.entries(s)) localStorage.setItem(k, v); }, seed);
   page.on('pageerror', e => { console.log('PAGEERROR:', String(e).slice(0, 300)); pageErrors.push(String(e)); });
   await page.goto(BASE, { waitUntil: 'networkidle' });

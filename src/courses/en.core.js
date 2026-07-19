@@ -9,8 +9,7 @@
    array index. Future insertions MUST mint NEW ids (t4, e9, f11, ...);
    NEVER renumber or reuse existing ids, even when inserting mid-array
    or deleting items. */
-window.PTB_COURSES = window.PTB_COURSES || {};
-window.PTB_COURSES.en = {
+export default {
   "meta": {
     "id": "en",
     "name": "English",

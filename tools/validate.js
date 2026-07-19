@@ -20,31 +20,43 @@
  */
 'use strict';
 
-const fs = require('fs');
-const vm = require('vm');
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
-const COURSES_DIR = path.join(ROOT, 'courses');
+const COURSES_DIR = path.join(ROOT, 'src', 'courses');
 
 let errors = 0, warnings = 0;
 const err = (msg) => { errors++; console.error('ERROR   ' + msg); };
 const warn = (msg) => { warnings++; console.warn('warning ' + msg); };
 
-/* ── Load course files: core files first, then overlays ── */
-const files = fs.readdirSync(COURSES_DIR).filter(f => f.endsWith('.js'))
-  .sort((a, b) => (a.includes('.support.') - b.includes('.support.')) || a.localeCompare(b));
-const sandbox = { window: {} };
-vm.createContext(sandbox);
-for (const f of files) {
-  try {
-    vm.runInContext(fs.readFileSync(path.join(COURSES_DIR, f), 'utf8'), sandbox, { filename: f });
-  } catch (e) {
-    err(`${f}: failed to load: ${e.message}`);
+/* ── Load ES-module course files and reassemble the registry exactly as
+   src/main.jsx does at runtime (each core exports {meta,core}; each overlay
+   exports {name,topics}). Overlay files are named <cid>.support.<lang>.js. ── */
+const COURSE_MODULES = {
+  en: { core: 'en.core.js', support: { es: 'en.support.es.js' } },
+  da: { core: 'da.core.js', support: { es: 'da.support.es.js' } },
+  es: { core: 'es.core.js', support: { en: 'es.support.en.js' } },
+};
+async function loadCourses() {
+  const out = {};
+  for (const [cid, m] of Object.entries(COURSE_MODULES)) {
+    try {
+      const core = (await import('file://' + path.join(COURSES_DIR, m.core))).default;
+      const support = {};
+      for (const [lang, f] of Object.entries(m.support)) {
+        support[lang] = (await import('file://' + path.join(COURSES_DIR, f))).default;
+      }
+      out[cid] = { ...core, support };
+    } catch (e) { err(`${cid}: failed to load: ${e.message}`); }
   }
+  return out;
 }
-const PTB_COURSES = sandbox.window.PTB_COURSES || {};
-if (Object.keys(PTB_COURSES).length === 0) err('no courses loaded from courses/');
+
+(async () => {
+const PTB_COURSES = await loadCourses();
+if (Object.keys(PTB_COURSES).length === 0) err('no courses loaded from src/courses/');
 
 const isStr = (v) => typeof v === 'string' && v.length > 0;
 const isInt = (v) => Number.isInteger(v);
@@ -166,3 +178,4 @@ for (const [courseId, course] of Object.entries(PTB_COURSES)) {
 
 console.log(`\nvalidate: ${errors} error(s), ${warnings} warning(s)`);
 process.exit(errors > 0 ? 1 : 0);
+})();

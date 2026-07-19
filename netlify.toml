@@ -1,22 +1,30 @@
-# Netlify configuration for "Pathway to B1"
-# Static, no-build site: JSX is compiled in the browser via Babel Standalone,
-# so there is no build step — Netlify just serves the repo root as-is.
+# Netlify configuration for "Pathway to B1" (sagamapu)
+# Vite build: JSX is precompiled + bundled at deploy time (no more Babel
+# Standalone / in-browser compile). Netlify installs deps and runs the build.
 [build]
-  publish = "."
-  command = ""
+  publish = "dist"
+  command = "npm run build"
 
 # Scheduled function that keeps the Supabase free-tier project awake.
 # See netlify/functions/keepalive.mjs for how the once-a-day, random-night
-# timing works.
+# timing works. (Independent of the build publish dir.)
 [functions]
   directory = "netlify/functions"
 
-# Update-friendliness for phone home-screen installs: nothing here has
-# content-hashed filenames, so NOTHING may be cached without revalidation.
-# no-cache = "store, but revalidate before use" — with Netlify's ETags a
-# reload after deploy always picks up the new version (and version.js is
-# what the in-app update check fetches fresh at every start).
+# Content-hashed bundles — filename changes when content changes, so they are
+# safe to cache forever.
 [[headers]]
-  for = "/*"
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Entry points must always revalidate so a new deploy is picked up, and so the
+# in-app update check reads a fresh version.js. NOT immutable.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/version.js"
   [headers.values]
     Cache-Control = "no-cache"

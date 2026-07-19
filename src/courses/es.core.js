@@ -17,8 +17,7 @@
 
    All 23 topics (7 A1, 8 A2, 8 B1) are present — authoring complete.
    Insertions must follow the ID STABILITY RULE above. */
-window.PTB_COURSES = window.PTB_COURSES || {};
-window.PTB_COURSES.es = {
+export default {
   "meta": {
     "id": "es",
     "name": "Español",

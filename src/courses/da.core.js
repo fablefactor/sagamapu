@@ -12,8 +12,7 @@
    COMPLETE: meta, full placement (20), pronunciation, and all 23 topics
    (A1 x7, A2 x8, B1 x8), authored in three parts. The append sentinel
    used during authoring has been removed. */
-window.PTB_COURSES = window.PTB_COURSES || {};
-window.PTB_COURSES.da = {
+export default {
   "meta": {
     "id": "da",
     "name": "Dansk",
