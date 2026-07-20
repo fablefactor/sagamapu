@@ -3,8 +3,9 @@
  *
  * Usage:  node tools/validate.js
  *
- * vm-loads every courses/*.js file (they are one-line window.PTB_COURSES
- * wrappers around pure JSON literals) into a shared fake window, then checks:
+ * dynamic-imports every src/courses course module via the eager COURSE_MANIFEST
+ * loaders (each core exports {meta,core}, each overlay {name,topics}) and
+ * reassembles the registry as the runtime does, then checks:
  *
  *   - schema shape: meta {id,name,nameByLang,levels,speechLocale};
  *     core topics {id,icon,level,title,theory[],examples[],flashcards[],
@@ -20,33 +21,26 @@
  */
 'use strict';
 
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.join(__dirname, '..');
-const COURSES_DIR = path.join(ROOT, 'src', 'courses');
+import { COURSE_MANIFEST } from '../src/courses/index.js';
 
 let errors = 0, warnings = 0;
 const err = (msg) => { errors++; console.error('ERROR   ' + msg); };
 const warn = (msg) => { warnings++; console.warn('warning ' + msg); };
 
-/* ── Load ES-module course files and reassemble the registry exactly as
-   src/main.jsx does at runtime (each core exports {meta,core}; each overlay
-   exports {name,topics}). Overlay files are named <cid>.support.<lang>.js. ── */
-const COURSE_MODULES = {
-  en: { core: 'en.core.js', support: { es: 'en.support.es.js' } },
-  da: { core: 'da.core.js', support: { es: 'da.support.es.js' } },
-  es: { core: 'es.core.js', support: { en: 'es.support.en.js' } },
-};
+/* ── Load every course via the eager COURSE_MANIFEST's own loaders — the same
+   single source of truth src/main.jsx uses — and reassemble the registry
+   exactly as ensureCourseLoaded does at runtime (each core exports {meta,core};
+   each overlay exports {name,topics}). Driving off the manifest (rather than a
+   second hand-maintained roster) means a course added to index.js can never
+   silently escape validation, and the loaders themselves are exercised. ── */
 async function loadCourses() {
   const out = {};
-  for (const [cid, m] of Object.entries(COURSE_MODULES)) {
+  for (const [cid, m] of Object.entries(COURSE_MANIFEST)) {
     try {
-      const core = (await import('file://' + path.join(COURSES_DIR, m.core))).default;
+      const core = (await m.loadCore()).default;
       const support = {};
-      for (const [lang, f] of Object.entries(m.support)) {
-        support[lang] = (await import('file://' + path.join(COURSES_DIR, f))).default;
+      for (const [lang, load] of Object.entries(m.loadSupport || {})) {
+        support[lang] = (await load()).default;
       }
       out[cid] = { ...core, support };
     } catch (e) { err(`${cid}: failed to load: ${e.message}`); }
@@ -57,6 +51,27 @@ async function loadCourses() {
 (async () => {
 const PTB_COURSES = await loadCourses();
 if (Object.keys(PTB_COURSES).length === 0) err('no courses loaded from src/courses/');
+
+/* ── Manifest coherence check: the eager COURSE_MANIFEST (src/courses/index.js)
+   carries the overlay NAMES shown before a course's payload loads. Its `meta`
+   is the very same <cid>.meta.js object the core re-exports (single-sourced —
+   it cannot drift, so there is nothing to compare there). The genuinely
+   separate sources are the hand-typed supportLangs names vs the overlay
+   modules' own `name`, and the supportLangs/loadSupport key sets — assert
+   those so onboarding/switcher never show a stale or missing overlay. ── */
+for (const [cid, course] of Object.entries(PTB_COURSES)) {
+  const m = COURSE_MANIFEST[cid];
+  if (typeof m.loadCore !== 'function') err(`manifest: '${cid}'.loadCore missing`);
+  const supKeys = Object.keys(m.supportLangs || {}).sort().join(',');
+  const loadKeys = Object.keys(m.loadSupport || {}).sort().join(',');
+  if (supKeys !== loadKeys)
+    err(`manifest: '${cid}' supportLangs [${supKeys}] != loadSupport [${loadKeys}]`);
+  for (const lang of Object.keys(course.support || {})) {
+    const mName = ((m.supportLangs || {})[lang] || {}).name;
+    if (mName !== course.support[lang].name)
+      err(`manifest: '${cid}'.supportLangs.${lang}.name ('${mName}') != overlay name ('${course.support[lang].name}')`);
+  }
+}
 
 const isStr = (v) => typeof v === 'string' && v.length > 0;
 const isInt = (v) => Number.isInteger(v);

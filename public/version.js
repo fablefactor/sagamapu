@@ -13,8 +13,9 @@
      one short line per language, newest first.
    ══════════════════════════════════════════════════════════════════ */
 window.PTB_VERSION = {
-  "version": 11,
+  "version": 12,
   "changelog": [
+    {"v": 12, "date": "2026-07-19", "en": "Smaller downloads — only the courses you use are loaded", "es": "Descargas más pequeñas — solo se cargan los cursos que usas"},
     {"v": 11, "date": "2026-07-19", "en": "Much faster startup (no more in-browser compile step)", "es": "Inicio mucho más rápido (ya no compila en el navegador)"},
     {"v": 10, "date": "2026-07-18", "en": "New Spanish course (A1–B1, Spain) with English support", "es": "Nuevo curso de español (A1–B1, de España) con apoyo en inglés"},
     {"v": 9, "date": "2026-07-17", "en": "Update prompt on start, app version and this change list", "es": "Aviso de actualización al iniciar, versión de la app y esta lista de cambios"},

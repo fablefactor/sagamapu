@@ -1,6 +1,5 @@
 /* ══ Pathway to B1 — UI string table ══════════════════════════════
-   Plain JS (no JSX) — loaded via <script src="strings.js"> after the
-   courses/*.js files, before the Babel block in index.html.
+   Plain ES module (no JSX) — imported by src/main.jsx; each helper is exported.
 
    t(lang, key)          → localized UI string for that uiLang (fallback en)
    t(lang, key, {n: 3})  → same, with {placeholder} interpolation
@@ -8,7 +7,7 @@
    pluralDays(lang, n)   → day/days/día/días
 
    lang here is always the UI language (uiLang). Course content is
-   localized by the resolver in index.html, not by this table.
+   localized by the resolver in src/main.jsx, not by this table.
    The 'lang.name' entry doubles as the registry of available UI
    languages: its keys are the selectable uiLang ids, its values their
    native names. Add a language here + translate the table = new UI lang.

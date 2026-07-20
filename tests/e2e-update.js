@@ -2,7 +2,7 @@
  * deployed version shows a localized prompt listing one line per change since
  * the RUNNING version, with Update now (reload) / Later; Settings shows About
  * (version + full changelog). Manual gate; same setup recipe as tests/e2e-da.js.
- * NOTE: expectations reference the running version number — update the v11/v13
+ * NOTE: expectations reference the running version number — update the v12/v14
  * literals when PTB_VERSION moves on.
  */
 const { chromium } = require('playwright-core');
@@ -12,13 +12,13 @@ const NM = REPO + '/node_modules';
 const BASE = process.env.BASE_URL || 'http://127.0.0.1:8877/index.html';
 const os=require('os');const SD=(process.env.SHOT_DIR||os.tmpdir()).replace(/\/$/,'');const SHOT = p => SD+'/upd-'+p+'.png';
 const STUB = `window.__sbClientFactory=()=>({auth:{getSession:async()=>({data:{session:{user:{id:'u',email:'e@x.com'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),signOut:async()=>({}),signInWithOtp:async()=>({error:null})},from:()=>({select:()=>({eq:()=>({maybeSingle:async()=>({data:null})})}),upsert:async()=>({error:null})})});`;
-// A "newer deployed" version.js (v13) with two new changelog lines beyond running v11.
+// A "newer deployed" version.js (v14) with two new changelog lines beyond running v12.
 const NEWER = `window.PTB_VERSION = {
-  "version": 13,
+  "version": 14,
   "changelog": [
-    {"v": 13, "date": "2026-07-20", "en": "Something even newer", "es": "Algo aún más nuevo"},
-    {"v": 12, "date": "2026-07-20", "en": "Bug fixes", "es": "Corrección de errores"},
-    {"v": 11, "date": "2026-07-19", "en": "Faster startup", "es": "Inicio más rápido"}
+    {"v": 14, "date": "2026-07-21", "en": "Something even newer", "es": "Algo aún más nuevo"},
+    {"v": 13, "date": "2026-07-21", "en": "Bug fixes", "es": "Corrección de errores"},
+    {"v": 12, "date": "2026-07-19", "en": "Smaller downloads", "es": "Descargas más pequeñas"}
   ]
 };`;
 
@@ -53,9 +53,9 @@ async function open(browser, { newer } = {}) {
     const { ctx, page } = await open(browser, { newer: true });
     const txt = await page.evaluate(() => document.body.innerText);
     S(/Nueva versión disponible/.test(txt), '1 update prompt shown (Spanish UI)');
-    S(/v11/.test(txt) && /v13/.test(txt), '1 subtitle names running v11 → new v13');
-    S(/Algo aún más nuevo/.test(txt) && /Corrección de errores/.test(txt), '1 changelog lines v12+v13 listed (localized)');
-    S(!/Faster startup|Inicio más rápido/.test(txt.split('Novedades')[1] || ''), '1 v11 (already running) NOT listed as new');
+    S(/v12/.test(txt) && /v14/.test(txt), '1 subtitle names running v12 → new v14');
+    S(/Algo aún más nuevo/.test(txt) && /Corrección de errores/.test(txt), '1 changelog lines v13+v14 listed (localized)');
+    S(!/Smaller downloads|Descargas más pequeñas/.test(txt.split('Novedades')[1] || ''), '1 v12 (already running) NOT listed as new');
     await page.screenshot({ path: SHOT('1-prompt') });
     // "Later" dismisses
     await page.locator('button', { hasText: /Más tarde/ }).click();
@@ -88,7 +88,7 @@ async function open(browser, { newer } = {}) {
     await page.evaluate(() => { const b = [...document.querySelectorAll('button')].find(x => x.getAttribute('aria-label') === 'Settings'); if (b) b.click(); });
     await page.waitForTimeout(500);
     const txt = await page.evaluate(() => document.body.innerText);
-    S(/Versión de la app/.test(txt) && /v11/.test(txt), '4 Settings About shows current version v11');
+    S(/Versión de la app/.test(txt) && /v12/.test(txt), '4 Settings About shows current version v12');
     S(/Primera versión/.test(txt), '4 full changelog reaches back to v1 (localized)');
     await page.screenshot({ path: SHOT('4-settings-about') });
     await ctx.close();
